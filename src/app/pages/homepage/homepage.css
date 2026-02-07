@@ -1,0 +1,10 @@
+/* Homepage Component Styles */
+
+:host {
+    display: block;
+}
+
+/* Hero section specific animations */
+.hero-gradient {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
