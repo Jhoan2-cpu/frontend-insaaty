@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-export class Login {
+export class Login implements OnInit {
   email = '';
   password = '';
   showPassword = false;
@@ -22,8 +22,14 @@ export class Login {
   emailTouched = false;
   passwordTouched = false;
 
-  constructor(private translate: TranslateService) {
-    this.currentLang = this.translate.currentLang || 'es';
+  constructor(private translate: TranslateService) { }
+
+  ngOnInit() {
+    // Ensure translation is initialized
+    this.translate.setDefaultLang('es');
+    const savedLang = this.translate.currentLang || 'es';
+    this.translate.use(savedLang);
+    this.currentLang = savedLang;
   }
 
   get emailError(): string | null {

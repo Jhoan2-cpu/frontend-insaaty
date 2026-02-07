@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-gray-50 flex flex-col justify-between">
     <!-- Language Selector (Top Right) -->
-    <div class="absolute top-4 right-4 z-10">
+    <div class="absolute top-4 right-4 z-10 animate__animated animate__fadeIn animate__delay-1s">
         <div class="relative group">
             <button
                 class="flex items-center gap-1 text-gray-500 hover:text-blue-600 font-medium text-sm px-3 py-2 rounded-lg hover:bg-white/80 transition-colors">
@@ -27,10 +27,10 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col items-center justify-center p-4 sm:p-6">
         <!-- Logo & Tagline -->
-        <div class="text-center mb-8">
+        <div class="text-center mb-8 animate__animated animate__fadeInDown">
             <a routerLink="/" class="inline-flex flex-col items-center gap-2">
                 <div
-                    class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/30">
+                    class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-600/30 animate__animated animate__pulse animate__infinite animate__slower">
                     <i class="fas fa-cube text-white text-2xl"></i>
                 </div>
                 <span class="text-xl font-bold text-gray-900">InventorySaaS</span>
@@ -39,7 +39,8 @@
         </div>
 
         <!-- Login Card -->
-        <div class="w-full max-w-md bg-white rounded-2xl shadow-xl shadow-gray-200/50 p-6 sm:p-8">
+        <div
+            class="w-full max-w-md bg-white rounded-2xl shadow-xl shadow-gray-200/50 p-6 sm:p-8 animate__animated animate__fadeInUp animate__fast">
             <h1 class="text-2xl font-bold text-gray-900 mb-6">{{ 'LOGIN.TITLE' | translate }}</h1>
 
             <!-- Login Form -->
@@ -59,7 +60,8 @@
                             [class.border-red-500]="emailError" [class.border-gray-300]="!emailError">
                     </div>
                     @if (emailError) {
-                    <p class="text-red-500 text-xs mt-1">{{ emailError | translate }}</p>
+                    <p class="text-red-500 text-xs mt-1 animate__animated animate__shakeX animate__faster">{{ emailError
+                        | translate }}</p>
                     }
                 </div>
 
@@ -87,13 +89,14 @@
                         </button>
                     </div>
                     @if (passwordError) {
-                    <p class="text-red-500 text-xs mt-1">{{ passwordError | translate }}</p>
+                    <p class="text-red-500 text-xs mt-1 animate__animated animate__shakeX animate__faster">{{
+                        passwordError | translate }}</p>
                     }
                 </div>
 
                 <!-- Submit Button -->
                 <button type="submit" [disabled]="isLoading"
-                    class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 mt-6">
+                    class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 mt-6 hover:scale-[1.02] active:scale-[0.98]">
                     @if (isLoading) {
                     <i class="fas fa-spinner fa-spin"></i>
                     } @else {
@@ -113,7 +116,7 @@
             <!-- Social Login Buttons -->
             <div class="grid grid-cols-2 gap-3">
                 <button (click)="loginWithGoogle()"
-                    class="flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium text-gray-700">
+                    class="flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all font-medium text-gray-700 hover:scale-[1.02] active:scale-[0.98]">
                     <svg class="w-5 h-5" viewBox="0 0 24 24">
                         <path fill="#4285F4"
                             d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -127,7 +130,7 @@
                     {{ 'LOGIN.GOOGLE' | translate }}
                 </button>
                 <button (click)="loginWithSSO()"
-                    class="flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium text-gray-700">
+                    class="flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all font-medium text-gray-700 hover:scale-[1.02] active:scale-[0.98]">
                     <i class="fas fa-key text-gray-600"></i>
                     {{ 'LOGIN.SSO' | translate }}
                 </button>
@@ -144,7 +147,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="py-6 text-center">
+    <footer class="py-6 text-center animate__animated animate__fadeIn animate__delay-1s">
         <div class="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
             <a href="#" class="hover:text-blue-600 transition-colors">{{ 'LOGIN.PRIVACY_POLICY' | translate }}</a>
             <span class="text-gray-300">•</span>
