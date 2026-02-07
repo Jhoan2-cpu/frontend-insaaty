@@ -26,6 +26,13 @@ export class Homepage {
         this.currentLang = lang;
     }
 
+    scrollTo(sectionId: string) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
     features = [
         {
             icon: 'fa-chart-line',
