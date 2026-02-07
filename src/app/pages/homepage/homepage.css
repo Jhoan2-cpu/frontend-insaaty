@@ -4,7 +4,119 @@
     display: block;
 }
 
-/* Hero section specific animations */
-.hero-gradient {
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+/* 3D Perspective Container */
+.perspective-container {
+    perspective: 1000px;
+    perspective-origin: center;
+}
+
+/* Dashboard 3D Card */
+.dashboard-3d {
+    transform: rotateY(-8deg) rotateX(5deg);
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.15),
+        -20px 20px 40px -20px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-3d:hover {
+    transform: rotateY(-2deg) rotateX(2deg) translateY(-8px);
+    box-shadow:
+        0 35px 60px -15px rgba(0, 0, 0, 0.2),
+        -30px 30px 50px -25px rgba(0, 0, 0, 0.15);
+}
+
+/* Floating cards with 3D effect */
+.floating-card {
+    transform: translateZ(30px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+}
+
+.floating-card:nth-child(3) {
+    animation-delay: 0.5s;
+}
+
+.floating-card:hover {
+    transform: translateZ(50px) scale(1.05);
+}
+
+/* Float animation */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateZ(30px) translateY(0px);
+    }
+
+    50% {
+        transform: translateZ(30px) translateY(-10px);
+    }
+}
+
+/* Chart bars animation */
+.chart-bar {
+    animation: growUp 1s ease-out forwards;
+    transform-origin: bottom;
+}
+
+.chart-bar:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.chart-bar:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.chart-bar:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.chart-bar:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.chart-bar:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.chart-bar:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
+.chart-bar:nth-child(7) {
+    animation-delay: 0.7s;
+}
+
+@keyframes growUp {
+    0% {
+        transform: scaleY(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+/* Shine effect on dashboard */
+.dashboard-3d::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent);
+    transition: left 0.7s ease;
+    pointer-events: none;
+}
+
+.dashboard-3d:hover::before {
+    left: 100%;
 }
