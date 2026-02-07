@@ -1,133 +1,156 @@
 <!-- Header / Navigation -->
 <header class="fixed top-0 left-0 right-0 z-50 glass">
-  <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
     <!-- Logo -->
     <a routerLink="/" class="flex items-center gap-2">
       <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
         <i class="fas fa-cube text-white text-lg"></i>
       </div>
-      <span class="text-xl font-bold text-gray-900">InventorySaaS</span>
+      <span class="text-lg sm:text-xl font-bold text-gray-900">InventorySaaS</span>
     </a>
 
-    <!-- Nav Links -->
-    <div class="hidden md:flex items-center gap-8">
+    <!-- Nav Links - Hidden on mobile -->
+    <div class="hidden md:flex items-center gap-6 lg:gap-8">
       <a href="#features" class="text-gray-600 hover:text-blue-600 font-medium">Features</a>
       <a href="#solutions" class="text-gray-600 hover:text-blue-600 font-medium">Solutions</a>
       <a href="#pricing" class="text-gray-600 hover:text-blue-600 font-medium">Pricing</a>
     </div>
 
     <!-- Auth Buttons -->
-    <div class="flex items-center gap-4">
-      <a routerLink="/login" class="text-gray-600 hover:text-blue-600 font-medium">Log In</a>
+    <div class="flex items-center gap-2 sm:gap-4">
+      <a routerLink="/login" class="hidden sm:block text-gray-600 hover:text-blue-600 font-medium">Log In</a>
       <a routerLink="/register"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors">
+        class="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg font-medium transition-colors text-sm sm:text-base">
         Get Started
       </a>
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden w-10 h-10 flex items-center justify-center text-gray-600"
+        (click)="mobileMenuOpen = !mobileMenuOpen">
+        <i class="fas" [class.fa-bars]="!mobileMenuOpen" [class.fa-times]="mobileMenuOpen"></i>
+      </button>
     </div>
   </nav>
+
+  <!-- Mobile Menu -->
+  @if (mobileMenuOpen) {
+  <div class="md:hidden bg-white border-t border-gray-100 px-4 py-4 animate__animated animate__fadeIn animate__faster">
+    <div class="flex flex-col gap-3">
+      <a href="#features" class="text-gray-600 hover:text-blue-600 font-medium py-2"
+        (click)="mobileMenuOpen = false">Features</a>
+      <a href="#solutions" class="text-gray-600 hover:text-blue-600 font-medium py-2"
+        (click)="mobileMenuOpen = false">Solutions</a>
+      <a href="#pricing" class="text-gray-600 hover:text-blue-600 font-medium py-2"
+        (click)="mobileMenuOpen = false">Pricing</a>
+      <a routerLink="/login" class="text-gray-600 hover:text-blue-600 font-medium py-2 sm:hidden"
+        (click)="mobileMenuOpen = false">Log In</a>
+    </div>
+  </div>
+  }
 </header>
 
 <!-- Hero Section -->
-<section class="gradient-hero min-h-screen pt-24 pb-16 relative overflow-hidden">
-  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+<section class="gradient-hero min-h-screen pt-20 sm:pt-24 pb-12 sm:pb-16 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
     <!-- Left Content -->
-    <div class="animate__animated animate__fadeInLeft">
+    <div class="animate__animated animate__fadeInLeft text-center lg:text-left order-2 lg:order-1">
       <span
-        class="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
+        class="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
         <i class="fas fa-sparkles"></i>
         Now with Forecasting 5.0
       </span>
 
-      <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4 sm:mb-6">
         Control inventory<br>
         with <span class="text-gradient">absolute</span><br>
         precision
       </h1>
 
-      <p class="text-lg text-gray-600 mb-8 max-w-lg">
+      <p class="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0">
         Eliminate stockouts and overstocking forever. Our intelligent platform gives you real-time visibility and
         automated workflows to scale your business effortlessly.
       </p>
 
       <!-- CTA Buttons -->
-      <div class="flex flex-wrap gap-4 mb-8">
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mb-6 sm:mb-8 justify-center lg:justify-start">
         <a routerLink="/register"
-          class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-lg font-semibold transition-all hover-lift flex items-center gap-2">
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg font-semibold transition-all hover-lift flex items-center justify-center gap-2">
           Start Free Trial
           <i class="fas fa-arrow-right"></i>
         </a>
         <button
-          class="border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 px-8 py-3.5 rounded-lg font-semibold transition-all flex items-center gap-2">
+          class="border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg font-semibold transition-all flex items-center justify-center gap-2">
           <i class="fas fa-play-circle"></i>
           Watch Demo
         </button>
       </div>
 
       <!-- Trust Badge -->
-      <div class="flex items-center gap-3 text-gray-500">
+      <div class="flex items-center justify-center lg:justify-start gap-3 text-gray-500">
         <div class="flex -space-x-2">
-          <div class="w-8 h-8 rounded-full bg-blue-500 border-2 border-white"></div>
-          <div class="w-8 h-8 rounded-full bg-green-500 border-2 border-white"></div>
-          <div class="w-8 h-8 rounded-full bg-purple-500 border-2 border-white"></div>
+          <div class="w-7 sm:w-8 h-7 sm:h-8 rounded-full bg-blue-500 border-2 border-white"></div>
+          <div class="w-7 sm:w-8 h-7 sm:h-8 rounded-full bg-green-500 border-2 border-white"></div>
+          <div class="w-7 sm:w-8 h-7 sm:h-8 rounded-full bg-purple-500 border-2 border-white"></div>
         </div>
-        <span class="text-sm">Trusted by <strong class="text-gray-700">2,000+</strong> managers</span>
+        <span class="text-xs sm:text-sm">Trusted by <strong class="text-gray-700">2,000+</strong> managers</span>
       </div>
     </div>
 
     <!-- Right Content - Dashboard Preview with 3D Effect -->
-    <div class="relative animate__animated animate__fadeInRight animate__delay-1s perspective-container">
+    <div
+      class="relative animate__animated animate__fadeInRight animate__delay-1s perspective-container order-1 lg:order-2 mt-8 lg:mt-0">
       <!-- Main Dashboard Card with 3D tilt -->
-      <div class="dashboard-3d bg-white rounded-2xl shadow-2xl p-6">
-        <div class="flex items-center justify-between mb-4">
-          <span class="text-sm font-medium text-gray-500">Revenue Overview</span>
+      <div class="dashboard-3d bg-white rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 mx-auto max-w-md lg:max-w-none">
+        <div class="flex items-center justify-between mb-3 sm:mb-4">
+          <span class="text-xs sm:text-sm font-medium text-gray-500">Revenue Overview</span>
           <span class="text-xs text-gray-400">Last 7 days</span>
         </div>
 
         <!-- Stats Row -->
-        <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
           <div class="text-center">
-            <div class="text-2xl font-bold text-gray-900">$24.5k</div>
+            <div class="text-lg sm:text-2xl font-bold text-gray-900">$24.5k</div>
             <div class="text-xs text-gray-500">Revenue</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-green-500">+24.5%</div>
+            <div class="text-lg sm:text-2xl font-bold text-green-500">+24.5%</div>
             <div class="text-xs text-gray-500">Growth</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-gray-900">1,234</div>
+            <div class="text-lg sm:text-2xl font-bold text-gray-900">1,234</div>
             <div class="text-xs text-gray-500">Orders</div>
           </div>
         </div>
 
         <!-- Chart Placeholder -->
-        <div class="h-40 bg-gradient-to-b from-blue-50 to-white rounded-lg flex items-end justify-around px-4 pb-4">
-          <div class="chart-bar w-8 bg-blue-500 rounded-t" style="height: 60%"></div>
-          <div class="chart-bar w-8 bg-blue-500 rounded-t" style="height: 80%"></div>
-          <div class="chart-bar w-8 bg-blue-500 rounded-t" style="height: 45%"></div>
-          <div class="chart-bar w-8 bg-blue-500 rounded-t" style="height: 90%"></div>
-          <div class="chart-bar w-8 bg-blue-500 rounded-t" style="height: 70%"></div>
-          <div class="chart-bar w-8 bg-blue-500 rounded-t" style="height: 55%"></div>
-          <div class="chart-bar w-8 bg-blue-600 rounded-t" style="height: 100%"></div>
+        <div
+          class="h-28 sm:h-40 bg-gradient-to-b from-blue-50 to-white rounded-lg flex items-end justify-around px-2 sm:px-4 pb-3 sm:pb-4">
+          <div class="chart-bar w-5 sm:w-8 bg-blue-500 rounded-t" style="height: 60%"></div>
+          <div class="chart-bar w-5 sm:w-8 bg-blue-500 rounded-t" style="height: 80%"></div>
+          <div class="chart-bar w-5 sm:w-8 bg-blue-500 rounded-t" style="height: 45%"></div>
+          <div class="chart-bar w-5 sm:w-8 bg-blue-500 rounded-t" style="height: 90%"></div>
+          <div class="chart-bar w-5 sm:w-8 bg-blue-500 rounded-t" style="height: 70%"></div>
+          <div class="chart-bar w-5 sm:w-8 bg-blue-500 rounded-t" style="height: 55%"></div>
+          <div class="chart-bar w-5 sm:w-8 bg-blue-600 rounded-t" style="height: 100%"></div>
         </div>
       </div>
 
-      <!-- Floating Card - Low Stock Alert -->
+      <!-- Floating Card - Low Stock Alert (Hidden on very small screens) -->
       <div
-        class="floating-card absolute -right-4 top-1/3 bg-white rounded-xl shadow-lg p-4 animate__animated animate__fadeInUp animate__delay-2s">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-            <i class="fas fa-exclamation-triangle text-orange-500"></i>
+        class="floating-card hidden sm:block absolute -right-2 sm:-right-4 top-1/4 sm:top-1/3 bg-white rounded-lg sm:rounded-xl shadow-lg p-2 sm:p-4 animate__animated animate__fadeInUp animate__delay-2s">
+        <div class="flex items-center gap-2 sm:gap-3">
+          <div class="w-8 sm:w-10 h-8 sm:h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+            <i class="fas fa-exclamation-triangle text-orange-500 text-sm sm:text-base"></i>
           </div>
           <div>
             <div class="text-xs text-gray-500">LOW STOCK</div>
-            <div class="text-sm font-semibold text-gray-900">3 Items</div>
+            <div class="text-xs sm:text-sm font-semibold text-gray-900">3 Items</div>
           </div>
         </div>
       </div>
 
-      <!-- Floating Card - Growth Badge -->
+      <!-- Floating Card - Growth Badge (Hidden on mobile) -->
       <div
-        class="floating-card absolute -left-8 top-16 bg-white rounded-xl shadow-lg p-3 animate__animated animate__fadeInUp animate__delay-3s">
+        class="floating-card hidden lg:block absolute -left-8 top-16 bg-white rounded-xl shadow-lg p-3 animate__animated animate__fadeInUp animate__delay-3s">
         <div class="flex items-center gap-2">
           <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
             <i class="fas fa-arrow-trend-up text-green-500"></i>
@@ -142,16 +165,16 @@
 </section>
 
 <!-- Brands Section -->
-<section class="py-12 border-b border-gray-100">
-  <div class="max-w-7xl mx-auto px-6">
-    <p class="text-center text-sm text-gray-400 uppercase tracking-wider mb-8">
+<section class="py-8 sm:py-12 border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <p class="text-center text-xs sm:text-sm text-gray-400 uppercase tracking-wider mb-6 sm:mb-8">
       Powering next-gen commerce brands
     </p>
-    <div class="flex flex-wrap justify-center items-center gap-12">
+    <div class="flex flex-wrap justify-center items-center gap-6 sm:gap-8 lg:gap-12">
       @for (brand of brands; track brand) {
       <div class="flex items-center gap-2 text-gray-400 hover:text-gray-600 transition-colors">
-        <i class="fas fa-check-circle"></i>
-        <span class="font-medium">{{ brand }}</span>
+        <i class="fas fa-check-circle text-sm sm:text-base"></i>
+        <span class="font-medium text-sm sm:text-base">{{ brand }}</span>
       </div>
       }
     </div>
@@ -159,28 +182,29 @@
 </section>
 
 <!-- Features Section -->
-<section id="features" class="py-24 bg-white">
-  <div class="max-w-7xl mx-auto px-6">
+<section id="features" class="py-16 sm:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
     <!-- Section Header -->
-    <div class="text-center mb-16">
-      <span class="text-blue-600 font-semibold text-sm uppercase tracking-wider">WHY CHOOSE US</span>
-      <h2 class="text-4xl font-bold text-gray-900 mt-3">
-        Everything you need to<br>run your warehouse
+    <div class="text-center mb-10 sm:mb-16">
+      <span class="text-blue-600 font-semibold text-xs sm:text-sm uppercase tracking-wider">WHY CHOOSE US</span>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mt-2 sm:mt-3">
+        Everything you need to<br class="hidden sm:block">run your warehouse
       </h2>
     </div>
 
     <!-- Features Grid -->
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
       @for (feature of features; track feature.title; let i = $index) {
       <div
-        class="group p-8 rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all hover-lift animate__animated animate__fadeInUp"
+        class="group p-5 sm:p-6 lg:p-8 rounded-xl sm:rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all hover-lift animate__animated animate__fadeInUp"
         [style.animation-delay]="(i * 0.1) + 's'">
         <div
-          class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 transition-colors">
-          <i class="fas {{ feature.icon }} text-blue-600 text-xl group-hover:text-white transition-colors"></i>
+          class="w-10 sm:w-12 h-10 sm:h-12 bg-blue-100 rounded-lg sm:rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-blue-600 transition-colors">
+          <i
+            class="fas {{ feature.icon }} text-blue-600 text-lg sm:text-xl group-hover:text-white transition-colors"></i>
         </div>
-        <h3 class="text-xl font-bold text-gray-900 mb-3">{{ feature.title }}</h3>
-        <p class="text-gray-600 leading-relaxed">{{ feature.description }}</p>
+        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">{{ feature.title }}</h3>
+        <p class="text-sm sm:text-base text-gray-600 leading-relaxed">{{ feature.description }}</p>
       </div>
       }
     </div>
@@ -188,27 +212,27 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-24 bg-gray-900 relative overflow-hidden">
+<section class="py-16 sm:py-24 bg-gray-900 relative overflow-hidden">
   <div class="absolute inset-0 opacity-10">
-    <div class="absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-500 rounded-full blur-3xl"></div>
+    <div class="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-blue-500 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-purple-500 rounded-full blur-3xl"></div>
   </div>
 
-  <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-    <h2 class="text-4xl font-bold text-white mb-6">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">
       Ready to optimize your operations?
     </h2>
-    <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
+    <p class="text-gray-400 text-sm sm:text-base lg:text-lg mb-8 sm:mb-10 max-w-2xl mx-auto">
       Join thousands of businesses that trust us to keep their operations running smoothly. Start your 14-day free trial
       today.
     </p>
-    <div class="flex flex-wrap justify-center gap-4">
+    <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
       <a routerLink="/register"
-        class="bg-white hover:bg-gray-100 text-gray-900 px-8 py-3.5 rounded-lg font-semibold transition-all hover-lift">
+        class="bg-white hover:bg-gray-100 text-gray-900 px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg font-semibold transition-all hover-lift">
         Get Started for Free
       </a>
       <a routerLink="/demo"
-        class="border border-gray-600 hover:border-white text-white px-8 py-3.5 rounded-lg font-semibold transition-all flex items-center gap-2">
+        class="border border-gray-600 hover:border-white text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg font-semibold transition-all flex items-center justify-center gap-2">
         Schedule a Demo
         <i class="fas fa-arrow-right"></i>
       </a>
@@ -217,67 +241,67 @@
 </section>
 
 <!-- Footer -->
-<footer class="bg-gray-50 py-16">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid md:grid-cols-5 gap-12 mb-12">
+<footer class="bg-gray-50 py-10 sm:py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-8 sm:gap-12 mb-8 sm:mb-12">
       <!-- Brand -->
-      <div class="md:col-span-2">
+      <div class="col-span-2">
         <a routerLink="/" class="flex items-center gap-2 mb-4">
           <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <i class="fas fa-cube text-white text-lg"></i>
           </div>
-          <span class="text-xl font-bold text-gray-900">InventorySaaS</span>
+          <span class="text-lg sm:text-xl font-bold text-gray-900">InventorySaaS</span>
         </a>
-        <p class="text-gray-500 text-sm mb-4 max-w-xs">
+        <p class="text-gray-500 text-xs sm:text-sm mb-4 max-w-xs">
           Making inventory management painless, intelligent, and scalable for modern businesses.
         </p>
-        <div class="flex gap-4">
+        <div class="flex gap-3">
           <a href="#"
-            class="w-10 h-10 bg-gray-200 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors group">
-            <i class="fab fa-facebook-f text-gray-600 group-hover:text-white"></i>
+            class="w-9 sm:w-10 h-9 sm:h-10 bg-gray-200 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors group">
+            <i class="fab fa-facebook-f text-gray-600 group-hover:text-white text-sm"></i>
           </a>
           <a href="#"
-            class="w-10 h-10 bg-gray-200 hover:bg-blue-400 rounded-full flex items-center justify-center transition-colors group">
-            <i class="fab fa-twitter text-gray-600 group-hover:text-white"></i>
+            class="w-9 sm:w-10 h-9 sm:h-10 bg-gray-200 hover:bg-blue-400 rounded-full flex items-center justify-center transition-colors group">
+            <i class="fab fa-twitter text-gray-600 group-hover:text-white text-sm"></i>
           </a>
           <a href="#"
-            class="w-10 h-10 bg-gray-200 hover:bg-gray-800 rounded-full flex items-center justify-center transition-colors group">
-            <i class="fab fa-github text-gray-600 group-hover:text-white"></i>
+            class="w-9 sm:w-10 h-9 sm:h-10 bg-gray-200 hover:bg-gray-800 rounded-full flex items-center justify-center transition-colors group">
+            <i class="fab fa-github text-gray-600 group-hover:text-white text-sm"></i>
           </a>
         </div>
       </div>
 
       <!-- Links -->
       <div>
-        <h4 class="font-semibold text-gray-900 mb-4">Product</h4>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-sm">Features</a></li>
-          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-sm">Integrations</a></li>
-          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-sm">Pricing</a></li>
+        <h4 class="font-semibold text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base">Product</h4>
+        <ul class="space-y-2 sm:space-y-3">
+          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">Features</a></li>
+          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">Integrations</a></li>
+          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">Pricing</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 class="font-semibold text-gray-900 mb-4">Support</h4>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-sm">Documentation</a></li>
-          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-sm">API Status</a></li>
-          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-sm">Contact</a></li>
+        <h4 class="font-semibold text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base">Support</h4>
+        <ul class="space-y-2 sm:space-y-3">
+          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">Documentation</a></li>
+          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">API Status</a></li>
+          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">Contact</a></li>
         </ul>
       </div>
 
       <div>
-        <h4 class="font-semibold text-gray-900 mb-4">Legal</h4>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-sm">Privacy</a></li>
-          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-sm">Terms</a></li>
+        <h4 class="font-semibold text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base">Legal</h4>
+        <ul class="space-y-2 sm:space-y-3">
+          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">Privacy</a></li>
+          <li><a href="#" class="text-gray-500 hover:text-blue-600 text-xs sm:text-sm">Terms</a></li>
         </ul>
       </div>
     </div>
 
     <!-- Copyright -->
-    <div class="pt-8 border-t border-gray-200 text-center">
-      <p class="text-gray-400 text-sm">
+    <div class="pt-6 sm:pt-8 border-t border-gray-200 text-center">
+      <p class="text-gray-400 text-xs sm:text-sm">
         © 2026 InventorySaaS, Inc. All rights reserved.
       </p>
     </div>

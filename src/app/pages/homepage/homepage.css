@@ -18,6 +18,8 @@
     box-shadow:
         0 25px 50px -12px rgba(0, 0, 0, 0.15),
         -20px 20px 40px -20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
 }
 
 .dashboard-3d:hover {
@@ -25,6 +27,18 @@
     box-shadow:
         0 35px 60px -15px rgba(0, 0, 0, 0.2),
         -30px 30px 50px -25px rgba(0, 0, 0, 0.15);
+}
+
+/* Remove 3D on mobile for better UX */
+@media (max-width: 1024px) {
+    .dashboard-3d {
+        transform: none;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    }
+
+    .dashboard-3d:hover {
+        transform: translateY(-4px);
+    }
 }
 
 /* Floating cards with 3D effect */
@@ -52,6 +66,18 @@
 
     50% {
         transform: translateZ(30px) translateY(-10px);
+    }
+}
+
+/* Reduce motion on mobile */
+@media (max-width: 640px) {
+    .floating-card {
+        animation: none;
+        transform: none;
+    }
+
+    .floating-card:hover {
+        transform: scale(1.02);
     }
 }
 
@@ -115,8 +141,16 @@
             transparent);
     transition: left 0.7s ease;
     pointer-events: none;
+    z-index: 10;
 }
 
 .dashboard-3d:hover::before {
     left: 100%;
+}
+
+/* Disable shine on touch devices */
+@media (hover: none) {
+    .dashboard-3d::before {
+        display: none;
+    }
 }

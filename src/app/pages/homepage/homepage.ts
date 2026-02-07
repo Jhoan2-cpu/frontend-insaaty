@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
     styleUrl: './homepage.css'
 })
 export class Homepage {
+    mobileMenuOpen = false;
+
     features = [
         {
             icon: 'fa-chart-line',
