@@ -1,37 +1,51 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-homepage',
     standalone: true,
-    imports: [CommonModule, RouterLink],
+    imports: [CommonModule, RouterLink, TranslateModule],
     templateUrl: './homepage.html',
     styleUrl: './homepage.css'
 })
 export class Homepage {
     mobileMenuOpen = false;
+    currentLang = 'es';
+
+    constructor(private translate: TranslateService) {
+        // Establecer español como idioma por defecto
+        this.translate.setDefaultLang('es');
+        this.translate.use('es');
+        this.currentLang = this.translate.currentLang || 'es';
+    }
+
+    switchLanguage(lang: string) {
+        this.translate.use(lang);
+        this.currentLang = lang;
+    }
 
     features = [
         {
             icon: 'fa-chart-line',
-            title: 'Real-time Analytics',
-            description: 'Gain deep insights into your inventory performance. Track sales velocity, profit margins, and forecast demand with AI-powered precision.'
+            titleKey: 'FEATURES.ANALYTICS_TITLE',
+            descKey: 'FEATURES.ANALYTICS_DESC'
         },
         {
             icon: 'fa-robot',
-            title: 'Automated Workflows',
-            description: 'Set triggers for low stock alerts and auto-generate purchase orders.'
+            titleKey: 'FEATURES.WORKFLOWS_TITLE',
+            descKey: 'FEATURES.WORKFLOWS_DESC'
         },
         {
             icon: 'fa-warehouse',
-            title: 'Multi-warehouse Sync',
-            description: 'Synchronize stock across unlimited locations instantly.'
+            titleKey: 'FEATURES.WAREHOUSE_TITLE',
+            descKey: 'FEATURES.WAREHOUSE_DESC'
         },
         {
             icon: 'fa-plug',
-            title: 'Seamless Integrations',
-            description: 'Connect with Shopify, Amazon, WooCommerce, and more in just a few clicks.'
+            titleKey: 'FEATURES.INTEGRATIONS_TITLE',
+            descKey: 'FEATURES.INTEGRATIONS_DESC'
         }
     ];
 

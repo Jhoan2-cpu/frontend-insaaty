@@ -1,0 +1,71 @@
+{
+    "NAV": {
+        "FEATURES": "Características",
+        "SOLUTIONS": "Soluciones",
+        "PRICING": "Precios",
+        "LOGIN": "Iniciar Sesión",
+        "GET_STARTED": "Comenzar"
+    },
+    "HERO": {
+        "BADGE": "Ahora con Pronóstico 5.0",
+        "TITLE_1": "Controla tu inventario",
+        "TITLE_2": "con precisión",
+        "TITLE_HIGHLIGHT": "absoluta",
+        "DESCRIPTION": "Elimina los faltantes y el exceso de stock para siempre. Nuestra plataforma inteligente te brinda visibilidad en tiempo real y flujos de trabajo automatizados para escalar tu negocio sin esfuerzo.",
+        "CTA_TRIAL": "Prueba Gratuita",
+        "CTA_DEMO": "Ver Demo",
+        "TRUST": "Confiado por más de",
+        "TRUST_SUFFIX": "gerentes"
+    },
+    "DASHBOARD_PREVIEW": {
+        "TITLE": "Resumen de Ingresos",
+        "PERIOD": "Últimos 7 días",
+        "REVENUE": "Ingresos",
+        "GROWTH": "Crecimiento",
+        "ORDERS": "Pedidos",
+        "LOW_STOCK": "STOCK BAJO",
+        "ITEMS": "Artículos"
+    },
+    "BRANDS": {
+        "TITLE": "Impulsando marcas de comercio de última generación"
+    },
+    "FEATURES": {
+        "SECTION_LABEL": "POR QUÉ ELEGIRNOS",
+        "SECTION_TITLE_1": "Todo lo que necesitas para",
+        "SECTION_TITLE_2": "gestionar tu almacén",
+        "ANALYTICS_TITLE": "Analítica en Tiempo Real",
+        "ANALYTICS_DESC": "Obtén información profunda sobre el rendimiento de tu inventario. Rastrea la velocidad de ventas, márgenes de ganancia y pronostica la demanda con precisión impulsada por IA.",
+        "WORKFLOWS_TITLE": "Flujos Automatizados",
+        "WORKFLOWS_DESC": "Configura alertas de stock bajo y genera órdenes de compra automáticamente.",
+        "WAREHOUSE_TITLE": "Sincronización Multi-almacén",
+        "WAREHOUSE_DESC": "Sincroniza el stock en ubicaciones ilimitadas al instante.",
+        "INTEGRATIONS_TITLE": "Integraciones Perfectas",
+        "INTEGRATIONS_DESC": "Conéctate con Shopify, Amazon, WooCommerce y más en solo unos clics."
+    },
+    "CTA": {
+        "TITLE": "¿Listo para optimizar tus operaciones?",
+        "DESCRIPTION": "Únete a miles de empresas que confían en nosotros para mantener sus operaciones funcionando sin problemas. Comienza tu prueba gratuita de 14 días hoy.",
+        "BUTTON_START": "Comenzar Gratis",
+        "BUTTON_DEMO": "Programar Demo"
+    },
+    "FOOTER": {
+        "TAGLINE": "Haciendo que la gestión de inventario sea sencilla, inteligente y escalable para negocios modernos.",
+        "PRODUCT": "Producto",
+        "FEATURES": "Características",
+        "INTEGRATIONS": "Integraciones",
+        "PRICING": "Precios",
+        "SUPPORT": "Soporte",
+        "DOCUMENTATION": "Documentación",
+        "API_STATUS": "Estado del API",
+        "CONTACT": "Contacto",
+        "LEGAL": "Legal",
+        "PRIVACY": "Privacidad",
+        "TERMS": "Términos",
+        "COPYRIGHT": "© 2026 InventorySaaS, Inc. Todos los derechos reservados."
+    },
+    "COMMON": {
+        "LANGUAGE": "Idioma",
+        "SPANISH": "Español",
+        "ENGLISH": "English"
+    }
+}

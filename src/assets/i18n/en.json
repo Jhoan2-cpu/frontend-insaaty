@@ -1,0 +1,71 @@
+{
+    "NAV": {
+        "FEATURES": "Features",
+        "SOLUTIONS": "Solutions",
+        "PRICING": "Pricing",
+        "LOGIN": "Log In",
+        "GET_STARTED": "Get Started"
+    },
+    "HERO": {
+        "BADGE": "Now with Forecasting 5.0",
+        "TITLE_1": "Control inventory",
+        "TITLE_2": "with precision",
+        "TITLE_HIGHLIGHT": "absolute",
+        "DESCRIPTION": "Eliminate stockouts and overstocking forever. Our intelligent platform gives you real-time visibility and automated workflows to scale your business effortlessly.",
+        "CTA_TRIAL": "Start Free Trial",
+        "CTA_DEMO": "Watch Demo",
+        "TRUST": "Trusted by",
+        "TRUST_SUFFIX": "managers"
+    },
+    "DASHBOARD_PREVIEW": {
+        "TITLE": "Revenue Overview",
+        "PERIOD": "Last 7 days",
+        "REVENUE": "Revenue",
+        "GROWTH": "Growth",
+        "ORDERS": "Orders",
+        "LOW_STOCK": "LOW STOCK",
+        "ITEMS": "Items"
+    },
+    "BRANDS": {
+        "TITLE": "Powering next-gen commerce brands"
+    },
+    "FEATURES": {
+        "SECTION_LABEL": "WHY CHOOSE US",
+        "SECTION_TITLE_1": "Everything you need to",
+        "SECTION_TITLE_2": "run your warehouse",
+        "ANALYTICS_TITLE": "Real-time Analytics",
+        "ANALYTICS_DESC": "Gain deep insights into your inventory performance. Track sales velocity, profit margins, and forecast demand with AI-powered precision.",
+        "WORKFLOWS_TITLE": "Automated Workflows",
+        "WORKFLOWS_DESC": "Set triggers for low stock alerts and auto-generate purchase orders.",
+        "WAREHOUSE_TITLE": "Multi-warehouse Sync",
+        "WAREHOUSE_DESC": "Synchronize stock across unlimited locations instantly.",
+        "INTEGRATIONS_TITLE": "Seamless Integrations",
+        "INTEGRATIONS_DESC": "Connect with Shopify, Amazon, WooCommerce, and more in just a few clicks."
+    },
+    "CTA": {
+        "TITLE": "Ready to optimize your operations?",
+        "DESCRIPTION": "Join thousands of businesses that trust us to keep their operations running smoothly. Start your 14-day free trial today.",
+        "BUTTON_START": "Get Started for Free",
+        "BUTTON_DEMO": "Schedule a Demo"
+    },
+    "FOOTER": {
+        "TAGLINE": "Making inventory management painless, intelligent, and scalable for modern businesses.",
+        "PRODUCT": "Product",
+        "FEATURES": "Features",
+        "INTEGRATIONS": "Integrations",
+        "PRICING": "Pricing",
+        "SUPPORT": "Support",
+        "DOCUMENTATION": "Documentation",
+        "API_STATUS": "API Status",
+        "CONTACT": "Contact",
+        "LEGAL": "Legal",
+        "PRIVACY": "Privacy",
+        "TERMS": "Terms",
+        "COPYRIGHT": "© 2026 InventorySaaS, Inc. All rights reserved."
+    },
+    "COMMON": {
+        "LANGUAGE": "Language",
+        "SPANISH": "Español",
+        "ENGLISH": "English"
+    }
+}
