@@ -1,0 +1,49 @@
+/* Register Page Styles */
+
+:host {
+    display: block;
+}
+
+/* Smooth focus transitions */
+input:focus {
+    transition: all 0.2s ease;
+}
+
+/* Button loading state */
+button:disabled {
+    cursor: not-allowed;
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+    accent-color: #2563eb;
+}
+
+/* Input autofill styling */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #1f2937 !important;
+}
+
+/* Social button pulse on hover */
+.social-btn:hover svg {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+/* Progress bar animation */
+@keyframes progressPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.progress-bar {
+    animation: progressPulse 2s infinite;
+}
