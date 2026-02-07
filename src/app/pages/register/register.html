@@ -1,192 +1,199 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex flex-col">
-    <!-- Header -->
-    <header class="py-4 px-4 sm:px-6 animate__animated animate__fadeIn">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <!-- Logo -->
-            <a routerLink="/" class="flex items-center gap-2">
-                <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-cube text-white text-lg"></i>
-                </div>
-                <span class="text-lg font-bold text-gray-900">Inventory SaaS</span>
-            </a>
+<div class="min-h-screen flex">
+    <!-- Left Panel - Info (Same as Login) -->
+    <div
+        class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-100 via-blue-50 to-white p-8 lg:p-12 flex-col justify-between animate__animated animate__fadeIn">
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                <i class="fas fa-cube text-white text-lg"></i>
+            </div>
+            <span class="text-lg font-bold text-gray-900">Inventory SaaS</span>
+        </div>
 
-            <!-- Login Link -->
-            <div class="flex items-center gap-4">
-                <span class="text-gray-500 text-sm hidden sm:inline">{{ 'REGISTER.HAVE_ACCOUNT' | translate }}</span>
-                <a routerLink="/login"
-                    class="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors">
-                    {{ 'REGISTER.LOG_IN' | translate }}
-                </a>
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col justify-center max-w-lg">
+            <h1
+                class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight animate__animated animate__fadeInUp">
+                {{ 'AUTH.LEFT_TITLE' | translate }}
+            </h1>
+            <p class="text-gray-600 text-lg mb-8 animate__animated animate__fadeInUp animate__delay-1s">
+                {{ 'AUTH.LEFT_SUBTITLE' | translate }}
+            </p>
+
+            <!-- Dashboard Preview -->
+            <div
+                class="relative rounded-xl overflow-hidden shadow-2xl mb-8 animate__animated animate__fadeInUp animate__delay-1s">
+                <div class="bg-gray-900 rounded-xl p-4">
+                    <!-- Mock Dashboard Header -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div class="text-gray-500 text-xs">Dashboard</div>
+                    </div>
+                    <!-- Mock Chart -->
+                    <div class="bg-gray-800 rounded-lg p-4 h-32 flex items-end gap-1">
+                        <div class="flex-1 bg-blue-600/50 rounded-t h-[40%]"></div>
+                        <div class="flex-1 bg-blue-600/50 rounded-t h-[60%]"></div>
+                        <div class="flex-1 bg-blue-600/50 rounded-t h-[45%]"></div>
+                        <div class="flex-1 bg-blue-600/50 rounded-t h-[80%]"></div>
+                        <div class="flex-1 bg-blue-600/50 rounded-t h-[65%]"></div>
+                        <div class="flex-1 bg-blue-600/50 rounded-t h-[90%]"></div>
+                        <div class="flex-1 bg-blue-600 rounded-t h-[100%]"></div>
+                    </div>
+                </div>
+                <!-- Growth Badge -->
+                <div
+                    class="absolute bottom-6 right-6 bg-white rounded-xl shadow-lg px-4 py-3 flex items-center gap-3 animate__animated animate__bounceIn animate__delay-2s">
+                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-line text-green-600"></i>
+                    </div>
+                    <div>
+                        <div class="text-gray-500 text-xs uppercase tracking-wide">{{ 'AUTH.GROWTH' | translate }}</div>
+                        <div class="text-green-600 font-bold">+24% {{ 'AUTH.THIS_WEEK' | translate }}</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </header>
 
-    <!-- Main Content -->
-    <div class="flex-1 flex items-center justify-center p-4 sm:p-6">
-        <div class="w-full max-w-lg">
-            <!-- Register Card -->
-            <div
-                class="bg-white rounded-2xl shadow-xl shadow-gray-200/50 p-6 sm:p-8 animate__animated animate__fadeInUp animate__fast">
-                <!-- Step Indicator -->
-                <div class="flex items-center justify-between mb-6">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs font-semibold text-gray-500 tracking-wider">{{ 'REGISTER.STEP_1' |
-                            translate }}</span>
-                        <div class="w-24 h-1.5 bg-blue-600 rounded-full"></div>
-                    </div>
-                    <span class="text-sm text-gray-400">{{ 'REGISTER.ACCOUNT_DETAILS' | translate }}</span>
-                </div>
-
-                <!-- Title -->
-                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{{ 'REGISTER.TITLE' | translate }}</h1>
-                <p class="text-gray-500 mb-6">{{ 'REGISTER.SUBTITLE' | translate }}</p>
-
-                <!-- Social Login Buttons -->
-                <div class="grid grid-cols-2 gap-3 mb-6">
-                    <button (click)="registerWithGoogle()"
-                        class="flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all font-medium text-gray-700 hover:scale-[1.02] active:scale-[0.98]">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24">
-                            <path fill="#4285F4"
-                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                            <path fill="#34A853"
-                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                            <path fill="#FBBC05"
-                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                            <path fill="#EA4335"
-                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-                        </svg>
-                        {{ 'REGISTER.GOOGLE' | translate }}
-                    </button>
-                    <button (click)="registerWithMicrosoft()"
-                        class="flex items-center justify-center gap-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all font-medium text-gray-700 hover:scale-[1.02] active:scale-[0.98]">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24">
-                            <path fill="#F25022" d="M1 1h10v10H1z" />
-                            <path fill="#00A4EF" d="M1 13h10v10H1z" />
-                            <path fill="#7FBA00" d="M13 1h10v10H13z" />
-                            <path fill="#FFB900" d="M13 13h10v10H13z" />
-                        </svg>
-                        {{ 'REGISTER.MICROSOFT' | translate }}
-                    </button>
-                </div>
-
-                <!-- Divider -->
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="flex-1 h-px bg-gray-200"></div>
-                    <span class="text-xs text-gray-400 font-medium tracking-wider">{{ 'REGISTER.OR_CONTINUE_EMAIL' |
-                        translate }}</span>
-                    <div class="flex-1 h-px bg-gray-200"></div>
-                </div>
-
-                <!-- Register Form -->
-                <form (ngSubmit)="onSubmit()">
-                    <!-- Business Name Field -->
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
-                            {{ 'REGISTER.BUSINESS_NAME' | translate }}
-                        </label>
-                        <div class="relative">
-                            <input type="text" [(ngModel)]="businessName" name="businessName"
-                                (blur)="businessTouched = true"
-                                [placeholder]="'REGISTER.BUSINESS_PLACEHOLDER' | translate"
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all pr-10"
-                                [class.border-red-500]="businessError" [class.border-gray-300]="!businessError">
-                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                                <i class="fas fa-building"></i>
-                            </span>
-                        </div>
-                        @if (businessError) {
-                        <p class="text-red-500 text-xs mt-1 animate__animated animate__shakeX animate__faster">{{
-                            businessError | translate }}</p>
-                        }
-                    </div>
-
-                    <!-- Work Email Field -->
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
-                            {{ 'REGISTER.WORK_EMAIL' | translate }}
-                        </label>
-                        <div class="relative">
-                            <input type="email" [(ngModel)]="email" name="email" (blur)="emailTouched = true"
-                                [placeholder]="'REGISTER.EMAIL_PLACEHOLDER' | translate"
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all pr-10"
-                                [class.border-red-500]="emailError" [class.border-gray-300]="!emailError">
-                            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-                                <i class="fas fa-envelope"></i>
-                            </span>
-                        </div>
-                        @if (emailError) {
-                        <p class="text-red-500 text-xs mt-1 animate__animated animate__shakeX animate__faster">{{
-                            emailError | translate }}</p>
-                        }
-                    </div>
-
-                    <!-- Password Field -->
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
-                            {{ 'REGISTER.PASSWORD' | translate }}
-                        </label>
-                        <div class="relative">
-                            <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password"
-                                (blur)="passwordTouched = true"
-                                [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate"
-                                class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all pr-10"
-                                [class.border-red-500]="passwordError" [class.border-gray-300]="!passwordError">
-                            <button type="button" (click)="togglePassword()"
-                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
-                                <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
-                            </button>
-                        </div>
-                        <p class="text-gray-400 text-xs mt-1">{{ 'REGISTER.PASSWORD_HINT' | translate }}</p>
-                        @if (passwordError) {
-                        <p class="text-red-500 text-xs mt-1 animate__animated animate__shakeX animate__faster">{{
-                            passwordError | translate }}</p>
-                        }
-                    </div>
-
-                    <!-- Terms Checkbox -->
-                    <div class="mb-6">
-                        <label class="flex items-start gap-3 cursor-pointer group">
-                            <input type="checkbox" [(ngModel)]="termsAccepted" name="terms"
-                                (change)="termsTouched = true"
-                                class="mt-0.5 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer">
-                            <span class="text-sm text-gray-600">
-                                {{ 'REGISTER.TERMS_AGREE' | translate }}
-                                <a href="#" class="text-blue-600 hover:text-blue-700 font-medium">{{
-                                    'REGISTER.TERMS_OF_SERVICE' | translate }}</a>
-                                {{ 'REGISTER.AND' | translate }}
-                                <a href="#" class="text-blue-600 hover:text-blue-700 font-medium">{{
-                                    'REGISTER.PRIVACY_POLICY' | translate }}</a>.
-                            </span>
-                        </label>
-                        @if (termsError) {
-                        <p class="text-red-500 text-xs mt-1 animate__animated animate__shakeX animate__faster">{{
-                            termsError | translate }}</p>
-                        }
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" [disabled]="isLoading"
-                        class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3.5 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
-                        @if (isLoading) {
-                        <i class="fas fa-spinner fa-spin"></i>
-                        } @else {
-                        {{ 'REGISTER.SUBMIT' | translate }}
-                        <i class="fas fa-arrow-right"></i>
-                        }
-                    </button>
-                </form>
-
-                <!-- Security Badge -->
-                <div class="flex items-center justify-center gap-2 mt-6 text-gray-400 text-sm">
-                    <i class="fas fa-lock text-green-500"></i>
-                    <span>{{ 'REGISTER.SECURE_DATA' | translate }}</span>
-                </div>
+        <!-- Testimonial -->
+        <div class="animate__animated animate__fadeIn animate__delay-2s">
+            <div class="flex gap-1 mb-3">
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
+                <i class="fas fa-star text-yellow-400"></i>
             </div>
+            <p class="text-gray-700 italic mb-2">"{{ 'AUTH.TESTIMONIAL_TEXT' | translate }}"</p>
+            <p class="text-gray-500 text-sm">— {{ 'AUTH.TESTIMONIAL_AUTHOR' | translate }}</p>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="py-6 text-center animate__animated animate__fadeIn animate__delay-1s">
-        <p class="text-gray-400 text-sm">{{ 'REGISTER.COPYRIGHT' | translate }}</p>
-    </footer>
+    <!-- Right Panel - Register Form -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-8 lg:p-12 bg-white overflow-y-auto">
+        <div class="w-full max-w-md animate__animated animate__fadeInRight animate__fast py-8">
+            <!-- Mobile Logo -->
+            <div class="lg:hidden flex items-center gap-2 mb-8">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-cube text-white text-lg"></i>
+                </div>
+                <span class="text-lg font-bold text-gray-900">Inventory SaaS</span>
+            </div>
+
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{{ 'REGISTER.TITLE' | translate }}</h2>
+            <p class="text-gray-500 mb-8">{{ 'REGISTER.SUBTITLE' | translate }}</p>
+
+            <!-- Register Form -->
+            <form (ngSubmit)="onSubmit()">
+                <!-- Business Name -->
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        {{ 'REGISTER.BUSINESS_NAME' | translate }}
+                    </label>
+                    <div class="relative">
+                        <input type="text" [(ngModel)]="businessName" name="businessName"
+                            (blur)="businessTouched = true" [placeholder]="'REGISTER.BUSINESS_PLACEHOLDER' | translate"
+                            class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                            [class.border-red-500]="businessError">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                            <i class="fas fa-building"></i>
+                        </span>
+                    </div>
+                    @if (businessError) {
+                    <p class="text-red-500 text-xs mt-1.5 animate__animated animate__shakeX animate__faster">{{
+                        businessError | translate }}</p>
+                    }
+                </div>
+
+                <!-- Email Field -->
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        {{ 'REGISTER.WORK_EMAIL' | translate }}
+                    </label>
+                    <div class="relative">
+                        <input type="email" [(ngModel)]="email" name="email" (blur)="emailTouched = true"
+                            [placeholder]="'REGISTER.EMAIL_PLACEHOLDER' | translate"
+                            class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                            [class.border-red-500]="emailError">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </div>
+                    @if (emailError) {
+                    <p class="text-red-500 text-xs mt-1.5 animate__animated animate__shakeX animate__faster">{{
+                        emailError | translate }}</p>
+                    }
+                </div>
+
+                <!-- Password Field -->
+                <div class="mb-5">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        {{ 'REGISTER.PASSWORD' | translate }}
+                    </label>
+                    <div class="relative">
+                        <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password"
+                            (blur)="passwordTouched = true" [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate"
+                            class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                            [class.border-red-500]="passwordError">
+                        <button type="button" (click)="togglePassword()"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+                            <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-400 text-xs mt-1.5">{{ 'REGISTER.PASSWORD_HINT' | translate }}</p>
+                    @if (passwordError) {
+                    <p class="text-red-500 text-xs mt-1.5 animate__animated animate__shakeX animate__faster">{{
+                        passwordError | translate }}</p>
+                    }
+                </div>
+
+                <!-- Terms Checkbox -->
+                <div class="mb-6">
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" [(ngModel)]="termsAccepted" name="terms" (change)="termsTouched = true"
+                            class="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer">
+                        <span class="text-sm text-gray-600 leading-snug">
+                            {{ 'REGISTER.TERMS_AGREE' | translate }}
+                            <a href="#" class="text-blue-600 hover:text-blue-700 font-medium">{{
+                                'REGISTER.TERMS_OF_SERVICE' | translate }}</a>
+                            {{ 'REGISTER.AND' | translate }}
+                            <a href="#" class="text-blue-600 hover:text-blue-700 font-medium">{{
+                                'REGISTER.PRIVACY_POLICY' | translate }}</a>.
+                        </span>
+                    </label>
+                    @if (termsError) {
+                    <p class="text-red-500 text-xs mt-1.5 animate__animated animate__shakeX animate__faster">{{
+                        termsError | translate }}</p>
+                    }
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" [disabled]="isLoading"
+                    class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-4 px-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
+                    @if (isLoading) {
+                    <i class="fas fa-spinner fa-spin"></i>
+                    } @else {
+                    {{ 'REGISTER.SUBMIT' | translate }}
+                    }
+                </button>
+            </form>
+
+            <!-- Login Link -->
+            <p class="text-center text-gray-600 mt-8">
+                {{ 'REGISTER.HAVE_ACCOUNT' | translate }}
+                <a routerLink="/login" class="text-blue-600 hover:text-blue-700 font-semibold ml-1">
+                    {{ 'REGISTER.LOG_IN' | translate }}
+                </a>
+            </p>
+
+            <!-- Security Badge -->
+            <div class="flex items-center justify-center gap-2 mt-8 text-gray-400 text-xs">
+                <i class="fas fa-lock text-green-500"></i>
+                <span>{{ 'REGISTER.SECURE_DATA' | translate }}</span>
+            </div>
+        </div>
+    </div>
 </div>
