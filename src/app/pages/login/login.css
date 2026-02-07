@@ -1,0 +1,57 @@
+/* Login Page Styles */
+
+:host {
+    display: block;
+}
+
+/* Smooth focus transitions */
+input:focus {
+    transition: all 0.2s ease;
+}
+
+/* Button loading state */
+button:disabled {
+    cursor: not-allowed;
+}
+
+/* Card hover effect */
+.login-card {
+    transition: box-shadow 0.3s ease;
+}
+
+.login-card:hover {
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
+}
+
+/* Social button hover */
+.social-btn:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+}
+
+/* Input autofill styling */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #1f2937 !important;
+}
+
+/* Error shake animation */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    75% {
+        transform: translateX(4px);
+    }
+}
+
+.error-shake {
+    animation: shake 0.3s ease-in-out;
+}

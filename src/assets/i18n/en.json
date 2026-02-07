@@ -109,6 +109,28 @@
         "TERMS": "Terms",
         "COPYRIGHT": "© 2026 InventorySaaS, Inc. All rights reserved."
     },
+    "LOGIN": {
+        "TITLE": "Welcome back",
+        "SUBTITLE": "Manage your business assets efficiently.",
+        "EMAIL_LABEL": "Email address",
+        "EMAIL_PLACEHOLDER": "name@company.com",
+        "PASSWORD_LABEL": "Password",
+        "PASSWORD_PLACEHOLDER": "••••••••",
+        "FORGOT_PASSWORD": "Forgot password?",
+        "SUBMIT": "Sign in",
+        "OR_CONTINUE": "Or continue with",
+        "GOOGLE": "Google",
+        "SSO": "SSO",
+        "NO_ACCOUNT": "Don't have an account?",
+        "SIGN_UP": "Sign up for free",
+        "PRIVACY_POLICY": "Privacy Policy",
+        "TERMS_SERVICE": "Terms of Service",
+        "CONTACT_SUPPORT": "Contact Support",
+        "EMAIL_REQUIRED": "Email is required",
+        "EMAIL_INVALID": "Enter a valid email",
+        "PASSWORD_REQUIRED": "Password is required",
+        "PASSWORD_MIN": "Minimum 6 characters"
+    },
     "COMMON": {
         "LANGUAGE": "Language",
         "SPANISH": "Español",
