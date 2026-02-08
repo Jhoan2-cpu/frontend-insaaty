@@ -258,6 +258,42 @@
             "DELETE": "Eliminar"
         }
     },
+    "ORDERS": {
+        "TITLE": "Pedidos",
+        "DESCRIPTION": "Gestiona los pedidos de tu negocio",
+        "NEW_ORDER": "Nuevo Pedido",
+        "ORDER_NUMBER": "Número de Pedido",
+        "STATUS": "Estado",
+        "TOTAL": "Total",
+        "CREATED_AT": "Fecha",
+        "NOTES": "Notas",
+        "CANCEL": "Cancelar",
+        "SAVE": "Guardar Pedido",
+        "SAVING": "Guardando...",
+        "ALL": "Todos",
+        "LOADING": "Cargando pedidos...",
+        "NO_ORDERS": "No hay pedidos",
+        "STATUSES": {
+            "PENDING": "Pendiente",
+            "PROCESSING": "Procesando",
+            "COMPLETED": "Completado",
+            "CANCELLED": "Cancelado"
+        },
+        "FORM": {
+            "SELECT_PRODUCT": "Seleccionar Producto",
+            "QUANTITY": "Cantidad",
+            "ADD_ITEM": "Agregar Producto",
+            "PRODUCT": "Producto",
+            "UNIT_PRICE": "Precio Unitario",
+            "SUBTOTAL": "Subtotal",
+            "REMOVE": "Eliminar"
+        },
+        "ACTIONS": {
+            "TITLE": "Acciones",
+            "VIEW_DETAIL": "Ver Detalle",
+            "CHANGE_STATUS": "Cambiar Estado"
+        }
+    },
     "PRODUCT_MODAL": {
         "TITLE_NEW": "Nuevo Producto",
         "TITLE_EDIT": "Editar Producto",

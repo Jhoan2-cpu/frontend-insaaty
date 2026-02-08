@@ -258,6 +258,42 @@
             "DELETE": "Delete"
         }
     },
+    "ORDERS": {
+        "TITLE": "Orders",
+        "DESCRIPTION": "Manage your business orders",
+        "NEW_ORDER": "New Order",
+        "ORDER_NUMBER": "Order Number",
+        "STATUS": "Status",
+        "TOTAL": "Total",
+        "CREATED_AT": "Date",
+        "NOTES": "Notes",
+        "CANCEL": "Cancel",
+        "SAVE": "Save Order",
+        "SAVING": "Saving...",
+        "ALL": "All",
+        "LOADING": "Loading orders...",
+        "NO_ORDERS": "No orders",
+        "STATUSES": {
+            "PENDING": "Pending",
+            "PROCESSING": "Processing",
+            "COMPLETED": "Completed",
+            "CANCELLED": "Cancelled"
+        },
+        "FORM": {
+            "SELECT_PRODUCT": "Select Product",
+            "QUANTITY": "Quantity",
+            "ADD_ITEM": "Add Product",
+            "PRODUCT": "Product",
+            "UNIT_PRICE": "Unit Price",
+            "SUBTOTAL": "Subtotal",
+            "REMOVE": "Remove"
+        },
+        "ACTIONS": {
+            "TITLE": "Actions",
+            "VIEW_DETAIL": "View Detail",
+            "CHANGE_STATUS": "Change Status"
+        }
+    },
     "PRODUCT_MODAL": {
         "TITLE_NEW": "New Product",
         "TITLE_EDIT": "Edit Product",
