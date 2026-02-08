@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -40,7 +40,8 @@ export class Inventory implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -82,13 +83,21 @@ export class Inventory implements OnInit {
         this.totalProducts = response.meta.total;
         this.totalPages = response.meta.totalPages;
         this.isLoading = false;
+
         console.log('Products loaded:', this.products.length);
+        console.log('isLoading set to:', this.isLoading);
+        console.log('Products array:', this.products);
+
+        // Forzar detección de cambios
+        this.cdr.detectChanges();
+        console.log('Change detection triggered');
       },
       error: (error) => {
         console.error('❌ Error loading products:', error);
         console.error('Error status:', error.status);
         console.error('Error message:', error.message);
         this.isLoading = false;
+        this.cdr.detectChanges();
       }
     });
   }

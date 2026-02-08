@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export interface Product {
     id: number;
@@ -60,7 +61,16 @@ export class ProductService {
             if (filters.limit) params = params.set('limit', filters.limit.toString());
         }
 
-        return this.http.get<ProductsResponse>(this.apiUrl, { params });
+        const url = `${this.apiUrl}?${params.toString()}`;
+        console.log('🌐 ProductService - Making HTTP GET request to:', url);
+        console.log('📋 Params:', params.toString());
+
+        return this.http.get<ProductsResponse>(this.apiUrl, { params }).pipe(
+            tap({
+                next: (response) => console.log('✅ ProductService - HTTP Response received:', response),
+                error: (error) => console.error('❌ ProductService - HTTP Error:', error)
+            })
+        );
     }
 
     getProduct(id: number): Observable<Product> {

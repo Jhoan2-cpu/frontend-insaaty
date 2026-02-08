@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart, registerables } from 'chart.js';
 
@@ -9,7 +8,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslateModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -49,10 +48,6 @@ export class Dashboard implements OnInit, AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       this.initChart();
     }
-  }
-
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   initChart() {
@@ -143,9 +138,5 @@ export class Dashboard implements OnInit, AfterViewInit {
       case 'TRANSFER': return 'fa-exchange-alt text-purple-500';
       default: return 'fa-circle';
     }
-  }
-
-  logout() {
-    this.authService.logout();
   }
 }
