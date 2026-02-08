@@ -243,16 +243,48 @@
         "STOCK": "Stock",
         "COST_PRICE": "Precio de Costo",
         "SALE_PRICE": "Precio de Venta",
-        "ACTIONS": "Acciones",
         "LOADING": "Cargando productos...",
         "NO_PRODUCTS": "No hay productos disponibles",
         "OUT_OF_STOCK_LABEL": "Agotado",
-        "LOW_STOCK_LABEL": "Bajo",
+        "LOW_STOCK_LABEL": "Stock Bajo",
         "SHOWING": "Mostrando",
         "TO": "a",
         "OF": "de",
         "RESULTS": "resultados",
         "PREVIOUS": "Anterior",
-        "NEXT": "Siguiente"
+        "NEXT": "Siguiente",
+        "ACTIONS": {
+            "EDIT": "Editar",
+            "DELETE": "Eliminar"
+        }
+    },
+    "PRODUCT_MODAL": {
+        "TITLE_NEW": "Nuevo Producto",
+        "TITLE_EDIT": "Editar Producto",
+        "SKU": "SKU",
+        "NAME": "Nombre del Producto",
+        "DESCRIPTION": "Descripción",
+        "PRICE_COST": "Precio de Costo",
+        "PRICE_SALE": "Precio de Venta",
+        "MIN_STOCK": "Stock Mínimo",
+        "CURRENT_STOCK": "Stock Actual",
+        "STOCK_READONLY": "El stock solo se modifica mediante movimientos de inventario",
+        "MARGIN": "Margen",
+        "SAVE": "Guardar",
+        "CANCEL": "Cancelar",
+        "SAVING": "Guardando...",
+        "VALIDATION": {
+            "SKU_REQUIRED": "El SKU es obligatorio",
+            "NAME_REQUIRED": "El nombre es obligatorio (mínimo 3 caracteres)",
+            "PRICE_REQUIRED": "El precio es obligatorio",
+            "PRICE_INVALID": "El precio debe ser mayor a 0"
+        }
+    },
+    "CONFIRM_DIALOG": {
+        "DELETE_PRODUCT_TITLE": "¿Eliminar Producto?",
+        "DELETE_PRODUCT_MESSAGE": "Esta acción no se puede deshacer. El producto será eliminado permanentemente.",
+        "CONFIRM": "Sí, eliminar",
+        "CANCEL": "Cancelar",
+        "DELETE": "Eliminar"
     }
 }

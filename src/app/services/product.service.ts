@@ -74,10 +74,12 @@ export class ProductService {
     }
 
     getProduct(id: number): Observable<Product> {
+        console.log(`🔍 ProductService - Getting product ${id}`);
         return this.http.get<Product>(`${this.apiUrl}/${id}`);
     }
 
     createProduct(dto: CreateProductDto): Observable<Product> {
+        console.log('➕ ProductService - Creating product:', dto);
         return this.http.post<Product>(this.apiUrl, dto);
     }
 

@@ -4,17 +4,24 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductService, Product } from '../../services/product.service';
+import { ToastService } from '../../services/toast.service';
+import { ProductModalComponent } from '../../components/product-modal/product-modal.component';
+import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, TranslateModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    TranslateModule,
+    ProductModalComponent,
+    ConfirmDialogComponent,],
   templateUrl: './inventory.html',
   styleUrl: './inventory.css'
 })
 export class Inventory implements OnInit {
   products: Product[] = [];
-  isLoading = false;
 
   // Filtros
   currentFilter = 'all';
@@ -34,6 +41,17 @@ export class Inventory implements OnInit {
   pageSize = 10;
   totalProducts = 0;
   totalPages = 0;
+  isLoading = true;
+
+  // Modales
+  isProductModalOpen = false;
+  selectedProductId?: number;
+  isConfirmDialogOpen = false;
+  productToDelete?: number;
+  isDeletingProduct = false;
+
+  // Menú de acciones
+  openMenuId: number | null = null;
 
   // Para template
   Math = Math;
@@ -41,6 +59,7 @@ export class Inventory implements OnInit {
   constructor(
     private productService: ProductService,
     private translate: TranslateService,
+    private toastService: ToastService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -152,5 +171,69 @@ export class Inventory implements OnInit {
     }
 
     return pages;
+  }
+
+  // Modal methods
+  openNewProductModal() {
+    this.selectedProductId = undefined;
+    this.isProductModalOpen = true;
+  }
+
+  openEditProductModal(productId: number) {
+    this.selectedProductId = productId;
+    this.isProductModalOpen = true;
+    this.openMenuId = null;
+  }
+
+  closeProductModal() {
+    this.isProductModalOpen = false;
+    this.selectedProductId = undefined;
+  }
+
+  onProductSaved(product: Product) {
+    this.closeProductModal();
+    this.loadProducts(); // Refrescar tabla
+  }
+
+  // Delete methods
+  confirmDelete(productId: number) {
+    this.productToDelete = productId;
+    this.isConfirmDialogOpen = true;
+    this.openMenuId = null;
+  }
+
+  cancelDelete() {
+    this.isConfirmDialogOpen = false;
+    this.productToDelete = undefined;
+  }
+
+  executeDelete() {
+    if (!this.productToDelete) return;
+
+    this.isDeletingProduct = true;
+    this.productService.deleteProduct(this.productToDelete).subscribe({
+      next: () => {
+        this.toastService.success('Producto eliminado correctamente');
+        this.isConfirmDialogOpen = false;
+        this.productToDelete = undefined;
+        this.isDeletingProduct = false;
+        this.loadProducts(); // Refrescar tabla
+      },
+      error: (error) => {
+        console.error('Error deleting product:', error);
+        this.toastService.error('Error al eliminar el producto');
+        this.isDeletingProduct = false;
+      }
+    });
+  }
+
+  // Actions menu
+  toggleMenu(productId: number, event: Event) {
+    event.stopPropagation();
+    this.openMenuId = this.openMenuId === productId ? null : productId;
+  }
+
+  closeMenu() {
+    this.openMenuId = null;
   }
 }

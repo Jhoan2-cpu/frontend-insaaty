@@ -243,16 +243,48 @@
         "STOCK": "Stock",
         "COST_PRICE": "Cost Price",
         "SALE_PRICE": "Sale Price",
-        "ACTIONS": "Actions",
         "LOADING": "Loading products...",
         "NO_PRODUCTS": "No products available",
-        "OUT_OF_STOCK_LABEL": "Out",
-        "LOW_STOCK_LABEL": "Low",
+        "OUT_OF_STOCK_LABEL": "Out of Stock",
+        "LOW_STOCK_LABEL": "Low Stock",
         "SHOWING": "Showing",
         "TO": "to",
         "OF": "of",
         "RESULTS": "results",
         "PREVIOUS": "Previous",
-        "NEXT": "Next"
+        "NEXT": "Next",
+        "ACTIONS": {
+            "EDIT": "Edit",
+            "DELETE": "Delete"
+        }
+    },
+    "PRODUCT_MODAL": {
+        "TITLE_NEW": "New Product",
+        "TITLE_EDIT": "Edit Product",
+        "SKU": "SKU",
+        "NAME": "Product Name",
+        "DESCRIPTION": "Description",
+        "PRICE_COST": "Cost Price",
+        "PRICE_SALE": "Sale Price",
+        "MIN_STOCK": "Minimum Stock",
+        "CURRENT_STOCK": "Current Stock",
+        "STOCK_READONLY": "Stock can only be modified through inventory movements",
+        "MARGIN": "Margin",
+        "SAVE": "Save",
+        "CANCEL": "Cancel",
+        "SAVING": "Saving...",
+        "VALIDATION": {
+            "SKU_REQUIRED": "SKU is required",
+            "NAME_REQUIRED": "Name is required (minimum 3 characters)",
+            "PRICE_REQUIRED": "Price is required",
+            "PRICE_INVALID": "Price must be greater than 0"
+        }
+    },
+    "CONFIRM_DIALOG": {
+        "DELETE_PRODUCT_TITLE": "Delete Product?",
+        "DELETE_PRODUCT_MESSAGE": "This action cannot be undone. The product will be permanently deleted.",
+        "CONFIRM": "Yes, delete",
+        "CANCEL": "Cancel",
+        "DELETE": "Delete"
     }
 }

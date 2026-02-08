@@ -15,13 +15,15 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900">{{ 'INVENTORY.TITLE' | translate }}</h1>
-                    <p class="text-gray-500 mt-1">{{ 'INVENTORY.DESCRIPTION' | translate }}</p>
+                    <p class="mt-2 text-sm text-gray-600">{{ 'INVENTORY.DESCRIPTION' | translate }}</p>
                 </div>
-                <button
-                    class="bg-blue-600 text-white px-4 py-2.5 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2">
-                    <i class="fas fa-plus"></i>
-                    {{ 'INVENTORY.NEW_PRODUCT' | translate }}
-                </button>
+                <div>
+                    <button (click)="openNewProductModal()"
+                        class="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm hover:shadow-md font-medium">
+                        <i class="fas fa-plus"></i>
+                        <span>{{ 'INVENTORY.NEW_PRODUCT' | translate }}</span>
+                    </button>
+                </div>
             </div>
 
             <!-- Filters & Search -->
@@ -133,11 +135,31 @@
                                 <td class="px-6 py-4 text-sm font-bold text-gray-900">
                                     ${{product.price_sale.toFixed(2)}}
                                 </td>
-                                <td class="px-6 py-4 text-right">
-                                    <button
+                                <td class="px-6 py-4 text-right relative">
+                                    <button (click)="toggleMenu(product.id, $event)"
                                         class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition-colors">
                                         <i class="fas fa-ellipsis-v"></i>
                                     </button>
+
+                                    <!-- Dropdown Menu -->
+                                    @if (openMenuId === product.id) {
+                                    <div
+                                        class="absolute right-8 top-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+                                        <div class="py-1">
+                                            <button (click)="openEditProductModal(product.id)"
+                                                class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                                <i class="fas fa-edit text-blue-600 w-4"></i>
+                                                <span>{{ 'INVENTORY.ACTIONS.EDIT' | translate }}</span>
+                                            </button>
+                                            <hr class="border-gray-100">
+                                            <button (click)="confirmDelete(product.id)"
+                                                class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                                <i class="fas fa-trash w-4"></i>
+                                                <span>{{ 'INVENTORY.ACTIONS.DELETE' | translate }}</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    }
                                 </td>
                             </tr>
                             }
@@ -189,3 +211,15 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Nuevo/Editar Producto -->
+<app-product-modal [isOpen]="isProductModalOpen" [productId]="selectedProductId" (close)="closeProductModal()"
+    (saved)="onProductSaved($event)">
+</app-product-modal>
+
+<!-- Confirm Delete Dialog -->
+<app-confirm-dialog [isOpen]="isConfirmDialogOpen" [title]="'CONFIRM_DIALOG.DELETE_PRODUCT_TITLE' | translate"
+    [message]="'CONFIRM_DIALOG.DELETE_PRODUCT_MESSAGE' | translate" [confirmText]="'CONFIRM_DIALOG.DELETE' | translate"
+    [cancelText]="'CONFIRM_DIALOG.CANCEL' | translate" [isLoading]="isDeletingProduct" (confirm)="executeDelete()"
+    (cancel)="cancelDelete()">
+</app-confirm-dialog>

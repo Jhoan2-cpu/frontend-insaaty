@@ -1,0 +1,147 @@
+<!-- Backdrop -->
+<div *ngIf="isOpen" (click)="onClose()"
+    class="fixed inset-0 bg-black bg-opacity-50 z-40 animate__animated animate__fadeIn animate__faster">
+</div>
+
+<!-- Modal -->
+<div *ngIf="isOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 animate__animated animate__fadeIn">
+    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+        (click)="$event.stopPropagation()">
+
+        <!-- Header -->
+        <div
+            class="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-xl">
+            <h2 class="text-2xl font-bold text-gray-900">
+                {{ (isEditMode ? 'PRODUCT_MODAL.TITLE_EDIT' : 'PRODUCT_MODAL.TITLE_NEW') | translate }}
+            </h2>
+            <button (click)="onClose()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="p-6 space-y-4">
+
+            <!-- SKU y Nombre -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        {{ 'PRODUCT_MODAL.SKU' | translate }} <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" formControlName="sku" [readonly]="isEditMode"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        [class.border-red-500]="f['sku'].invalid && f['sku'].touched" placeholder="PRD-001">
+                    <p *ngIf="f['sku'].invalid && f['sku'].touched" class="text-red-500 text-sm mt-1">
+                        {{ 'PRODUCT_MODAL.VALIDATION.SKU_REQUIRED' | translate }}
+                    </p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        {{ 'PRODUCT_MODAL.NAME' | translate }} <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" formControlName="name"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        [class.border-red-500]="f['name'].invalid && f['name'].touched" placeholder="Wireless Mouse">
+                    <p *ngIf="f['name'].invalid && f['name'].touched" class="text-red-500 text-sm mt-1">
+                        {{ 'PRODUCT_MODAL.VALIDATION.NAME_REQUIRED' | translate }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Descripción -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                    {{ 'PRODUCT_MODAL.DESCRIPTION' | translate }}
+                </label>
+                <textarea formControlName="description" rows="3"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                    placeholder="Ergonomic wireless mouse with USB receiver"></textarea>
+            </div>
+
+            <!-- Precios -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        {{ 'PRODUCT_MODAL.PRICE_COST' | translate }} <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                        <input type="number" step="0.01" formControlName="price_cost"
+                            class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            [class.border-red-500]="f['price_cost'].invalid && f['price_cost'].touched"
+                            placeholder="0.00">
+                    </div>
+                    <p *ngIf="f['price_cost'].invalid && f['price_cost'].touched" class="text-red-500 text-sm mt-1">
+                        {{ 'PRODUCT_MODAL.VALIDATION.PRICE_REQUIRED' | translate }}
+                    </p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        {{ 'PRODUCT_MODAL.PRICE_SALE' | translate }} <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
+                        <input type="number" step="0.01" formControlName="price_sale"
+                            class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            [class.border-red-500]="f['price_sale'].invalid && f['price_sale'].touched"
+                            placeholder="0.00">
+                    </div>
+                    <p *ngIf="f['price_sale'].invalid && f['price_sale'].touched" class="text-red-500 text-sm mt-1">
+                        {{ 'PRODUCT_MODAL.VALIDATION.PRICE_REQUIRED' | translate }}
+                    </p>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        {{ 'PRODUCT_MODAL.MARGIN' | translate }}
+                    </label>
+                    <div class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-center">
+                        <span class="text-lg font-bold" [class.text-green-600]="margin > 0"
+                            [class.text-gray-400]="margin <= 0">
+                            {{margin | number:'1.0-1'}}%
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stock -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        {{ 'PRODUCT_MODAL.MIN_STOCK' | translate }} <span class="text-red-500">*</span>
+                    </label>
+                    <input type="number" formControlName="min_stock"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        placeholder="10">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        {{ 'PRODUCT_MODAL.CURRENT_STOCK' | translate }} <span class="text-red-500">*</span>
+                    </label>
+                    <input type="number" formControlName="current_stock" [readonly]="isEditMode"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        [class.bg-gray-100]="isEditMode" placeholder="0">
+                    <p *ngIf="isEditMode" class="text-xs text-gray-500 mt-1">
+                        {{ 'PRODUCT_MODAL.STOCK_READONLY' | translate }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-200">
+                <button type="button" (click)="onClose()" [disabled]="isLoading"
+                    class="px-6 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium disabled:opacity-50">
+                    {{ 'PRODUCT_MODAL.CANCEL' | translate }}
+                </button>
+                <button type="submit" [disabled]="isLoading || productForm.invalid"
+                    class="px-6 py-2.5 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
+                    <span>{{ (isLoading ? 'PRODUCT_MODAL.SAVING' : 'PRODUCT_MODAL.SAVE') | translate }}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
