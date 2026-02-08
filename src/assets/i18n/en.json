@@ -227,5 +227,32 @@
         "LANGUAGE": "Language",
         "SPANISH": "Español",
         "ENGLISH": "English"
+    },
+    "INVENTORY": {
+        "BREADCRUMB": "Inventory",
+        "TITLE": "Product Management",
+        "DESCRIPTION": "Manage your product inventory, track stock levels, and update pricing across all sales channels.",
+        "NEW_PRODUCT": "New Product",
+        "ALL_PRODUCTS": "All Products",
+        "LOW_STOCK": "Low Stock",
+        "OUT_OF_STOCK": "Out of Stock",
+        "IN_STOCK": "In Stock",
+        "SEARCH_PLACEHOLDER": "Search by Name, SKU or Tag...",
+        "SKU": "SKU",
+        "NAME": "Name",
+        "STOCK": "Stock",
+        "COST_PRICE": "Cost Price",
+        "SALE_PRICE": "Sale Price",
+        "ACTIONS": "Actions",
+        "LOADING": "Loading products...",
+        "NO_PRODUCTS": "No products available",
+        "OUT_OF_STOCK_LABEL": "Out",
+        "LOW_STOCK_LABEL": "Low",
+        "SHOWING": "Showing",
+        "TO": "to",
+        "OF": "of",
+        "RESULTS": "results",
+        "PREVIOUS": "Previous",
+        "NEXT": "Next"
     }
 }

@@ -227,5 +227,32 @@
         "LANGUAGE": "Idioma",
         "SPANISH": "Español",
         "ENGLISH": "English"
+    },
+    "INVENTORY": {
+        "BREADCRUMB": "Inventario",
+        "TITLE": "Gestión de Productos",
+        "DESCRIPTION": "Administra tu inventario de productos, rastrea niveles de stock y actualiza precios en todos los canales de venta.",
+        "NEW_PRODUCT": "Nuevo Producto",
+        "ALL_PRODUCTS": "Todos los Productos",
+        "LOW_STOCK": "Stock Bajo",
+        "OUT_OF_STOCK": "Sin Stock",
+        "IN_STOCK": "En Stock",
+        "SEARCH_PLACEHOLDER": "Buscar por Nombre, SKU o Etiqueta...",
+        "SKU": "SKU",
+        "NAME": "Nombre",
+        "STOCK": "Stock",
+        "COST_PRICE": "Precio de Costo",
+        "SALE_PRICE": "Precio de Venta",
+        "ACTIONS": "Acciones",
+        "LOADING": "Cargando productos...",
+        "NO_PRODUCTS": "No hay productos disponibles",
+        "OUT_OF_STOCK_LABEL": "Agotado",
+        "LOW_STOCK_LABEL": "Bajo",
+        "SHOWING": "Mostrando",
+        "TO": "a",
+        "OF": "de",
+        "RESULTS": "resultados",
+        "PREVIOUS": "Anterior",
+        "NEXT": "Siguiente"
     }
 }
