@@ -3,7 +3,6 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart, registerables } from 'chart.js';
-import { AuthService } from '../../services/auth.service';
 
 Chart.register(...registerables);
 
@@ -17,8 +16,6 @@ Chart.register(...registerables);
 export class Dashboard implements OnInit, AfterViewInit {
   @ViewChild('volumeChart') volumeChart!: ElementRef;
 
-  isSidebarOpen = true;
-  currentLang = 'es';
   chart: any;
 
   // Mock data for low stock
@@ -39,7 +36,6 @@ export class Dashboard implements OnInit, AfterViewInit {
 
   constructor(
     private translate: TranslateService,
-    private authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -47,7 +43,6 @@ export class Dashboard implements OnInit, AfterViewInit {
     this.translate.setDefaultLang('es');
     const savedLang = this.translate.currentLang || 'es';
     this.translate.use(savedLang);
-    this.currentLang = savedLang;
   }
 
   ngAfterViewInit() {

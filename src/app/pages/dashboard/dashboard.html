@@ -1,410 +1,260 @@
-<div class="flex h-screen bg-gray-50 overflow-hidden">
+<!-- Dashboard Content (without sidebar) -->
+<div class="p-4 sm:p-6 lg:p-8">
+    <div class="max-w-7xl mx-auto space-y-6">
 
-    <!-- Sidebar -->
-    <aside
-        class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 lg:translate-x-0 lg:static lg:inset-0 flex flex-col"
-        [class.-translate-x-full]="!isSidebarOpen">
-
-        <!-- Logo -->
-        <div class="h-16 flex items-center px-6 border-b border-gray-100">
-            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
-                <i class="fas fa-cube text-white text-sm"></i>
-            </div>
-            <div>
-                <h1 class="font-bold text-gray-900 leading-tight">Nexus Stock</h1>
-                <p class="text-[10px] text-gray-400 uppercase tracking-wider">Enterprise Edition</p>
-            </div>
+        <!-- Welcome Message -->
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-1">Dashboard Overview</h2>
+            <p class="text-gray-500">{{ 'DASHBOARD.WELCOME' | translate }}</p>
         </div>
 
-        <!-- Navigation -->
-        <div class="flex-1 overflow-y-auto py-6 px-4 space-y-8 custom-scrollbar">
-            <!-- Main Menu -->
-            <div>
-                <h3 class="px-2 text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
-                    {{ 'SIDEBAR.MAIN_MENU' | translate }}
-                </h3>
-                <nav class="space-y-1">
-                    <a routerLink="/dashboard"
-                        class="flex items-center px-4 py-2.5 bg-blue-50 text-blue-600 rounded-lg group transition-colors font-medium">
-                        <i class="fas fa-th-large w-5 text-center mr-3"></i>
-                        {{ 'SIDEBAR.DASHBOARD' | translate }}
-                    </a>
-                    <a routerLink="/inventory"
-                        class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
-                        <i class="fas fa-box w-5 text-center mr-3 text-gray-400 group-hover:text-gray-500"></i>
-                        {{ 'SIDEBAR.INVENTORY' | translate }}
-                    </a>
-                    <a routerLink="/orders"
-                        class="flex items-center justify-between px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
-                        <div class="flex items-center">
-                            <i
-                                class="fas fa-shopping-cart w-5 text-center mr-3 text-gray-400 group-hover:text-gray-500"></i>
-                            {{ 'SIDEBAR.ORDERS' | translate }}
-                        </div>
-                        <span class="bg-orange-100 text-orange-600 py-0.5 px-2 rounded-full text-xs font-bold">3</span>
-                    </a>
-                    <a routerLink="/reports"
-                        class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
-                        <i class="fas fa-chart-bar w-5 text-center mr-3 text-gray-400 group-hover:text-gray-500"></i>
-                        {{ 'SIDEBAR.REPORTS' | translate }}
-                    </a>
-                </nav>
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <!-- Card 1 -->
+            <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.TOTAL_PRODUCTS' | translate
+                            }}</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-1">1,240</h3>
+                    </div>
+                    <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                </div>
+                <div class="flex items-center text-xs">
+                    <span class="text-green-600 font-bold flex items-center bg-green-50 px-1.5 py-0.5 rounded">
+                        <i class="fas fa-arrow-up mr-1"></i> 2.5%
+                    </span>
+                    <span class="text-gray-400 ml-2">{{ 'DASHBOARD.FROM_LAST_MONTH' | translate }}</span>
+                </div>
             </div>
 
-            <!-- Administration -->
-            <div>
-                <h3 class="px-2 text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
-                    {{ 'SIDEBAR.ADMINISTRATION' | translate }}
-                </h3>
-                <nav class="space-y-1">
-                    <a routerLink="/suppliers"
-                        class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
-                        <i class="fas fa-users w-5 text-center mr-3 text-gray-400 group-hover:text-gray-500"></i>
-                        {{ 'SIDEBAR.SUPPLIERS' | translate }}
-                    </a>
-                    <a routerLink="/settings"
-                        class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
-                        <i class="fas fa-cog w-5 text-center mr-3 text-gray-400 group-hover:text-gray-500"></i>
-                        {{ 'SIDEBAR.SETTINGS' | translate }}
-                    </a>
-                </nav>
-            </div>
-        </div>
-
-        <!-- User Profile (Bottom) -->
-        <div class="p-4 border-t border-gray-100">
+            <!-- Card 2 -->
             <div
-                class="bg-gray-50 rounded-xl p-3 flex items-center gap-3 hover:bg-gray-100 transition-colors cursor-pointer">
-                <div
-                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden border-2 border-white shadow-sm">
-                    <img src="https://ui-avatars.com/api/?name=Thomas+Anderson&background=random" alt="Avatar"
-                        class="w-full h-full object-cover">
+                class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
+                <div class="absolute right-0 top-0 w-16 h-16 bg-red-50 rounded-bl-full -mr-8 -mt-8"></div>
+                <div class="flex justify-between items-start mb-4 relative">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.LOW_STOCK_ITEMS' | translate
+                            }}</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-1">12</h3>
+                    </div>
+                    <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center text-red-500">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
                 </div>
-                <div class="flex-1 min-w-0">
-                    <p class="text-sm font-semibold text-gray-900 truncate">Thomas Anderson</p>
-                    <p class="text-xs text-gray-500 truncate">{{ 'DASHBOARD.ADMIN_MANAGER' | translate }}</p>
+                <div class="flex items-center gap-2">
+                    <span class="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded">
+                        {{ 'DASHBOARD.ACTION_NEEDED' | translate }}
+                    </span>
+                    <span class="text-gray-400 text-xs">{{ 'DASHBOARD.RESTOCK_SOON' | translate }}</span>
                 </div>
-                <i (click)="logout()"
-                    class="fas fa-sign-out-alt text-gray-400 hover:text-red-500 transition-colors"></i>
             </div>
 
-            <!-- Current Tenant Badge -->
-            <div
-                class="mt-4 bg-blue-600 rounded-lg p-3 text-white flex items-center gap-3 shadow-lg shadow-blue-600/20">
-                <div class="w-8 h-8 bg-white/20 rounded flex items-center justify-center backdrop-blur-sm">
-                    <i class="fas fa-building"></i>
+            <!-- Card 3 -->
+            <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.INVENTORY_VALUE' | translate
+                            }}</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-1">$45,230</h3>
+                    </div>
+                    <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center text-green-600">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
                 </div>
-                <div>
-                    <div class="text-[10px] text-blue-100 uppercase tracking-wider">{{ 'DASHBOARD.CURRENT_TENANT' |
-                        translate }}</div>
-                    <div class="font-bold text-sm">Warehouse A</div>
+                <div class="flex items-center text-xs">
+                    <span class="text-green-600 font-bold flex items-center bg-green-50 px-1.5 py-0.5 rounded">
+                        <i class="fas fa-arrow-up mr-1"></i> 1.2%
+                    </span>
+                    <span class="text-gray-400 ml-2">{{ 'DASHBOARD.VALUATION_INCREASE' | translate }}</span>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.TODAYS_TRANSACTIONS' |
+                            translate }}</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-1">156</h3>
+                    </div>
+                    <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                </div>
+                <div class="flex items-center text-xs">
+                    <span class="text-green-600 font-bold flex items-center bg-green-50 px-1.5 py-0.5 rounded">
+                        <i class="fas fa-arrow-up mr-1"></i> 12%
+                    </span>
+                    <span class="text-gray-400 ml-2">{{ 'DASHBOARD.VS_YESTERDAY' | translate }}</span>
                 </div>
             </div>
         </div>
-    </aside>
 
-    <!-- Mobile Overlay -->
-    <div class="fixed inset-0 bg-gray-900/50 z-40 lg:hidden transition-opacity duration-300"
-        [class.opacity-0]="!isSidebarOpen" [class.pointer-events-none]="!isSidebarOpen" (click)="toggleSidebar()">
-    </div>
+        <!-- Main Grid (Chart + Low Stock) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
+            <!-- Chart Section -->
+            <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-gray-900">{{ 'DASHBOARD.TRANSACTION_VOLUME' |
+                            translate }}</h3>
+                        <p class="text-sm text-gray-500">{{ 'DASHBOARD.VOLUME_SUBTITLE' | translate }}</p>
+                    </div>
+                    <div class="flex bg-gray-100 rounded-lg p-1 self-start">
+                        <button class="px-3 py-1 bg-white text-gray-900 text-xs font-medium rounded shadow-sm">{{
+                            'DASHBOARD.DAYS_30' | translate }}</button>
+                        <button class="px-3 py-1 text-gray-500 text-xs font-medium hover:text-gray-700">{{
+                            'DASHBOARD.DAYS_90' | translate }}</button>
+                    </div>
+                </div>
 
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col overflow-hidden">
-        <!-- Header -->
-        <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center gap-4">
-                <button (click)="toggleSidebar()" class="lg:hidden text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-                <h2 class="text-lg font-bold text-gray-900 hidden sm:block">Dashboard Overview</h2>
+                <div class="h-64 w-full relative">
+                    <canvas #volumeChart></canvas>
+
+                    <!-- Floating Badge Mockup -->
+                    <div
+                        class="absolute top-1/3 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded pointer-events-none shadow-lg animate__animated animate__fadeInUp">
+                        182 Sales
+                        <div class="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-4 text-xs text-gray-400 px-2">
+                    <span>Aug 1</span>
+                    <span>Aug 5</span>
+                    <span>Aug 10</span>
+                    <span>Aug 15</span>
+                    <span>Aug 20</span>
+                    <span>Aug 25</span>
+                    <span>Aug 30</span>
+                </div>
             </div>
 
-            <div class="flex items-center gap-4">
-                <!-- Search -->
-                <div class="hidden md:flex relative">
-                    <input type="text" [placeholder]="'DASHBOARD.SEARCH_PLACEHOLDER' | translate"
-                        class="w-64 pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
-                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <!-- Low Stock Alert -->
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 flex flex-col">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-bold text-gray-900">{{ 'DASHBOARD.LOW_STOCK_ALERT' | translate }}
+                    </h3>
+                    <button class="text-blue-600 text-sm font-medium hover:text-blue-700">{{
+                        'DASHBOARD.VIEW_ALL' | translate }}</button>
                 </div>
 
-                <!-- Notification -->
-                <button
-                    class="relative w-10 h-10 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">
-                    <i class="fas fa-bell"></i>
-                    <span
-                        class="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-                </button>
-            </div>
-        </header>
-
-        <!-- Scrollable Content -->
-        <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 custom-scrollbar">
-            <div class="max-w-7xl mx-auto space-y-6">
-
-                <!-- Welcome Message -->
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-900 mb-1">Dashboard Overview</h2>
-                    <p class="text-gray-500">{{ 'DASHBOARD.WELCOME' | translate }}</p>
-                </div>
-
-                <!-- Stats Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                    <!-- Card 1 -->
-                    <div
-                        class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.TOTAL_PRODUCTS' | translate
-                                    }}</p>
-                                <h3 class="text-2xl font-bold text-gray-900 mt-1">1,240</h3>
-                            </div>
-                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600">
-                                <i class="fas fa-cube"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center text-xs">
-                            <span class="text-green-600 font-bold flex items-center bg-green-50 px-1.5 py-0.5 rounded">
-                                <i class="fas fa-arrow-up mr-1"></i> 2.5%
-                            </span>
-                            <span class="text-gray-400 ml-2">{{ 'DASHBOARD.FROM_LAST_MONTH' | translate }}</span>
-                        </div>
-                    </div>
-
-                    <!-- Card 2 -->
-                    <div
-                        class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-                        <div class="absolute right-0 top-0 w-16 h-16 bg-red-50 rounded-bl-full -mr-8 -mt-8"></div>
-                        <div class="flex justify-between items-start mb-4 relative">
-                            <div>
-                                <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.LOW_STOCK_ITEMS' | translate
-                                    }}</p>
-                                <h3 class="text-2xl font-bold text-gray-900 mt-1">12</h3>
-                            </div>
-                            <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center text-red-500">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded">
-                                {{ 'DASHBOARD.ACTION_NEEDED' | translate }}
-                            </span>
-                            <span class="text-gray-400 text-xs">{{ 'DASHBOARD.RESTOCK_SOON' | translate }}</span>
-                        </div>
-                    </div>
-
-                    <!-- Card 3 -->
-                    <div
-                        class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.INVENTORY_VALUE' | translate
-                                    }}</p>
-                                <h3 class="text-2xl font-bold text-gray-900 mt-1">$45,230</h3>
-                            </div>
-                            <div
-                                class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center text-green-600">
-                                <i class="fas fa-dollar-sign"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center text-xs">
-                            <span class="text-green-600 font-bold flex items-center bg-green-50 px-1.5 py-0.5 rounded">
-                                <i class="fas fa-arrow-up mr-1"></i> 1.2%
-                            </span>
-                            <span class="text-gray-400 ml-2">{{ 'DASHBOARD.VALUATION_INCREASE' | translate }}</span>
-                        </div>
-                    </div>
-
-                    <!-- Card 4 -->
-                    <div
-                        class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.TODAYS_TRANSACTIONS' |
-                                    translate }}</p>
-                                <h3 class="text-2xl font-bold text-gray-900 mt-1">156</h3>
-                            </div>
-                            <div
-                                class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600">
-                                <i class="fas fa-exchange-alt"></i>
-                            </div>
-                        </div>
-                        <div class="flex items-center text-xs">
-                            <span class="text-green-600 font-bold flex items-center bg-green-50 px-1.5 py-0.5 rounded">
-                                <i class="fas fa-arrow-up mr-1"></i> 12%
-                            </span>
-                            <span class="text-gray-400 ml-2">{{ 'DASHBOARD.VS_YESTERDAY' | translate }}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Grid (Chart + Low Stock) -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                    <!-- Chart Section -->
-                    <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
-                            <div>
-                                <h3 class="text-lg font-bold text-gray-900">{{ 'DASHBOARD.TRANSACTION_VOLUME' |
-                                    translate }}</h3>
-                                <p class="text-sm text-gray-500">{{ 'DASHBOARD.VOLUME_SUBTITLE' | translate }}</p>
-                            </div>
-                            <div class="flex bg-gray-100 rounded-lg p-1 self-start">
-                                <button
-                                    class="px-3 py-1 bg-white text-gray-900 text-xs font-medium rounded shadow-sm">{{
-                                    'DASHBOARD.DAYS_30' | translate }}</button>
-                                <button class="px-3 py-1 text-gray-500 text-xs font-medium hover:text-gray-700">{{
-                                    'DASHBOARD.DAYS_90' | translate }}</button>
-                            </div>
-                        </div>
-
-                        <div class="h-64 w-full relative">
-                            <canvas #volumeChart></canvas>
-
-                            <!-- Floating Badge Mockup -->
-                            <div
-                                class="absolute top-1/3 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded pointer-events-none shadow-lg animate__animated animate__fadeInUp">
-                                182 Sales
-                                <div
-                                    class="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between mt-4 text-xs text-gray-400 px-2">
-                            <span>Aug 1</span>
-                            <span>Aug 5</span>
-                            <span>Aug 10</span>
-                            <span>Aug 15</span>
-                            <span>Aug 20</span>
-                            <span>Aug 25</span>
-                            <span>Aug 30</span>
-                        </div>
-                    </div>
-
-                    <!-- Low Stock Alert -->
-                    <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 flex flex-col">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-lg font-bold text-gray-900">{{ 'DASHBOARD.LOW_STOCK_ALERT' | translate }}
-                            </h3>
-                            <button class="text-blue-600 text-sm font-medium hover:text-blue-700">{{
-                                'DASHBOARD.VIEW_ALL' | translate }}</button>
-                        </div>
-
-                        <div class="flex-1 overflow-y-auto custom-scrollbar">
-                            <table class="w-full text-left">
-                                <thead>
-                                    <tr class="text-xs text-gray-400 uppercase tracking-wider border-b border-gray-100">
-                                        <th class="pb-3 font-medium">{{ 'DASHBOARD.ITEM_NAME' | translate }}</th>
-                                        <th class="pb-3 font-medium text-center">{{ 'DASHBOARD.QTY' | translate }}</th>
-                                        <th class="pb-3 font-medium text-right">{{ 'DASHBOARD.STATUS' | translate }}
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-50">
-                                    @for (item of lowStockItems; track item.nameKey) {
-                                    <tr class="group hover:bg-gray-50 transition-colors">
-                                        <td class="py-3">
-                                            <div class="flex items-center gap-3">
-                                                <div
-                                                    class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:shadow-sm transition-all">
-                                                    <i class="fas {{ item.icon }}"></i>
-                                                </div>
-                                                <span class="text-sm font-medium text-gray-700">{{ item.nameKey
-                                                    }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-3 text-center font-bold text-gray-900">{{ item.qty }}</td>
-                                        <td class="py-3 text-right">
-                                            <span class="text-[10px] font-bold px-2 py-1 rounded-full uppercase"
-                                                [class.bg-red-100]="item.status === 'CRITICAL'"
-                                                [class.text-red-600]="item.status === 'CRITICAL'"
-                                                [class.bg-orange-100]="item.status === 'LOW'"
-                                                [class.text-orange-600]="item.status === 'LOW'">
-                                                {{ (item.status === 'CRITICAL' ? 'DASHBOARD.CRITICAL' : 'DASHBOARD.LOW')
-                                                | translate }}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <button
-                            class="w-full mt-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
-                            <i class="fas fa-plus mr-2"></i> {{ 'DASHBOARD.CREATE_ORDER' | translate }}
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Recent Transactions -->
-                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                    <div class="p-6 border-b border-gray-200 flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <h3 class="text-lg font-bold text-gray-900">{{ 'DASHBOARD.RECENT_TRANSACTIONS' | translate
-                                }}</h3>
-                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">{{
-                                'DASHBOARD.LATEST_5' | translate }}</span>
-                        </div>
-                        <button
-                            class="text-gray-500 hover:text-gray-700 text-sm font-medium flex items-center gap-2 border border-gray-300 px-3 py-1.5 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all">
-                            <i class="fas fa-filter"></i>
-                            {{ 'DASHBOARD.FILTER' | translate }}
-                        </button>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left bg-white">
-                            <thead class="bg-gray-50/50">
-                                <tr class="text-xs text-gray-500 uppercase tracking-wider">
-                                    <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.TRANSACTION_ID' | translate }}
-                                    </th>
-                                    <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.TYPE' | translate }}</th>
-                                    <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.DATE' | translate }}</th>
-                                    <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.ITEMS' | translate }}</th>
-                                    <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.STATUS' | translate }}</th>
-                                    <th class="px-6 py-4 font-semibold text-right">{{ 'DASHBOARD.ACTION' | translate }}
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-100">
-                                @for (trx of recentTransactions; track trx.id) {
-                                <tr class="hover:bg-gray-50/80 transition-colors">
-                                    <td class="px-6 py-4 font-medium text-gray-900">{{ trx.id }}</td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-2">
-                                            <div
-                                                class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center text-xs">
-                                                <i class="fas" [class]="getIconClass(trx.type)"></i>
-                                            </div>
-                                            <span class="text-sm text-gray-600 font-medium">
-                                                {{ ('DASHBOARD.' + trx.type) | translate }}
-                                            </span>
+                <div class="flex-1 overflow-y-auto custom-scrollbar">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-xs text-gray-400 uppercase tracking-wider border-b border-gray-100">
+                                <th class="pb-3 font-medium">{{ 'DASHBOARD.ITEM_NAME' | translate }}</th>
+                                <th class="pb-3 font-medium text-center">{{ 'DASHBOARD.QTY' | translate }}</th>
+                                <th class="pb-3 font-medium text-right">{{ 'DASHBOARD.STATUS' | translate }}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            @for (item of lowStockItems; track item.nameKey) {
+                            <tr class="group hover:bg-gray-50 transition-colors">
+                                <td class="py-3">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:shadow-sm transition-all">
+                                            <i class="fas {{ item.icon }}"></i>
                                         </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500">{{ trx.date }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900 font-medium">{{ trx.items }}</td>
-                                    <td class="px-6 py-4">
-                                        <span class="text-xs font-bold px-2.5 py-1 rounded-full border"
-                                            [class]="getStatusClass(trx.status)">
-                                            {{ ('DASHBOARD.' + trx.status) | translate }}
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <button
-                                            class="text-gray-400 hover:text-blue-600 transition-colors w-8 h-8 rounded-full hover:bg-blue-50 flex items-center justify-center ml-auto">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                                        <span class="text-sm font-medium text-gray-700">{{ item.nameKey
+                                            }}</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 text-center font-bold text-gray-900">{{ item.qty }}</td>
+                                <td class="py-3 text-right">
+                                    <span class="text-[10px] font-bold px-2 py-1 rounded-full uppercase"
+                                        [class.bg-red-100]="item.status === 'CRITICAL'"
+                                        [class.text-red-600]="item.status === 'CRITICAL'"
+                                        [class.bg-orange-100]="item.status === 'LOW'"
+                                        [class.text-orange-600]="item.status === 'LOW'">
+                                        {{ (item.status === 'CRITICAL' ? 'DASHBOARD.CRITICAL' : 'DASHBOARD.LOW')
+                                        | translate }}
+                                    </span>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
 
+                <button
+                    class="w-full mt-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
+                    <i class="fas fa-plus mr-2"></i> {{ 'DASHBOARD.CREATE_ORDER' | translate }}
+                </button>
             </div>
         </div>
-    </main>
+
+        <!-- Recent Transactions -->
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <h3 class="text-lg font-bold text-gray-900">{{ 'DASHBOARD.RECENT_TRANSACTIONS' | translate
+                        }}</h3>
+                    <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">{{
+                        'DASHBOARD.LATEST_5' | translate }}</span>
+                </div>
+                <button
+                    class="text-gray-500 hover:text-gray-700 text-sm font-medium flex items-center gap-2 border border-gray-300 px-3 py-1.5 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all">
+                    <i class="fas fa-filter"></i>
+                    {{ 'DASHBOARD.FILTER' | translate }}
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left bg-white">
+                    <thead class="bg-gray-50/50">
+                        <tr class="text-xs text-gray-500 uppercase tracking-wider">
+                            <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.TRANSACTION_ID' | translate }}
+                            </th>
+                            <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.TYPE' | translate }}</th>
+                            <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.DATE' | translate }}</th>
+                            <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.ITEMS' | translate }}</th>
+                            <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.STATUS' | translate }}</th>
+                            <th class="px-6 py-4 font-semibold text-right">{{ 'DASHBOARD.ACTION' | translate }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @for (trx of recentTransactions; track trx.id) {
+                        <tr class="hover:bg-gray-50/80 transition-colors">
+                            <td class="px-6 py-4 font-medium text-gray-900">{{ trx.id }}</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded bg-gray-100 flex items-center justify-center text-xs">
+                                        <i class="fas" [class]="getIconClass(trx.type)"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600 font-medium">
+                                        {{ ('DASHBOARD.' + trx.type) | translate }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">{{ trx.date }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900 font-medium">{{ trx.items }}</td>
+                            <td class="px-6 py-4">
+                                <span class="text-xs font-bold px-2.5 py-1 rounded-full border"
+                                    [class]="getStatusClass(trx.status)">
+                                    {{ ('DASHBOARD.' + trx.status) | translate }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <button
+                                    class="text-gray-400 hover:text-blue-600 transition-colors w-8 h-8 rounded-full hover:bg-blue-50 flex items-center justify-center ml-auto">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 </div>

@@ -15,14 +15,19 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/register/register').then(m => m.Register),
     },
     {
-        path: 'dashboard',
-        loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard),
+        path: '',
+        loadComponent: () => import('./components/layout/layout').then(m => m.Layout),
         canActivate: [authGuard],
-    },
-    {
-        path: 'inventory',
-        loadComponent: () => import('./pages/inventory/inventory').then(m => m.Inventory),
-        canActivate: [authGuard],
+        children: [
+            {
+                path: 'dashboard',
+                loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard),
+            },
+            {
+                path: 'inventory',
+                loadComponent: () => import('./pages/inventory/inventory').then(m => m.Inventory),
+            },
+        ]
     },
     {
         path: '**',

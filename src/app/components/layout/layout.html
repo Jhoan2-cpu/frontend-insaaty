@@ -1,0 +1,141 @@
+<div class="flex h-screen bg-gray-50 overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside
+        class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 lg:translate-x-0 lg:static lg:inset-0 flex flex-col"
+        [class.-translate-x-full]="!isSidebarOpen">
+
+        <!-- Logo -->
+        <div class="h-16 flex items-center px-6 border-b border-gray-100">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                <i class="fas fa-cube text-white text-sm"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-gray-900 leading-tight">Nexus Stock</h1>
+                <p class="text-[10px] text-gray-400 uppercase tracking-wider">Enterprise Edition</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="flex-1 overflow-y-auto py-6 px-4 space-y-8 custom-scrollbar">
+            <!-- Main Menu -->
+            <div>
+                <h3 class="px-2 text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+                    {{ 'SIDEBAR.MAIN_MENU' | translate }}
+                </h3>
+                <nav class="space-y-1">
+                    <a routerLink="/dashboard" routerLinkActive="bg-blue-50 text-blue-600"
+                        [routerLinkActiveOptions]="{exact: true}"
+                        class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
+                        <i class="fas fa-th-large w-5 text-center mr-3"></i>
+                        {{ 'SIDEBAR.DASHBOARD' | translate }}
+                    </a>
+                    <a routerLink="/inventory" routerLinkActive="bg-blue-50 text-blue-600"
+                        class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
+                        <i class="fas fa-box w-5 text-center mr-3"></i>
+                        {{ 'SIDEBAR.INVENTORY' | translate }}
+                    </a>
+                    <a routerLink="/orders" routerLinkActive="bg-blue-50 text-blue-600"
+                        class="flex items-center justify-between px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
+                        <div class="flex items-center">
+                            <i class="fas fa-shopping-cart w-5 text-center mr-3"></i>
+                            {{ 'SIDEBAR.ORDERS' | translate }}
+                        </div>
+                        <span class="bg-orange-100 text-orange-600 py-0.5 px-2 rounded-full text-xs font-bold">3</span>
+                    </a>
+                    <a routerLink="/reports" routerLinkActive="bg-blue-50 text-blue-600"
+                        class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
+                        <i class="fas fa-chart-bar w-5 text-center mr-3"></i>
+                        {{ 'SIDEBAR.REPORTS' | translate }}
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Administration -->
+            <div>
+                <h3 class="px-2 text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+                    {{ 'SIDEBAR.ADMINISTRATION' | translate }}
+                </h3>
+                <nav class="space-y-1">
+                    <a routerLink="/suppliers" routerLinkActive="bg-blue-50 text-blue-600"
+                        class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
+                        <i class="fas fa-users w-5 text-center mr-3"></i>
+                        {{ 'SIDEBAR.SUPPLIERS' | translate }}
+                    </a>
+                    <a routerLink="/settings" routerLinkActive="bg-blue-50 text-blue-600"
+                        class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
+                        <i class="fas fa-cog w-5 text-center mr-3"></i>
+                        {{ 'SIDEBAR.SETTINGS' | translate }}
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- User Profile (Bottom) -->
+        <div class="p-4 border-t border-gray-100">
+            <div
+                class="bg-gray-50 rounded-xl p-3 flex items-center gap-3 hover:bg-gray-100 transition-colors cursor-pointer">
+                <div
+                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden border-2 border-white shadow-sm">
+                    <img src="https://ui-avatars.com/api/?name=Thomas+Anderson&background=random" alt="Avatar"
+                        class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-gray-900 truncate">Thomas Anderson</p>
+                    <p class="text-xs text-gray-500 truncate">{{ 'DASHBOARD.ADMIN_MANAGER' | translate }}</p>
+                </div>
+                <i (click)="logout()"
+                    class="fas fa-sign-out-alt text-gray-400 hover:text-red-500 transition-colors"></i>
+            </div>
+
+            <!-- Current Tenant Badge -->
+            <div
+                class="mt-4 bg-blue-600 rounded-lg p-3 text-white flex items-center gap-3 shadow-lg shadow-blue-600/20">
+                <div class="w-8 h-8 bg-white/20 rounded flex items-center justify-center backdrop-blur-sm">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div>
+                    <div class="text-[10px] text-blue-100 uppercase tracking-wider">{{ 'DASHBOARD.CURRENT_TENANT' |
+                        translate }}</div>
+                    <div class="font-bold text-sm">Warehouse A</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Overlay -->
+    <div class="fixed inset-0 bg-gray-900/50 z-40 lg:hidden transition-opacity duration-300"
+        [class.opacity-0]="!isSidebarOpen" [class.pointer-events-none]="!isSidebarOpen" (click)="toggleSidebar()">
+    </div>
+
+
+    <!-- Main Content (Router Outlet) -->
+    <main class="flex-1 overflow-y-auto">
+        <!-- Top Bar -->
+        <div class="sticky top-0 z-30 bg-white border-b border-gray-200 h-16 flex items-center px-4 sm:px-6 lg:px-8">
+            <button (click)="toggleSidebar()" class="lg:hidden text-gray-600 hover:text-gray-900 mr-4">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+
+            <!-- Language Selector -->
+            <div class="ml-auto flex items-center gap-2">
+                <button (click)="switchLanguage('es')" [class.bg-blue-600]="currentLang === 'es'"
+                    [class.text-white]="currentLang === 'es'" [class.text-gray-600]="currentLang !== 'es'"
+                    class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100">
+                    ES
+                </button>
+                <button (click)="switchLanguage('en')" [class.bg-blue-600]="currentLang === 'en'"
+                    [class.text-white]="currentLang === 'en'" [class.text-gray-600]="currentLang !== 'en'"
+                    class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100">
+                    EN
+                </button>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="animate__animated animate__fadeIn">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+
+</div>
