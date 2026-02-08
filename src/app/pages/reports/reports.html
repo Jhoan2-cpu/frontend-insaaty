@@ -1,0 +1,199 @@
+<div class="reports-container fade-in">
+    <!-- Header -->
+    <div class="header">
+        <h1>{{ 'REPORTS.TITLE' | translate }}</h1>
+
+        <!-- Filtros de Fecha -->
+        <div class="date-filters">
+            <button [class.active]="dateFilter === 'today'" (click)="setDateFilter('today')">
+                {{ 'REPORTS.DATE_FILTER.TODAY' | translate }}
+            </button>
+            <button [class.active]="dateFilter === 'week'" (click)="setDateFilter('week')">
+                {{ 'REPORTS.DATE_FILTER.WEEK' | translate }}
+            </button>
+            <button [class.active]="dateFilter === 'month'" (click)="setDateFilter('month')">
+                {{ 'REPORTS.DATE_FILTER.MONTH' | translate }}
+            </button>
+            <button [class.active]="dateFilter === 'year'" (click)="setDateFilter('year')">
+                {{ 'REPORTS.DATE_FILTER.YEAR' | translate }}
+            </button>
+            <button [class.active]="dateFilter === 'custom'" (click)="setDateFilter('custom')">
+                {{ 'REPORTS.DATE_FILTER.CUSTOM' | translate }}
+            </button>
+        </div>
+
+        <!-- Date Picker para Custom -->
+        <div *ngIf="dateFilter === 'custom'" class="custom-date-picker">
+            <input type="date" [(ngModel)]="customStartDate" />
+            <span>-</span>
+            <input type="date" [(ngModel)]="customEndDate" />
+            <button (click)="applyCustomDateFilter()">
+                {{ 'REPORTS.APPLY' | translate }}
+            </button>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid" *ngIf="!isLoadingKPIs && kpis">
+        <div class="kpi-card green">
+            <div class="kpi-icon">💰</div>
+            <div class="kpi-content">
+                <div class="kpi-value">\${{ kpis.totalSales.toLocaleString('en-US', {minimumFractionDigits: 2}) }}</div>
+                <div class="kpi-label">{{ 'REPORTS.TOTAL_SALES' | translate }}</div>
+            </div>
+        </div>
+
+        <div class="kpi-card blue">
+            <div class="kpi-icon">📦</div>
+            <div class="kpi-content">
+                <div class="kpi-value">{{ kpis.completedOrders }}</div>
+                <div class="kpi-label">{{ 'REPORTS.COMPLETED_ORDERS' | translate }}</div>
+            </div>
+        </div>
+
+        <div class="kpi-card yellow">
+            <div class="kpi-icon">📈</div>
+            <div class="kpi-content">
+                <div class="kpi-value">\${{ kpis.totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2}) }}
+                </div>
+                <div class="kpi-label">{{ 'REPORTS.TOTAL_PROFIT' | translate }}</div>
+            </div>
+        </div>
+
+        <div class="kpi-card red">
+            <div class="kpi-icon">⚠️</div>
+            <div class="kpi-content">
+                <div class="kpi-value">{{ kpis.lowStockCount }}</div>
+                <div class="kpi-label">{{ 'REPORTS.CRITICAL_PRODUCTS' | translate }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading KPIs -->
+    <div *ngIf="isLoadingKPIs" class="loading">
+        <div class="spinner"></div>
+        <p>{{ 'REPORTS.LOADING_KPIS' | translate }}</p>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs">
+        <button [class.active]="activeTab === 'sales'" (click)="changeTab('sales')">
+            <i class="fas fa-chart-line"></i>
+            {{ 'REPORTS.SALES_TAB' | translate }}
+        </button>
+        <button [class.active]="activeTab === 'products'" (click)="changeTab('products')">
+            <i class="fas fa-box"></i>
+            {{ 'REPORTS.PRODUCTS_TAB' | translate }}
+        </button>
+        <button [class.active]="activeTab === 'movements'" (click)="changeTab('movements')">
+            <i class="fas fa-exchange-alt"></i>
+            {{ 'REPORTS.MOVEMENTS_TAB' | translate }}
+        </button>
+    </div>
+
+    <!-- Tab Content: Sales -->
+    <div *ngIf="activeTab === 'sales'" class="tab-content">
+        <div class="chart-container">
+            <h2>{{ 'REPORTS.SALES_TREND' | translate }}</h2>
+            <div class="chart-wrapper">
+                <canvas #salesChart></canvas>
+            </div>
+        </div>
+
+        <div class="sales-table">
+            <h3>{{ 'REPORTS.DAILY_SALES' | translate }}</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{ 'REPORTS.DATE' | translate }}</th>
+                        <th>{{ 'REPORTS.ORDERS' | translate }}</th>
+                        <th>{{ 'REPORTS.TOTAL_SALES' | translate }}</th>
+                        <th>{{ 'REPORTS.PROFIT' | translate }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sale of salesData">
+                        <td>{{ sale.date | date }}</td>
+                        <td>{{ sale.orderCount }}</td>
+                        <td>\${{ sale.totalSales.toLocaleString('en-US', {minimumFractionDigits: 2}) }}</td>
+                        <td class="profit">\${{ sale.profit.toLocaleString('en-US', {minimumFractionDigits: 2}) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div *ngIf="salesData.length === 0 && !isLoadingSales" class="empty-state">
+                <p>{{ 'REPORTS.NO_SALES_DATA' | translate }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Products -->
+    <div *ngIf="activeTab === 'products'" class="tab-content">
+        <div class="products-grid">
+            <!-- Top Productos -->
+            <div class="products-section">
+                <h2>{{ 'REPORTS.TOP_PRODUCTS' | translate }}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>{{ 'REPORTS.PRODUCT' | translate }}</th>
+                            <th>{{ 'REPORTS.SKU' | translate }}</th>
+                            <th>{{ 'REPORTS.QUANTITY_SOLD' | translate }}</th>
+                            <th>{{ 'REPORTS.REVENUE' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of topProducts; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ product.productName }}</td>
+                            <td>{{ product.sku }}</td>
+                            <td>{{ product.quantitySold }}</td>
+                            <td>\${{ product.revenue.toLocaleString('en-US', {minimumFractionDigits: 2}) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div *ngIf="topProducts.length === 0 && !isLoadingProducts" class="empty-state">
+                    <p>{{ 'REPORTS.NO_TOP_PRODUCTS' | translate }}</p>
+                </div>
+            </div>
+
+            <!-- Productos con Bajo Stock -->
+            <div class="products-section">
+                <h2>{{ 'REPORTS.LOW_STOCK_PRODUCTS' | translate }}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{{ 'REPORTS.PRODUCT' | translate }}</th>
+                            <th>{{ 'REPORTS.SKU' | translate }}</th>
+                            <th>{{ 'REPORTS.CURRENT_STOCK' | translate }}</th>
+                            <th>{{ 'REPORTS.MIN_STOCK' | translate }}</th>
+                            <th>{{ 'REPORTS.NEEDED' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of lowStockProducts" class="low-stock-row">
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.sku }}</td>
+                            <td class="stock-current">{{ product.current_stock }}</td>
+                            <td>{{ product.min_stock }}</td>
+                            <td class="stock-needed">{{ product.difference }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div *ngIf="lowStockProducts.length === 0 && !isLoadingLowStock" class="empty-state success">
+                    <i class="fas fa-check-circle"></i>
+                    <p>{{ 'REPORTS.NO_LOW_STOCK' | translate }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content: Movements (placeholder) -->
+    <div *ngIf="activeTab === 'movements'" class="tab-content">
+        <h2>{{ 'REPORTS.MOVEMENTS_TAB' | translate }}</h2>
+        <p class="coming-soon">{{ 'REPORTS.COMING_SOON' | translate }}</p>
+    </div>
+</div>

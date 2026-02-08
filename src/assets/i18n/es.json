@@ -294,6 +294,43 @@
             "CHANGE_STATUS": "Cambiar Estado"
         }
     },
+    "REPORTS": {
+        "TITLE": "Reportes",
+        "SALES_TAB": "Ventas",
+        "PRODUCTS_TAB": "Productos",
+        "MOVEMENTS_TAB": "Movimientos",
+        "TOTAL_SALES": "Ventas Totales",
+        "COMPLETED_ORDERS": "Pedidos Completados",
+        "TOTAL_PROFIT": "Ganancia Neta",
+        "CRITICAL_PRODUCTS": "Productos Críticos",
+        "DATE_FILTER": {
+            "TODAY": "Hoy",
+            "WEEK": "Esta Semana",
+            "MONTH": "Este Mes",
+            "YEAR": "Este Año",
+            "CUSTOM": "Personalizado"
+        },
+        "APPLY": "Aplicar",
+        "SALES_TREND": "Tendencia de Ventas",
+        "DAILY_SALES": "Ventas Diarias",
+        "DATE": "Fecha",
+        "ORDERS": "Pedidos",
+        "PROFIT": "Ganancia",
+        "TOP_PRODUCTS": "Productos Más Vendidos",
+        "LOW_STOCK_PRODUCTS": "Productos con Bajo Stock",
+        "PRODUCT": "Producto",
+        "SKU": "SKU",
+        "QUANTITY_SOLD": "Cantidad Vendida",
+        "REVENUE": "Ingresos",
+        "CURRENT_STOCK": "Stock Actual",
+        "MIN_STOCK": "Stock Mínimo",
+        "NEEDED": "Necesario",
+        "NO_SALES_DATA": "No hay datos de ventas para este período",
+        "NO_TOP_PRODUCTS": "No hay productos vendidos en este período",
+        "NO_LOW_STOCK": "¡Todos los productos tienen stock adecuado!",
+        "LOADING_KPIS": "Cargando indicadores...",
+        "COMING_SOON": "Próximamente..."
+    },
     "PRODUCT_MODAL": {
         "TITLE_NEW": "Nuevo Producto",
         "TITLE_EDIT": "Editar Producto",
