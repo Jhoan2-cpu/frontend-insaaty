@@ -18,13 +18,143 @@
                     <p class="mt-2 text-sm text-gray-600">{{ 'INVENTORY.DESCRIPTION' | translate }}</p>
                 </div>
                 <div>
-                    <button (click)="openNewProductModal()"
-                        class="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm hover:shadow-md font-medium">
-                        <i class="fas fa-plus"></i>
-                        <span>{{ 'INVENTORY.NEW_PRODUCT' | translate }}</span>
+                    <button (click)="toggleProductForm()" [class.bg-gray-600]="showProductForm"
+                        [class.bg-blue-600]="!showProductForm"
+                        class="inline-flex items-center gap-2 px-4 py-2.5 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm hover:shadow-md font-medium">
+                        <i [class.fa-times]="showProductForm" [class.fa-plus]="!showProductForm" class="fas"></i>
+                        <span *ngIf="!showProductForm">{{ 'INVENTORY.NEW_PRODUCT' | translate }}</span>
+                        <span *ngIf="showProductForm">{{ 'PRODUCT_MODAL.CANCEL' | translate }}</span>
                     </button>
                 </div>
             </div>
+
+            <!-- Product Form (Accordion) -->
+            @if (showProductForm) {
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 animate__animated animate__fadeIn">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">
+                    {{ isEditMode ? ('PRODUCT_MODAL.TITLE_EDIT' | translate) : ('PRODUCT_MODAL.TITLE_NEW' | translate)
+                    }}
+                </h2>
+
+                <form [formGroup]="productForm" (ngSubmit)="saveProduct()" class="space-y-4">
+                    <!-- Row 1: SKU & Name -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                                {{ 'PRODUCT_MODAL.SKU' | translate }} *
+                            </label>
+                            <input type="text" formControlName="sku" [readonly]="isEditMode"
+                                [class.bg-gray-50]="isEditMode"
+                                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                [class.border-red-500]="productForm.get('sku')?.invalid && productForm.get('sku')?.touched"
+                                placeholder="PRD-001">
+                            @if (productForm.get('sku')?.invalid && productForm.get('sku')?.touched) {
+                            <p class="text-red-600 text-xs mt-1">{{ 'PRODUCT_MODAL.VALIDATION.SKU_REQUIRED' | translate
+                                }}</p>
+                            }
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                                {{ 'PRODUCT_MODAL.NAME' | translate }} *
+                            </label>
+                            <input type="text" formControlName="name"
+                                class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                [class.border-red-500]="productForm.get('name')?.invalid && productForm.get('name')?.touched"
+                                placeholder="Wireless Mouse">
+                            @if (productForm.get('name')?.invalid && productForm.get('name')?.touched) {
+                            <p class="text-red-600 text-xs mt-1">{{ 'PRODUCT_MODAL.VALIDATION.NAME_REQUIRED' | translate
+                                }}</p>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                            {{ 'PRODUCT_MODAL.DESCRIPTION' | translate }}
+                        </label>
+                        <textarea formControlName="description" rows="2"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Ergonomic wireless mouse with USB receiver"></textarea>
+                    </div>
+
+                    <!-- Row 2: Prices & Margin -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                                {{ 'PRODUCT_MODAL.PRICE_COST' | translate }} *
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-2.5 text-gray-500">$</span>
+                                <input type="number" formControlName="price_cost" step="0.01"
+                                    class="w-full pl-7 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    [class.border-red-500]="productForm.get('price_cost')?.invalid && productForm.get('price_cost')?.touched">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                                {{ 'PRODUCT_MODAL.PRICE_SALE' | translate }} *
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-2.5 text-gray-500">$</span>
+                                <input type="number" formControlName="price_sale" step="0.01"
+                                    class="w-full pl-7 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    [class.border-red-500]="productForm.get('price_sale')?.invalid && productForm.get('price_sale')?.touched">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                                {{ 'PRODUCT_MODAL.MARGIN' | translate }}
+                            </label>
+                            <div
+                                class="px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg text-gray-700 font-semibold">
+                                {{ margin.toFixed(1) }}%
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Stock -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                                {{ 'PRODUCT_MODAL.MIN_STOCK' | translate }}
+                            </label>
+                            <input type="number" formControlName="min_stock"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1.5">
+                                {{ 'PRODUCT_MODAL.CURRENT_STOCK' | translate }} *
+                            </label>
+                            <input type="number" formControlName="current_stock"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                                [class.bg-gray-50]="isEditMode">
+                            @if (isEditMode) {
+                            <p class="text-gray-500 text-xs mt-1">{{ 'PRODUCT_MODAL.STOCK_READONLY' | translate }}</p>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex items-center gap-3 pt-4 border-t border-gray-200">
+                        <button type="button" (click)="toggleProductForm()" [disabled]="isSaving"
+                            class="flex-1 px-4 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium disabled:opacity-50">
+                            {{ 'PRODUCT_MODAL.CANCEL' | translate }}
+                        </button>
+                        <button type="submit" [disabled]="isSaving || productForm.invalid"
+                            class="flex-1 px-4 py-2.5 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                            @if (isSaving) {
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>{{ 'PRODUCT_MODAL.SAVING' | translate }}</span>
+                            } @else {
+                            <i class="fas fa-save"></i>
+                            <span>{{ 'PRODUCT_MODAL.SAVE' | translate }}</span>
+                            }
+                        </button>
+                    </div>
+                </form>
+            </div>
+            }
 
             <!-- Filters & Search -->
             <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
@@ -146,13 +276,13 @@
                                     <div
                                         class="absolute right-8 top-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                                         <div class="py-1">
-                                            <button (click)="openEditProductModal(product.id)"
+                                            <button (click)="editProduct(product.id)"
                                                 class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                                                 <i class="fas fa-edit text-blue-600 w-4"></i>
                                                 <span>{{ 'INVENTORY.ACTIONS.EDIT' | translate }}</span>
                                             </button>
                                             <hr class="border-gray-100">
-                                            <button (click)="confirmDelete(product.id)"
+                                            <button (click)="deleteProduct(product.id)"
                                                 class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm text-red-600 hover:bg-red-50 transition-colors">
                                                 <i class="fas fa-trash w-4"></i>
                                                 <span>{{ 'INVENTORY.ACTIONS.DELETE' | translate }}</span>
@@ -211,15 +341,3 @@
         </div>
     </div>
 </div>
-
-<!-- Modal Nuevo/Editar Producto -->
-<app-product-modal [isOpen]="isProductModalOpen" [productId]="selectedProductId" (close)="closeProductModal()"
-    (saved)="onProductSaved($event)">
-</app-product-modal>
-
-<!-- Confirm Delete Dialog -->
-<app-confirm-dialog [isOpen]="isConfirmDialogOpen" [title]="'CONFIRM_DIALOG.DELETE_PRODUCT_TITLE' | translate"
-    [message]="'CONFIRM_DIALOG.DELETE_PRODUCT_MESSAGE' | translate" [confirmText]="'CONFIRM_DIALOG.DELETE' | translate"
-    [cancelText]="'CONFIRM_DIALOG.CANCEL' | translate" [isLoading]="isDeletingProduct" (confirm)="executeDelete()"
-    (cancel)="cancelDelete()">
-</app-confirm-dialog>
