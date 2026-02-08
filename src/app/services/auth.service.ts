@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, shareReplay } from 'rxjs';
 import { Router } from '@angular/router';
 
 interface AuthResponse {
@@ -24,7 +24,7 @@ interface LoginDto {
     providedIn: 'root'
 })
 export class AuthService {
-    private apiUrl = 'http://localhost:3000/auth';
+    private baseUrl = 'http://localhost:3000';
     private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
     public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
@@ -34,14 +34,14 @@ export class AuthService {
     ) { }
 
     register(registerDto: RegisterDto): Observable<AuthResponse> {
-        return this.http.post<AuthResponse>(`${this.apiUrl}/register`, registerDto)
+        return this.http.post<AuthResponse>(`${this.baseUrl}/auth/register`, registerDto)
             .pipe(
                 tap(response => this.handleAuthResponse(response))
             );
     }
 
     login(loginDto: LoginDto): Observable<AuthResponse> {
-        return this.http.post<AuthResponse>(`${this.apiUrl}/login`, loginDto)
+        return this.http.post<AuthResponse>(`${this.baseUrl}/auth/login`, loginDto)
             .pipe(
                 tap(response => this.handleAuthResponse(response))
             );
@@ -51,7 +51,7 @@ export class AuthService {
         const refreshToken = this.getRefreshToken();
 
         if (refreshToken) {
-            this.http.post(`${this.apiUrl}/logout`, { refresh_token: refreshToken })
+            this.http.post(`${this.baseUrl}/auth/logout`, { refresh_token: refreshToken })
                 .subscribe({
                     next: () => this.clearTokensAndRedirect(),
                     error: () => this.clearTokensAndRedirect()
@@ -67,7 +67,7 @@ export class AuthService {
             throw new Error('No refresh token available');
         }
 
-        return this.http.post<AuthResponse>(`${this.apiUrl}/refresh`, { refresh_token: refreshToken })
+        return this.http.post<AuthResponse>(`${this.baseUrl}/auth/refresh`, { refresh_token: refreshToken })
             .pipe(
                 tap(response => this.handleAuthResponse(response))
             );
@@ -103,15 +103,30 @@ export class AuthService {
     }
 
     // New methods for Settings
-    getProfile(): Observable<any> {
-        return this.http.get(`${this.apiUrl}/../users/profile`);
+    private profileRequest$: Observable<any> | null = null;
+    private profileCache$: Observable<any> | null = null;
+
+    getProfile(forceRefresh = false): Observable<any> {
+        if (this.profileCache$ && !forceRefresh) {
+            return this.profileCache$;
+        }
+
+        // Cache the observable
+        this.profileCache$ = this.http.get(`${this.baseUrl}/users/profile`).pipe(
+            shareReplay(1)
+        );
+        return this.profileCache$;
     }
 
     updateProfile(data: any): Observable<any> {
-        return this.http.patch(`${this.apiUrl}/../users/profile`, data);
+        // Clear cache on update
+        this.profileCache$ = null;
+        return this.http.patch(`${this.baseUrl}/users/profile`, data).pipe(
+            tap(() => this.getProfile(true).subscribe()) // Refresh cache in background
+        );
     }
 
     updateTenant(data: any): Observable<any> {
-        return this.http.patch(`${this.apiUrl}/../tenants/settings`, data);
+        return this.http.patch(`${this.baseUrl}/tenants/settings`, data);
     }
 }

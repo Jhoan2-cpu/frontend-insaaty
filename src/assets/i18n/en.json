@@ -226,7 +226,8 @@
     "COMMON": {
         "LANGUAGE": "Language",
         "SPANISH": "EspaÃ±ol",
-        "ENGLISH": "English"
+        "ENGLISH": "English",
+        "LOADING": "Loading..."
     },
     "INVENTORY": {
         "BREADCRUMB": "Inventory",
