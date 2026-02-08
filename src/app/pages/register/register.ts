@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -13,12 +14,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class Register implements OnInit {
   businessName = '';
+  fullName = '';
   email = '';
   password = '';
   termsAccepted = false;
   showPassword = false;
   isLoading = false;
   currentLang = 'es';
+  errorMessage = '';
 
   // Validation state
   businessTouched = false;
@@ -26,7 +29,11 @@ export class Register implements OnInit {
   passwordTouched = false;
   termsTouched = false;
 
-  constructor(private translate: TranslateService) { }
+  constructor(
+    private translate: TranslateService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.translate.setDefaultLang('es');
@@ -91,16 +98,24 @@ export class Register implements OnInit {
     if (!this.isFormValid) return;
 
     this.isLoading = true;
-    console.log('Register attempt:', {
-      businessName: this.businessName,
-      email: this.email
-    });
+    this.errorMessage = '';
 
-    // Simulate API call
-    setTimeout(() => {
-      this.isLoading = false;
-      // TODO: Navigate to dashboard on success
-    }, 1500);
+    this.authService.register({
+      business_name: this.businessName,
+      full_name: this.fullName || this.businessName, // Use businessName as fallback
+      email: this.email,
+      password: this.password
+    }).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.error('Register error:', error);
+        this.errorMessage = error.error?.message || 'Error al registrar. Intenta de nuevo.';
+      }
+    });
   }
 
   registerWithGoogle() {

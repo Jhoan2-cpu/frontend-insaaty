@@ -84,7 +84,8 @@
                     <p class="text-sm font-semibold text-gray-900 truncate">Thomas Anderson</p>
                     <p class="text-xs text-gray-500 truncate">{{ 'DASHBOARD.ADMIN_MANAGER' | translate }}</p>
                 </div>
-                <i class="fas fa-sign-out-alt text-gray-400 hover:text-red-500 transition-colors"></i>
+                <i (click)="logout()"
+                    class="fas fa-sign-out-alt text-gray-400 hover:text-red-500 transition-colors"></i>
             </div>
 
             <!-- Current Tenant Badge -->

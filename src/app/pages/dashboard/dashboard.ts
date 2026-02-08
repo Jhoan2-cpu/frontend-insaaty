@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart, registerables } from 'chart.js';
+import { AuthService } from '../../services/auth.service';
 
 Chart.register(...registerables);
 
@@ -38,6 +39,7 @@ export class Dashboard implements OnInit, AfterViewInit {
 
   constructor(
     private translate: TranslateService,
+    private authService: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -146,5 +148,9 @@ export class Dashboard implements OnInit, AfterViewInit {
       case 'TRANSFER': return 'fa-exchange-alt text-purple-500';
       default: return 'fa-circle';
     }
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

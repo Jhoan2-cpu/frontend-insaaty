@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,12 +18,17 @@ export class Login implements OnInit {
   showPassword = false;
   isLoading = false;
   currentLang = 'es';
+  errorMessage = '';
 
   // Validation state
   emailTouched = false;
   passwordTouched = false;
 
-  constructor(private translate: TranslateService) { }
+  constructor(
+    private translate: TranslateService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     // Ensure translation is initialized
@@ -71,14 +77,20 @@ export class Login implements OnInit {
     if (!this.isFormValid) return;
 
     this.isLoading = true;
-    // TODO: Implement actual login logic with backend
-    console.log('Login attempt:', { email: this.email });
+    this.errorMessage = '';
 
-    // Simulate API call
-    setTimeout(() => {
-      this.isLoading = false;
-      // TODO: Navigate to dashboard on success
-    }, 1500);
+    this.authService.login({ email: this.email, password: this.password })
+      .subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          this.isLoading = false;
+          console.error('Login error:', error);
+          this.errorMessage = error.error?.message || 'Credenciales incorrectas';
+        }
+      });
   }
 
   loginWithGoogle() {
