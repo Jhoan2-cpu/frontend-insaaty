@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -35,7 +35,10 @@ export class Reports implements OnInit, AfterViewInit {
   isLoadingProducts = false;
   isLoadingLowStock = false;
 
-  constructor(private reportsService: ReportsService) { }
+  constructor(
+    private reportsService: ReportsService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.loadAllData();
@@ -55,15 +58,31 @@ export class Reports implements OnInit, AfterViewInit {
 
   loadKPIs(params?: { startDate?: string; endDate?: string }) {
     this.isLoadingKPIs = true;
+    this.cdr.detectChanges();
+    console.log('📊 Loading KPIs with params:', params);
+
     this.reportsService.getKPIs(params).subscribe({
       next: (data) => {
         this.kpis = data;
         this.isLoadingKPIs = false;
-        console.log('✓ KPIs loaded:', data);
+        console.log('✅ KPIs loaded - isLoading:', this.isLoadingKPIs);
+        this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Error loading KPIs:', err);
+        console.error('❌ Error loading KPIs:', err);
         this.isLoadingKPIs = false;
+
+        // Establecer KPIs vacíos en caso de error
+        this.kpis = {
+          totalSales: 0,
+          totalOrders: 0,
+          completedOrders: 0,
+          pendingOrders: 0,
+          totalProfit: 0,
+          productsCount: 0,
+          lowStockCount: 0
+        };
+        this.cdr.detectChanges();
       }
     });
   }
@@ -75,6 +94,7 @@ export class Reports implements OnInit, AfterViewInit {
         this.salesData = data;
         this.isLoadingSales = false;
         console.log('✓ Sales report loaded:', data);
+        this.cdr.detectChanges();
 
         // Crear o actualizar gráfico
         if (this.activeTab === 'sales') {
@@ -84,6 +104,7 @@ export class Reports implements OnInit, AfterViewInit {
       error: (err) => {
         console.error('Error loading sales report:', err);
         this.isLoadingSales = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -95,10 +116,12 @@ export class Reports implements OnInit, AfterViewInit {
         this.topProducts = data;
         this.isLoadingProducts = false;
         console.log('✓ Top products loaded:', data);
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error loading top products:', err);
         this.isLoadingProducts = false;
+        this.cdr.detectChanges();
       }
     });
   }
@@ -110,10 +133,12 @@ export class Reports implements OnInit, AfterViewInit {
         this.lowStockProducts = data;
         this.isLoadingLowStock = false;
         console.log('✓ Low stock products loaded:', data);
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Error loading low stock products:', err);
         this.isLoadingLowStock = false;
+        this.cdr.detectChanges();
       }
     });
   }

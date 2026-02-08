@@ -33,6 +33,12 @@
         </div>
     </div>
 
+    <!-- Loading KPIs -->
+    <div *ngIf="isLoadingKPIs" class="loading">
+        <div class="spinner"></div>
+        <p>{{ 'REPORTS.LOADING_KPIS' | translate }}</p>
+    </div>
+
     <!-- KPI Cards -->
     <div class="kpi-grid" *ngIf="!isLoadingKPIs && kpis">
         <div class="kpi-card green">
@@ -67,12 +73,6 @@
                 <div class="kpi-label">{{ 'REPORTS.CRITICAL_PRODUCTS' | translate }}</div>
             </div>
         </div>
-    </div>
-
-    <!-- Loading KPIs -->
-    <div *ngIf="isLoadingKPIs" class="loading">
-        <div class="spinner"></div>
-        <p>{{ 'REPORTS.LOADING_KPIS' | translate }}</p>
     </div>
 
     <!-- Tabs Navigation -->
