@@ -373,5 +373,32 @@
         "TITLE": "Proveedores",
         "PHONE": "Teléfono",
         "EMAIL": "Email"
+    },
+    "SETTINGS": {
+        "TITLE": "Configuración",
+        "DESCRIPTION": "Administra tu perfil, seguridad y datos de la empresa.",
+        "TABS": {
+            "PROFILE": "Mi Perfil",
+            "SECURITY": "Seguridad",
+            "COMPANY": "Empresa"
+        },
+        "PROFILE": {
+            "TITLE": "Información Personal",
+            "FULL_NAME": "Nombre Completo",
+            "EMAIL": "Correo Electrónico",
+            "CHANGE_AVATAR": "Cambiar Avatar"
+        },
+        "SECURITY": {
+            "TITLE": "Cambiar Contraseña",
+            "NEW_PASSWORD": "Nueva Contraseña",
+            "CONFIRM_PASSWORD": "Confirmar Contraseña",
+            "MISMATCH": "Las contraseñas no coinciden"
+        },
+        "COMPANY": {
+            "TITLE": "Información de la Empresa",
+            "NAME": "Nombre de la Empresa"
+        },
+        "SAVE": "Guardar Cambios",
+        "PROFILE_UPDATED": "Perfil actualizado correctamente"
     }
 }

@@ -76,19 +76,22 @@
 
         <!-- User Profile (Bottom) -->
         <div class="p-4 border-t border-gray-100">
-            <div
-                class="bg-gray-50 rounded-xl p-3 flex items-center gap-3 hover:bg-gray-100 transition-colors cursor-pointer">
+            <div routerLink="/settings"
+                class="bg-gray-50 rounded-xl p-3 flex items-center gap-3 hover:bg-gray-100 transition-colors cursor-pointer group">
                 <div
-                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden border-2 border-white shadow-sm">
-                    <img src="https://ui-avatars.com/api/?name=Thomas+Anderson&background=random" alt="Avatar"
-                        class="w-full h-full object-cover">
+                    class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden border-2 border-white shadow-sm text-blue-600 font-bold">
+                    {{ user?.full_name?.charAt(0) || 'U' }}
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-semibold text-gray-900 truncate">Thomas Anderson</p>
-                    <p class="text-xs text-gray-500 truncate">{{ 'DASHBOARD.ADMIN_MANAGER' | translate }}</p>
+                    <p class="text-sm font-semibold text-gray-900 truncate group-hover:text-blue-600 transition-colors">
+                        {{ user?.full_name || 'Loading...' }}
+                    </p>
+                    <p class="text-xs text-gray-500 truncate">
+                        {{ user?.role_id === 3 ? ('DASHBOARD.ADMIN_MANAGER' | translate) : 'User' }}
+                    </p>
                 </div>
-                <i (click)="logout()"
-                    class="fas fa-sign-out-alt text-gray-400 hover:text-red-500 transition-colors"></i>
+                <i (click)="logout(); $event.stopPropagation()"
+                    class="fas fa-sign-out-alt text-gray-400 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-white/50"></i>
             </div>
 
             <!-- Current Tenant Badge -->

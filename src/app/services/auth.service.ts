@@ -101,4 +101,17 @@ export class AuthService {
     isLoggedIn(): boolean {
         return this.hasToken();
     }
+
+    // New methods for Settings
+    getProfile(): Observable<any> {
+        return this.http.get(`${this.apiUrl}/../users/profile`);
+    }
+
+    updateProfile(data: any): Observable<any> {
+        return this.http.patch(`${this.apiUrl}/../users/profile`, data);
+    }
+
+    updateTenant(data: any): Observable<any> {
+        return this.http.patch(`${this.apiUrl}/../tenants/settings`, data);
+    }
 }
