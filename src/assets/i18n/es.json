@@ -227,7 +227,9 @@
         "LANGUAGE": "Idioma",
         "SPANISH": "Español",
         "ENGLISH": "English",
-        "LOADING": "Cargando..."
+        "LOADING": "Cargando...",
+        "PAGE_NOT_FOUND": "La página que buscas no existe o ha sido movida.",
+        "GO_dashboard": "Volver al Panel"
     },
     "INVENTORY": {
         "BREADCRUMB": "Inventario",

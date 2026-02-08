@@ -227,7 +227,9 @@
         "LANGUAGE": "Language",
         "SPANISH": "EspaÃ±ol",
         "ENGLISH": "English",
-        "LOADING": "Loading..."
+        "LOADING": "Loading...",
+        "PAGE_NOT_FOUND": "The page you are looking for does not exist or has been moved.",
+        "GO_dashboard": "Go to Dashboard"
     },
     "INVENTORY": {
         "BREADCRUMB": "Inventory",
