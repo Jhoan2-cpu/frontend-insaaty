@@ -25,7 +25,25 @@ export const routes: Routes = [
             },
             {
                 path: 'inventory',
-                loadComponent: () => import('./pages/inventory/inventory').then(m => m.Inventory),
+                children: [
+                    {
+                        path: '',
+                        redirectTo: 'products',
+                        pathMatch: 'full'
+                    },
+                    {
+                        path: 'products',
+                        loadComponent: () => import('./pages/inventory/inventory').then(m => m.Inventory),
+                    },
+                    {
+                        path: 'transactions',
+                        loadComponent: () => import('./pages/inventory/transactions/transactions').then(m => m.Transactions),
+                    },
+                    {
+                        path: 'movements/new',
+                        loadComponent: () => import('./pages/inventory/movement-create/movement-create').then(m => m.MovementCreate),
+                    }
+                ]
             },
             {
                 path: 'orders',

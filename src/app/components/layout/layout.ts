@@ -20,6 +20,7 @@ import { ToastComponent } from '../toast/toast.component';
 })
 export class Layout implements OnInit {
   isSidebarOpen = true;
+  isInventoryOpen = false;
   currentLang = 'es';
   pendingOrdersCount = 0;
 
@@ -45,6 +46,12 @@ export class Layout implements OnInit {
 
     // Cargar contador de pedidos pendientes
     this.loadPendingCount();
+
+    // Check if inventory is active (basic check)
+    // A better way would be using Router events, but for now this is simple
+    if (window.location.pathname.includes('/inventory')) {
+      this.isInventoryOpen = true;
+    }
   }
 
   loadPendingCount() {
@@ -58,6 +65,10 @@ export class Layout implements OnInit {
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  toggleInventory() {
+    this.isInventoryOpen = !this.isInventoryOpen;
   }
 
   switchLanguage(lang: string) {

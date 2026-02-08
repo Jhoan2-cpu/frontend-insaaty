@@ -30,11 +30,39 @@
                         <i class="fas fa-th-large w-5 text-center mr-3"></i>
                         {{ 'SIDEBAR.DASHBOARD' | translate }}
                     </a>
-                    <a routerLink="/inventory" routerLinkActive="bg-blue-50 text-blue-600"
-                        class="flex items-center px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
-                        <i class="fas fa-box w-5 text-center mr-3"></i>
-                        {{ 'SIDEBAR.INVENTORY' | translate }}
-                    </a>
+                    <!-- Inventory Accordion -->
+                    <div>
+                        <button (click)="toggleInventory()" [class.text-blue-600]="isInventoryOpen"
+                            [class.bg-blue-50]="isInventoryOpen"
+                            class="w-full flex items-center justify-between px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
+                            <div class="flex items-center">
+                                <i class="fas fa-box w-5 text-center mr-3"></i>
+                                {{ 'SIDEBAR.INVENTORY' | translate }}
+                            </div>
+                            <i class="fas fa-chevron-down text-xs transition-transform duration-200"
+                                [class.rotate-180]="isInventoryOpen"></i>
+                        </button>
+
+                        <!-- Submenu -->
+                        <div class="mt-1 space-y-1 pl-11 overflow-hidden transition-all duration-300"
+                            [class.max-h-0]="!isInventoryOpen" [class.max-h-40]="isInventoryOpen">
+
+                            <a routerLink="/inventory/products" routerLinkActive="text-blue-600 font-semibold"
+                                class="block py-2 text-sm text-gray-500 hover:text-gray-900 transition-colors">
+                                {{ 'INVENTORY.ALL_PRODUCTS' | translate }}
+                            </a>
+
+                            <a routerLink="/inventory/transactions" routerLinkActive="text-blue-600 font-semibold"
+                                class="block py-2 text-sm text-gray-500 hover:text-gray-900 transition-colors">
+                                {{ 'INVENTORY.HISTORY' | translate }}
+                            </a>
+
+                            <a routerLink="/inventory/movements/new" routerLinkActive="text-blue-600 font-semibold"
+                                class="block py-2 text-sm text-gray-500 hover:text-gray-900 transition-colors">
+                                {{ 'INVENTORY.MOVEMENT_TITLE' | translate }}
+                            </a>
+                        </div>
+                    </div>
                     <a routerLink="/orders" routerLinkActive="bg-blue-50 text-blue-600"
                         class="flex items-center justify-between px-4 py-2.5 text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg group transition-colors font-medium">
                         <div class="flex items-center">

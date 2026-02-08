@@ -52,6 +52,7 @@ export class Inventory implements OnInit {
   // Menú de acciones
   openMenuId: number | null = null;
 
+
   // Para template
   Math = Math;
 
