@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
 
 export type OrderStatus = 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'CANCELLED';
 
@@ -58,7 +57,7 @@ export interface UpdateOrderStatusDto {
     providedIn: 'root'
 })
 export class OrderService {
-    private apiUrl = `${environment.apiUrl}/orders`;
+    private apiUrl = 'http://localhost:3000/orders';
 
     constructor(private http: HttpClient) { }
 
