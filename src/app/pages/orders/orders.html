@@ -233,7 +233,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of selectedOrder.items" class="border-t">
+                        <tr *ngFor="let item of selectedOrder.order_items" class="border-t">
                             <td class="px-3 py-2">{{ item.product.name }}</td>
                             <td class="px-3 py-2 text-center">{{ item.quantity }}</td>
                             <td class="px-3 py-2 text-right">${{ item.unit_price }}</td>
@@ -259,17 +259,17 @@
 
             <div class="flex gap-2 pt-4 border-t">
                 @if (selectedOrder.status === 'PENDING') {
-                <button (click)="changeStatus(selectedOrder.id, 'PROCESSING')"
+                <button (click)="processOrder()"
                     class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                     Procesar
                 </button>
-                <button (click)="changeStatus(selectedOrder.id, 'CANCELLED')"
+                <button (click)="cancelOrder()"
                     class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
                     Cancelar
                 </button>
                 }
                 @if (selectedOrder.status === 'PROCESSING') {
-                <button (click)="changeStatus(selectedOrder.id, 'COMPLETED')"
+                <button (click)="completeOrder()"
                     class="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
                     Completar
                 </button>

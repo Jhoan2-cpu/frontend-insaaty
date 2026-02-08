@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { OrderService, Order, OrderStatus, CreateOrderDto } from '../../services/order.service';
+import { OrderService, Order, OrderStatus, CreateOrderDto, UpdateOrderDto } from '../../services/order.service';
 import { ProductService, Product } from '../../services/product.service';
 
 @Component({
@@ -78,7 +78,7 @@ export class Orders implements OnInit {
       next: (response) => {
         this.orders = response.data;
         this.totalOrders = response.meta.total;
-        this.totalPages = response.meta.totalPages;
+        this.totalPages = response.meta.last_page;
         this.isLoading = false;
         this.cdr.detectChanges();
       },
@@ -187,6 +187,21 @@ export class Orders implements OnInit {
   closeDetail() {
     this.showDetailModal = false;
     this.selectedOrder = undefined;
+  }
+
+  processOrder() {
+    if (!this.selectedOrder) return;
+    this.changeStatus(this.selectedOrder.id, OrderStatus.PROCESSING);
+  }
+
+  completeOrder() {
+    if (!this.selectedOrder) return;
+    this.changeStatus(this.selectedOrder.id, OrderStatus.COMPLETED);
+  }
+
+  cancelOrder() {
+    if (!this.selectedOrder) return;
+    this.changeStatus(this.selectedOrder.id, OrderStatus.CANCELLED);
   }
 
   changeStatus(orderId: number, newStatus: OrderStatus) {
