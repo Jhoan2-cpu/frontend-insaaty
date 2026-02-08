@@ -128,8 +128,10 @@
                                             translate }}) } @else if (product.current_stock < product.min_stock) {
                                             ({{ 'INVENTORY.LOW_STOCK_LABEL' | translate }}) } </span>
                                 </td>
-                                <td class="px-6 py-4 text-sm text-gray-900">${{product.price_cost.toFixed(2)}}</td>
-                                <td class="px-6 py-4 text-sm font-bold text-gray-900">${{product.price_sale.toFixed(2)}}
+                                <td class="px-6 py-4 text-sm text-gray-900">${{product.price_cost.toFixed(2)}}
+                                </td>
+                                <td class="px-6 py-4 text-sm font-bold text-gray-900">
+                                    ${{product.price_sale.toFixed(2)}}
                                 </td>
                                 <td class="px-6 py-4 text-right">
                                     <button

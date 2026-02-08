@@ -49,6 +49,13 @@ export class Inventory implements OnInit {
   }
 
   loadProducts() {
+    console.log('🔄 loadProducts() called with filters:', {
+      currentFilter: this.currentFilter,
+      searchTerm: this.searchTerm,
+      currentPage: this.currentPage,
+      pageSize: this.pageSize
+    });
+
     this.isLoading = true;
 
     const filters: any = {
@@ -59,15 +66,28 @@ export class Inventory implements OnInit {
     if (this.searchTerm) filters.search = this.searchTerm;
     if (this.currentFilter !== 'all') filters.stockStatus = this.currentFilter;
 
+    console.log('📡 Calling API with filters:', filters);
+
     this.productService.getProducts(filters).subscribe({
       next: (response) => {
-        this.products = response.data;
+        console.log('✅ API Response received:', response);
+
+        // Convertir price_cost y price_sale de string a number (Prisma Decimal issue)
+        this.products = response.data.map(product => ({
+          ...product,
+          price_cost: Number(product.price_cost),
+          price_sale: Number(product.price_sale)
+        }));
+
         this.totalProducts = response.meta.total;
         this.totalPages = response.meta.totalPages;
         this.isLoading = false;
+        console.log('Products loaded:', this.products.length);
       },
       error: (error) => {
-        console.error('Error loading products:', error);
+        console.error('❌ Error loading products:', error);
+        console.error('Error status:', error.status);
+        console.error('Error message:', error.message);
         this.isLoading = false;
       }
     });
