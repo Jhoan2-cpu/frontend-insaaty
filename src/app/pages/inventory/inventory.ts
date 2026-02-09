@@ -304,6 +304,60 @@ export class Inventory implements OnInit {
     });
   }
 
+  // Quick Supplier Modal
+  showSupplierModal = false;
+  supplierForm!: FormGroup;
+  isSavingSupplier = false;
+
+  initSupplierForm() {
+    this.supplierForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      contact_person: [''],
+      email: ['', [Validators.email]],
+      phone: ['']
+    });
+  }
+
+  openSupplierModal() {
+    this.initSupplierForm();
+    this.showSupplierModal = true;
+  }
+
+  closeSupplierModal() {
+    this.showSupplierModal = false;
+    this.supplierForm.reset();
+  }
+
+  saveQuickSupplier() {
+    if (this.supplierForm.invalid) {
+      this.supplierForm.markAllAsTouched();
+      return;
+    }
+
+    this.isSavingSupplier = true;
+    const formValue = this.supplierForm.value;
+
+    this.suppliersService.createSupplier(formValue).subscribe({
+      next: (newSupplier: Supplier) => {
+        // Add to list
+        this.suppliers = [...this.suppliers, newSupplier];
+
+        // Select in product form
+        this.productForm.patchValue({
+          supplier_id: newSupplier.id
+        });
+
+        this.isSavingSupplier = false;
+        this.closeSupplierModal();
+        console.log('✓ Supplier created and selected');
+      },
+      error: (err) => {
+        console.error('❌ Error creating supplier:', err);
+        this.isSavingSupplier = false;
+      }
+    });
+  }
+
   // Actions menu
   toggleMenu(productId: number, event: Event) {
     event.stopPropagation();
