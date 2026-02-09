@@ -221,7 +221,9 @@
         "COMPLETED": "Completed",
         "CREATE_ORDER": "Create Order",
         "CURRENT_TENANT": "Current Tenant",
-        "ADMIN_MANAGER": "Admin Manager"
+        "ADMIN_MANAGER": "Admin Manager",
+        "NO_LOW_STOCK": "All products have adequate stock!",
+        "NO_TRANSACTIONS": "No recent transactions"
     },
     "COMMON": {
         "LANGUAGE": "Language",
@@ -229,7 +231,16 @@
         "ENGLISH": "English",
         "LOADING": "Loading...",
         "PAGE_NOT_FOUND": "The page you are looking for does not exist or has been moved.",
-        "GO_dashboard": "Go to Dashboard"
+        "GO_dashboard": "Go to Dashboard",
+        "SEARCH": "Search...",
+        "ACTIONS": "Actions",
+        "CANCEL": "Cancel",
+        "SAVE": "Save",
+        "SAVING": "Saving...",
+        "UPDATE": "Update",
+        "PAGE": "Page",
+        "OF": "of",
+        "NONE": "None"
     },
     "INVENTORY": {
         "BREADCRUMB": "Inventory",
@@ -237,11 +248,12 @@
         "HISTORY": "History",
         "MOVEMENT_TITLE": "Register Movement",
         "MOVEMENT_TYPE": "Movement Type",
+        "MOVEMENT_SUBTITLE": "Record a new stock movement or adjustment.",
         "PRODUCT": "Product",
         "SELECT_PRODUCT": "Select Product",
         "QUANTITY": "Quantity",
         "REASON": "Reason",
-        "REASON_PLACEHOLDER": "Ex: Supplier purchase, Return, Stock adjustment...",
+        "REASON_PLACEHOLDER": "Ex: Supplier purchase, Return...",
         "MOVEMENT_SUCCESS": "Movement registered successfully",
         "MOVEMENT_ERROR": "Error registering movement",
         "DESCRIPTION": "Manage your product inventory, track stock levels, and update pricing across all sales channels.",
@@ -269,6 +281,53 @@
         "ACTIONS": {
             "EDIT": "Edit",
             "DELETE": "Delete"
+        },
+        "TRANSACTIONS": {
+            "SUBTITLE": "View all stock movements and adjustments.",
+            "HEADERS": {
+                "DATE": "Date",
+                "PRODUCT": "Product",
+                "TYPE": "Type",
+                "QTY": "Qty",
+                "USER": "User",
+                "REASON": "Reason"
+            },
+            "NO_MOVEMENTS": "No movements found.",
+            "PREV": "Prev",
+            "PAGE": "Page",
+            "NEXT": "Next"
+        },
+        "MOVEMENT": {
+            "TYPES": {
+                "IN": "IN",
+                "OUT": "OUT",
+                "ADJUSTMENT": "ADJUSTMENT"
+            },
+            "SELECTED_PRODUCT": "Selected product:",
+            "REASON_NOTES": "Reason / Notes",
+            "IMPACT": {
+                "TITLE": "Inventory Impact",
+                "SUBTITLE": "Stock projection",
+                "PREVIEW": "Preview",
+                "SELECT_HINT": "Select a product to view impact",
+                "STATS": {
+                    "CURRENT": "Current",
+                    "UNITS": "units",
+                    "MOVEMENT": "Movement",
+                    "FINAL_STOCK": "Final Stock",
+                    "PROJECTED": "Projected"
+                },
+                "CHART": {
+                    "BEFORE": "Before",
+                    "AFTER": "After"
+                },
+                "ANALYSIS": {
+                    "HEALTHY": "Healthy Stock",
+                    "LOW": "Low Stock Alert",
+                    "HEALTHY_DESC": "Projected level remains above reorder point.",
+                    "LOW_DESC": "Projected stock will fall below minimum."
+                }
+            }
         }
     },
     "SUPPLIERS": {
@@ -286,7 +345,20 @@
         "WEBSITE": "Website",
         "NOTES": "Notes",
         "PRODUCTS_COUNT": "Products",
-        "NO_SUPPLIERS": "No suppliers registered"
+        "NO_SUPPLIERS": "No suppliers registered",
+        "ACTIONS": {
+            "EDIT_TITLE": "Edit",
+            "DELETE_TITLE": "Delete"
+        },
+        "PLACEHOLDERS": {
+            "NAME": "Ex. Tech Solutions Inc.",
+            "CONTACT": "Ex. John Doe",
+            "EMAIL": "contact@company.com",
+            "PHONE": "+1 555...",
+            "ADDRESS": "123 Main St...",
+            "WEBSITE": "https://www.example.com",
+            "NOTES": "Add details..."
+        }
     },
     "ORDERS": {
         "TITLE": "Orders",
@@ -321,7 +393,22 @@
         "ACTIONS": {
             "TITLE": "Actions",
             "VIEW_DETAIL": "View Detail",
-            "CHANGE_STATUS": "Change Status"
+            "CHANGE_STATUS": "Change Status",
+            "PROCESS": "Process",
+            "CANCEL": "Cancel",
+            "COMPLETE": "Complete"
+        },
+        "DETAIL": {
+            "STATUS": "Status:",
+            "PRODUCTS": "Products:",
+            "NOTES": "Notes:",
+            "TABLE": {
+                "PRODUCT": "Product",
+                "QUANTITY": "Quantity",
+                "PRICE": "Price",
+                "SUBTOTAL": "Subtotal"
+            },
+            "TOTAL": "Total:"
         }
     },
     "REPORTS": {
@@ -392,29 +479,52 @@
     },
     "SETTINGS": {
         "TITLE": "Settings",
-        "DESCRIPTION": "Manage your profile, security, and company details.",
+        "DESCRIPTION": "Manage your preferences and account settings.",
+        "SAVE": "Save Changes",
         "TABS": {
-            "PROFILE": "My Profile",
+            "PROFILE": "Profile",
             "SECURITY": "Security",
-            "COMPANY": "Company"
+            "COMPANY": "Company",
+            "ACCOUNT": "Account"
         },
         "PROFILE": {
-            "TITLE": "Personal Information",
+            "TITLE": "User Profile",
+            "SUBTITLE": "Update your photo and personal details.",
+            "AVATAR": "Your Avatar",
+            "CHANGE": "Change",
+            "REMOVE": "Remove",
             "FULL_NAME": "Full Name",
             "EMAIL": "Email Address",
-            "CHANGE_AVATAR": "Change Avatar"
+            "PHONE": "Phone",
+            "ROLE": "Role"
+        },
+        "ROLES": {
+            "ADMIN": "Administrator",
+            "USER": "User"
         },
         "SECURITY": {
-            "TITLE": "Change Password",
+            "TITLE": "Security",
+            "SUBTITLE": "Change password and security.",
             "NEW_PASSWORD": "New Password",
             "CONFIRM_PASSWORD": "Confirm Password",
-            "MISMATCH": "Passwords do not match"
+            "MISMATCH": "Passwords do not match",
+            "UPDATE_PASSWORD": "Update Password",
+            "TWO_FACTOR": "Two-Factor Authentication",
+            "TWO_FACTOR_DESC": "Increases your account security."
         },
         "COMPANY": {
-            "TITLE": "Company Information",
-            "NAME": "Company Name"
+            "TITLE": "Company Profile",
+            "SUBTITLE": "Legal and contact information.",
+            "VERIFIED": "Verified",
+            "UPLOAD_LOGO": "Upload Logo",
+            "NAME": "Company Name",
+            "NIF": "Tax ID / EIN",
+            "ADDRESS": "Address",
+            "WEBSITE": "Website",
+            "PREFERENCES": "Warehouse Preferences",
+            "CURRENCY": "Currency",
+            "TIMEZONE": "Timezone"
         },
-        "SAVE": "Save Changes",
         "PROFILE_UPDATED": "Profile updated successfully"
     }
 }

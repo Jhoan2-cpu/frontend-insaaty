@@ -12,7 +12,8 @@
         <div
             class="w-full lg:w-64 flex-shrink-0 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden sticky top-24">
             <nav class="p-2 space-y-1">
-                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3 mt-3">Cuenta</div>
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3 mt-3">{{
+                    'SETTINGS.TABS.ACCOUNT' | translate }}</div>
 
                 <button (click)="activeTab = 'profile'" [class.bg-blue-50]="activeTab === 'profile'"
                     [class.text-blue-700]="activeTab === 'profile'"
@@ -30,7 +31,8 @@
 
                 <!-- Only Admin -->
                 @if (user?.role_id === 3) {
-                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3 mt-4">Empresa</div>
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3 mt-4">{{
+                    'SETTINGS.TABS.COMPANY' | translate }}</div>
 
                 <button (click)="activeTab = 'company'" [class.bg-blue-50]="activeTab === 'company'"
                     [class.text-blue-700]="activeTab === 'company'"
@@ -59,7 +61,7 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
                     <div class="mb-6">
                         <h3 class="text-lg font-bold text-gray-900">{{ 'SETTINGS.PROFILE.TITLE' | translate }}</h3>
-                        <p class="text-gray-500 text-sm">Actualiza tu foto y detalles personales.</p>
+                        <p class="text-gray-500 text-sm">{{ 'SETTINGS.PROFILE.SUBTITLE' | translate }}</p>
                     </div>
 
                     <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
@@ -71,40 +73,47 @@
                                 {{ user?.full_name?.charAt(0) || 'U' }}
                             </div>
                             <div>
-                                <h4 class="font-medium text-gray-900">Tu Avatar</h4>
+                                <h4 class="font-medium text-gray-900">{{ 'SETTINGS.PROFILE.AVATAR' | translate }}</h4>
                                 <div class="flex items-center gap-3 mt-2">
                                     <button type="button"
                                         class="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all bg-white shadow-sm">
-                                        Cambiar
+                                        {{ 'SETTINGS.PROFILE.CHANGE' | translate }}
                                     </button>
                                     <button type="button"
-                                        class="text-sm text-red-600 hover:text-red-700 font-medium px-2">Eliminar</button>
+                                        class="text-sm text-red-600 hover:text-red-700 font-medium px-2">{{
+                                        'SETTINGS.PROFILE.REMOVE' | translate }}</button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-1.5">
-                                <label class="block text-sm font-medium text-gray-700">Nombre Completo</label>
+                                <label class="block text-sm font-medium text-gray-700">{{ 'SETTINGS.PROFILE.FULL_NAME' |
+                                    translate }}</label>
                                 <input type="text" formControlName="fullName"
                                     class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all bg-gray-50/50 focus:bg-white">
                             </div>
 
                             <div class="space-y-1.5">
-                                <label class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                                <label class="block text-sm font-medium text-gray-700">{{ 'SETTINGS.PROFILE.EMAIL' |
+                                    translate }}</label>
                                 <input type="email" formControlName="email"
                                     class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all bg-gray-50/50 focus:bg-white">
                             </div>
 
                             <div class="space-y-1.5">
-                                <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                                <label class="block text-sm font-medium text-gray-700">{{ 'SETTINGS.PROFILE.PHONE' |
+                                    translate }}</label>
                                 <input type="tel" formControlName="phone" placeholder="+34 600..."
                                     class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all bg-gray-50/50 focus:bg-white">
                             </div>
 
                             <div class="space-y-1.5">
-                                <label class="block text-sm font-medium text-gray-700">Rol</label>
-                                <input type="text" [value]="user?.role_id === 3 ? 'Administrador' : 'Usuario'" disabled
+                                <label class="block text-sm font-medium text-gray-700">{{ 'SETTINGS.PROFILE.ROLE' |
+                                    translate }}</label>
+                                <input type="text"
+                                    [value]="user?.role_id === 3 ? ('SETTINGS.ROLES.ADMIN' | translate) : ('SETTINGS.ROLES.USER' | translate)"
+                                    disabled
                                     class="w-full px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-100 text-gray-500 cursor-not-allowed">
                             </div>
                         </div>
@@ -128,17 +137,19 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
                     <div class="mb-6">
                         <h3 class="text-lg font-bold text-gray-900">{{ 'SETTINGS.SECURITY.TITLE' | translate }}</h3>
-                        <p class="text-gray-500 text-sm">Cambiar contraseña y seguridad.</p>
+                        <p class="text-gray-500 text-sm">{{ 'SETTINGS.SECURITY.SUBTITLE' | translate }}</p>
                     </div>
 
                     <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="space-y-4 max-w-lg">
                         <div class="space-y-1.5">
-                            <label class="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
+                            <label class="block text-sm font-medium text-gray-700">{{ 'SETTINGS.SECURITY.NEW_PASSWORD' |
+                                translate }}</label>
                             <input type="password" formControlName="password"
                                 class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
                         </div>
                         <div class="space-y-1.5">
-                            <label class="block text-sm font-medium text-gray-700">Confirmar Contraseña</label>
+                            <label class="block text-sm font-medium text-gray-700">{{
+                                'SETTINGS.SECURITY.CONFIRM_PASSWORD' | translate }}</label>
                             <input type="password" formControlName="confirmPassword"
                                 class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
                             @if (passwordForm.hasError('mismatch')) {
@@ -149,7 +160,7 @@
                         <div class="pt-4">
                             <button type="submit" [disabled]="passwordForm.invalid || loading"
                                 class="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors shadow-sm">
-                                Actualizar Contraseña
+                                {{ 'SETTINGS.SECURITY.UPDATE_PASSWORD' | translate }}
                             </button>
                         </div>
                     </form>
@@ -157,8 +168,10 @@
                     <div class="mt-8 pt-6 border-t border-gray-100">
                         <div class="flex items-center justify-between">
                             <div>
-                                <h4 class="font-medium text-gray-900">Autenticación de Dos Factores</h4>
-                                <p class="text-sm text-gray-500">Aumenta la seguridad de tu cuenta.</p>
+                                <h4 class="font-medium text-gray-900">{{ 'SETTINGS.SECURITY.TWO_FACTOR' | translate }}
+                                </h4>
+                                <p class="text-sm text-gray-500">{{ 'SETTINGS.SECURITY.TWO_FACTOR_DESC' | translate }}
+                                </p>
                             </div>
                             <label
                                 class="relative inline-flex items-center cursor-pointer opacity-50 cursor-not-allowed">
@@ -182,11 +195,11 @@
                     <div class="flex items-center justify-between mb-6">
                         <div>
                             <h3 class="text-lg font-bold text-gray-900">{{ 'SETTINGS.COMPANY.TITLE' | translate }}</h3>
-                            <p class="text-gray-500 text-sm">Información legal y de contacto.</p>
+                            <p class="text-gray-500 text-sm">{{ 'SETTINGS.COMPANY.SUBTITLE' | translate }}</p>
                         </div>
                         <span
                             class="bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-                            <i class="fas fa-check-circle mr-1"></i> Verificado
+                            <i class="fas fa-check-circle mr-1"></i> {{ 'SETTINGS.COMPANY.VERIFIED' | translate }}
                         </span>
                     </div>
 
@@ -196,24 +209,26 @@
                             <div
                                 class="w-24 h-24 rounded-lg bg-gray-50 border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 hover:bg-gray-100 hover:border-gray-400 transition-colors cursor-pointer group">
                                 <i class="fas fa-image text-2xl mb-1 group-hover:text-gray-600"></i>
-                                <span class="text-xs">Subir Logo</span>
+                                <span class="text-xs">{{ 'SETTINGS.COMPANY.UPLOAD_LOGO' | translate }}</span>
                             </div>
                             <div class="flex-1 space-y-4">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="space-y-1.5">
-                                        <label class="block text-sm font-medium text-gray-700">Nombre de la
-                                            Empresa</label>
+                                        <label class="block text-sm font-medium text-gray-700">{{
+                                            'SETTINGS.COMPANY.NAME' | translate }}</label>
                                         <input type="text" formControlName="name"
                                             class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
                                     </div>
                                     <div class="space-y-1.5">
-                                        <label class="block text-sm font-medium text-gray-700">NIF / CIF</label>
+                                        <label class="block text-sm font-medium text-gray-700">{{ 'SETTINGS.COMPANY.NIF'
+                                            | translate }}</label>
                                         <input type="text" formControlName="nif"
                                             class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
                                     </div>
                                 </div>
                                 <div class="space-y-1.5">
-                                    <label class="block text-sm font-medium text-gray-700">Dirección</label>
+                                    <label class="block text-sm font-medium text-gray-700">{{ 'SETTINGS.COMPANY.ADDRESS'
+                                        | translate }}</label>
                                     <input type="text" formControlName="address"
                                         class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
                                 </div>
@@ -222,7 +237,8 @@
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-1.5">
-                                <label class="block text-sm font-medium text-gray-700">Sitio Web</label>
+                                <label class="block text-sm font-medium text-gray-700">{{ 'SETTINGS.COMPANY.WEBSITE' |
+                                    translate }}</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400"><i
                                             class="fas fa-globe"></i></span>
@@ -235,7 +251,7 @@
                         <div class="mt-6 flex justify-end">
                             <button type="submit" [disabled]="companyForm.invalid || loading"
                                 class="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors shadow-sm">
-                                Guardar Cambios
+                                {{ 'SETTINGS.SAVE' | translate }}
                             </button>
                         </div>
                     </form>
@@ -243,10 +259,12 @@
 
                 <!-- Config -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
-                    <h3 class="text-lg font-bold text-gray-900 mb-4">Preferencias de Almacén</h3>
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">{{ 'SETTINGS.COMPANY.PREFERENCES' | translate }}
+                    </h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-1.5">
-                            <label class="block text-sm font-medium text-gray-700">Moneda</label>
+                            <label class="block text-sm font-medium text-gray-700">{{ 'SETTINGS.COMPANY.CURRENCY' |
+                                translate }}</label>
                             <select formControlName="currency" [formGroup]="companyForm"
                                 class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white">
                                 <option value="EUR">Euro (€)</option>
@@ -254,7 +272,8 @@
                             </select>
                         </div>
                         <div class="space-y-1.5">
-                            <label class="block text-sm font-medium text-gray-700">Zona Horaria</label>
+                            <label class="block text-sm font-medium text-gray-700">{{ 'SETTINGS.COMPANY.TIMEZONE' |
+                                translate }}</label>
                             <select formControlName="timezone" [formGroup]="companyForm"
                                 class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 bg-white">
                                 <option value="Europe/Madrid">Europe/Madrid</option>

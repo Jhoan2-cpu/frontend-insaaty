@@ -210,7 +210,7 @@
 
         <div class="space-y-4">
             <div>
-                <span class="text-sm font-medium">Estado:</span>
+                <span class="text-sm font-medium">{{ 'ORDERS.DETAIL.STATUS' | translate }}</span>
                 <span [class]="getStatusClass(selectedOrder.status)"
                     class="ml-2 px-3 py-1 rounded-full text-xs font-semibold">
                     {{ 'ORDERS.STATUSES.' + selectedOrder.status | translate }}
@@ -218,14 +218,16 @@
             </div>
 
             <div>
-                <h3 class="font-semibold mb-2">Productos:</h3>
+                <h3 class="font-semibold mb-2">{{ 'ORDERS.DETAIL.PRODUCTS' | translate }}</h3>
                 <table class="w-full">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-3 py-2 text-left text-sm">Producto</th>
-                            <th class="px-3 py-2 text-center text-sm">Cantidad</th>
-                            <th class="px-3 py-2 text-right text-sm">Precio</th>
-                            <th class="px-3 py-2 text-right text-sm">Subtotal</th>
+                            <th class="px-3 py-2 text-left text-sm">{{ 'ORDERS.DETAIL.TABLE.PRODUCT' | translate }}</th>
+                            <th class="px-3 py-2 text-center text-sm">{{ 'ORDERS.DETAIL.TABLE.QUANTITY' | translate }}
+                            </th>
+                            <th class="px-3 py-2 text-right text-sm">{{ 'ORDERS.DETAIL.TABLE.PRICE' | translate }}</th>
+                            <th class="px-3 py-2 text-right text-sm">{{ 'ORDERS.DETAIL.TABLE.SUBTOTAL' | translate }}
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -238,7 +240,8 @@
                     </tbody>
                     <tfoot class="bg-gray-50 border-t-2">
                         <tr>
-                            <td colspan="3" class="px-3 py-2 text-right font-bold">Total:</td>
+                            <td colspan="3" class="px-3 py-2 text-right font-bold">{{ 'ORDERS.DETAIL.TOTAL' | translate
+                                }}</td>
                             <td class="px-3 py-2 text-right text-lg font-bold text-blue-600">${{ selectedOrder.total }}
                             </td>
                         </tr>
@@ -248,7 +251,7 @@
 
             @if (selectedOrder.notes) {
             <div>
-                <span class="text-sm font-medium">Notas:</span>
+                <span class="text-sm font-medium">{{ 'ORDERS.DETAIL.NOTES' | translate }}</span>
                 <p class="mt-1 text-gray-600">{{ selectedOrder.notes }}</p>
             </div>
             }
@@ -257,17 +260,17 @@
                 @if (selectedOrder.status === 'PENDING') {
                 <button (click)="processOrder()"
                     class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                    Procesar
+                    {{ 'ORDERS.ACTIONS.PROCESS' | translate }}
                 </button>
                 <button (click)="cancelOrder()"
                     class="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                    Cancelar
+                    {{ 'ORDERS.ACTIONS.CANCEL' | translate }}
                 </button>
                 }
                 @if (selectedOrder.status === 'PROCESSING') {
                 <button (click)="completeOrder()"
                     class="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
-                    Completar
+                    {{ 'ORDERS.ACTIONS.COMPLETE' | translate }}
                 </button>
                 }
             </div>

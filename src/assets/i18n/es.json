@@ -221,7 +221,9 @@
         "COMPLETED": "Completado",
         "CREATE_ORDER": "Crear Pedido",
         "CURRENT_TENANT": "Almacén Actual",
-        "ADMIN_MANAGER": "Gerente Admin"
+        "ADMIN_MANAGER": "Gerente Admin",
+        "NO_LOW_STOCK": "¡Todos los productos tienen stock adecuado!",
+        "NO_TRANSACTIONS": "No hay transacciones recientes"
     },
     "COMMON": {
         "LANGUAGE": "Idioma",
@@ -229,7 +231,16 @@
         "ENGLISH": "English",
         "LOADING": "Cargando...",
         "PAGE_NOT_FOUND": "La página que buscas no existe o ha sido movida.",
-        "GO_dashboard": "Volver al Panel"
+        "GO_dashboard": "Volver al Panel",
+        "SEARCH": "Buscar...",
+        "ACTIONS": "Acciones",
+        "CANCEL": "Cancelar",
+        "SAVE": "Guardar",
+        "SAVING": "Guardando...",
+        "UPDATE": "Actualizar",
+        "PAGE": "Página",
+        "OF": "de",
+        "NONE": "Ninguno"
     },
     "INVENTORY": {
         "BREADCRUMB": "Inventario",
@@ -237,11 +248,12 @@
         "HISTORY": "Historial",
         "MOVEMENT_TITLE": "Registrar Movimiento",
         "MOVEMENT_TYPE": "Tipo de Movimiento",
+        "MOVEMENT_SUBTITLE": "Registrar un nuevo movimiento de stock o ajuste.",
         "PRODUCT": "Producto",
         "SELECT_PRODUCT": "Seleccionar Producto",
         "QUANTITY": "Cantidad",
         "REASON": "Motivo",
-        "REASON_PLACEHOLDER": "Ej: Compra de proveedor, Devolución, Ajuste de inventario...",
+        "REASON_PLACEHOLDER": "Ej: Compra de proveedor, Devolución...",
         "MOVEMENT_SUCCESS": "Movimiento registrado correctamente",
         "MOVEMENT_ERROR": "Error al registrar movimiento",
         "DESCRIPTION": "Administra tu inventario de productos, rastrea niveles de stock y actualiza precios en todos los canales de venta.",
@@ -269,6 +281,53 @@
         "ACTIONS": {
             "EDIT": "Editar",
             "DELETE": "Eliminar"
+        },
+        "TRANSACTIONS": {
+            "SUBTITLE": "Ver todos los movimientos de stock y ajustes.",
+            "HEADERS": {
+                "DATE": "Fecha",
+                "PRODUCT": "Producto",
+                "TYPE": "Tipo",
+                "QTY": "Cant.",
+                "USER": "Usuario",
+                "REASON": "Razón"
+            },
+            "NO_MOVEMENTS": "No se encontraron movimientos.",
+            "PREV": "Ant.",
+            "PAGE": "Página",
+            "NEXT": "Sig."
+        },
+        "MOVEMENT": {
+            "TYPES": {
+                "IN": "ENTRADA",
+                "OUT": "SALIDA",
+                "ADJUSTMENT": "AJUSTE"
+            },
+            "SELECTED_PRODUCT": "Producto seleccionado:",
+            "REASON_NOTES": "Razón / Notas",
+            "IMPACT": {
+                "TITLE": "Impacto en Inventario",
+                "SUBTITLE": "Proyección de stock",
+                "PREVIEW": "Vista Previa",
+                "SELECT_HINT": "Selecciona un producto para ver el impacto",
+                "STATS": {
+                    "CURRENT": "Actual",
+                    "UNITS": "unid.",
+                    "MOVEMENT": "Movimiento",
+                    "FINAL_STOCK": "Stock Final",
+                    "PROJECTED": "Proyectado"
+                },
+                "CHART": {
+                    "BEFORE": "Antes",
+                    "AFTER": "Después"
+                },
+                "ANALYSIS": {
+                    "HEALTHY": "Stock Saludable",
+                    "LOW": "Alerta de Stock Bajo",
+                    "HEALTHY_DESC": "El nivel proyectado se mantiene por encima del punto de reorden.",
+                    "LOW_DESC": "El stock proyectado caerá por debajo del mínimo ({min})."
+                }
+            }
         }
     },
     "SUPPLIERS": {
@@ -286,7 +345,20 @@
         "WEBSITE": "Sitio Web",
         "NOTES": "Notas",
         "PRODUCTS_COUNT": "Productos",
-        "NO_SUPPLIERS": "No hay proveedores registrados"
+        "NO_SUPPLIERS": "No hay proveedores registrados",
+        "ACTIONS": {
+            "EDIT_TITLE": "Editar",
+            "DELETE_TITLE": "Eliminar"
+        },
+        "PLACEHOLDERS": {
+            "NAME": "Ej. Tech Solutions S.L.",
+            "CONTACT": "Ej. Juan Pérez",
+            "EMAIL": "contacto@empresa.com",
+            "PHONE": "+34 600 000 000",
+            "ADDRESS": "Calle Principal 123...",
+            "WEBSITE": "https://www.ejemplo.com",
+            "NOTES": "Agregue detalles..."
+        }
     },
     "ORDERS": {
         "TITLE": "Pedidos",
@@ -321,7 +393,22 @@
         "ACTIONS": {
             "TITLE": "Acciones",
             "VIEW_DETAIL": "Ver Detalle",
-            "CHANGE_STATUS": "Cambiar Estado"
+            "CHANGE_STATUS": "Cambiar Estado",
+            "PROCESS": "Procesar",
+            "CANCEL": "Cancelar",
+            "COMPLETE": "Completar"
+        },
+        "DETAIL": {
+            "STATUS": "Estado:",
+            "PRODUCTS": "Productos:",
+            "NOTES": "Notas:",
+            "TABLE": {
+                "PRODUCT": "Producto",
+                "QUANTITY": "Cantidad",
+                "PRICE": "Precio",
+                "SUBTOTAL": "Subtotal"
+            },
+            "TOTAL": "Total:"
         }
     },
     "REPORTS": {
@@ -392,29 +479,52 @@
     },
     "SETTINGS": {
         "TITLE": "Configuración",
-        "DESCRIPTION": "Administra tu perfil, seguridad y datos de la empresa.",
+        "DESCRIPTION": "Administra tus preferencias y configuración de cuenta.",
+        "SAVE": "Guardar Cambios",
         "TABS": {
-            "PROFILE": "Mi Perfil",
+            "PROFILE": "Perfil",
             "SECURITY": "Seguridad",
-            "COMPANY": "Empresa"
+            "COMPANY": "Empresa",
+            "ACCOUNT": "Cuenta"
         },
         "PROFILE": {
-            "TITLE": "Información Personal",
+            "TITLE": "Perfil de Usuario",
+            "SUBTITLE": "Actualiza tu foto y detalles personales.",
+            "AVATAR": "Tu Avatar",
+            "CHANGE": "Cambiar",
+            "REMOVE": "Eliminar",
             "FULL_NAME": "Nombre Completo",
             "EMAIL": "Correo Electrónico",
-            "CHANGE_AVATAR": "Cambiar Avatar"
+            "PHONE": "Teléfono",
+            "ROLE": "Rol"
+        },
+        "ROLES": {
+            "ADMIN": "Administrador",
+            "USER": "Usuario"
         },
         "SECURITY": {
-            "TITLE": "Cambiar Contraseña",
+            "TITLE": "Seguridad",
+            "SUBTITLE": "Cambiar contraseña y seguridad.",
             "NEW_PASSWORD": "Nueva Contraseña",
             "CONFIRM_PASSWORD": "Confirmar Contraseña",
-            "MISMATCH": "Las contraseñas no coinciden"
+            "MISMATCH": "Las contraseñas no coinciden",
+            "UPDATE_PASSWORD": "Actualizar Contraseña",
+            "TWO_FACTOR": "Autenticación de Dos Factores",
+            "TWO_FACTOR_DESC": "Aumenta la seguridad de tu cuenta."
         },
         "COMPANY": {
-            "TITLE": "Información de la Empresa",
-            "NAME": "Nombre de la Empresa"
+            "TITLE": "Perfil de Empresa",
+            "SUBTITLE": "Información legal y de contacto.",
+            "VERIFIED": "Verificado",
+            "UPLOAD_LOGO": "Subir Logo",
+            "NAME": "Nombre de la Empresa",
+            "NIF": "NIF / CIF",
+            "ADDRESS": "Dirección",
+            "WEBSITE": "Sitio Web",
+            "PREFERENCES": "Preferencias de Almacén",
+            "CURRENCY": "Moneda",
+            "TIMEZONE": "Zona Horaria"
         },
-        "SAVE": "Guardar Cambios",
         "PROFILE_UPDATED": "Perfil actualizado correctamente"
     }
 }
