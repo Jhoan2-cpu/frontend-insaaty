@@ -31,7 +31,9 @@ export class Settings implements OnInit {
   ) {
     this.profileForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
+      phone: [''],
+      role: [''] // Read-only mostly
     });
 
     this.passwordForm = this.fb.group({
@@ -40,7 +42,13 @@ export class Settings implements OnInit {
     }, { validators: this.passwordMatchValidator });
 
     this.companyForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]]
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      nif: [''],
+      address: [''],
+      website: [''],
+      currency: ['EUR'],
+      timezone: ['Europe/Madrid'],
+      multiWarehouse: [false]
     });
   }
 
