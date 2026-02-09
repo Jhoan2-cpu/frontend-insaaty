@@ -84,16 +84,22 @@ export class MovementCreate implements OnInit {
         });
     }
 
+
     get selectedProduct(): Product | undefined {
         const id = this.form.get('product_id')?.value;
-        return this.products.find(p => p.id == id);
+        const product = this.products.find(p => p.id == id);
+        // Ensure current_stock is a number
+        if (product) {
+            product.current_stock = Number(product.current_stock);
+        }
+        return product;
     }
 
     get projectedStock(): number {
         const product = this.selectedProduct;
         if (!product) return 0;
 
-        const current = product.current_stock || 0;
+        const current = Number(product.current_stock) || 0;
         const qty = this.form.get('quantity')?.value || 0;
         const type = this.form.get('type')?.value;
 
@@ -103,40 +109,23 @@ export class MovementCreate implements OnInit {
             case TransactionType.OUT:
                 return current - qty;
             case TransactionType.ADJUSTMENT:
-                // For adjustment, we usually set the stock TO this value, or add/sub? 
-                // In this system's logic (based on previous files), ADJUSTMENT might be an absolute set or relative.
-                // Looking at standard inventory systems: Adjustment usually creates a diff.
-                // However, without deep backend checking, let's assume it ADDS (positive) or REMOVES (negative) if the user enters negative? 
-                // Or maybe the user enters the DIFFERENCE. 
-                // Let's assume standard IN/OUT logic for simplicity in this visualization, or that Adjustment is just a label for a manual correction (usually behaving like IN or OUT depending on sign).
-                // Wait, typically 'Adjustment' in simple forms implies "I found 5 more" (IN) or "5 are broken" (OUT).
-                // But often users want to say "The stock IS 50". 
-                // Let's stick to the form's implicit logic: Functionally, the backend likely creates a transaction with signed quantity.
-                // Checking previous context: backend createTransaction uses `type` and `quantity`.
-                // If it's a simple 'record movement', let's assume standard behavior:
-                // IN: +qty
-                // OUT: -qty
-                // ADJUSTMENT: +/-qty (user might need to specify sign? or usually implies a correction). 
-                // Let's treat ADJUSTMENT like a correction that adds/removes based on context, but here let's assume it behaves like IN if positive? 
-                // Actually, for safety/visuals, let's strict to: 
-                // IN = Add
-                // OUT = Subtract
-                // ADJUSTMENT = Let's treat it as "Add" for positive numbers in this viz, or maybe neutral?
-                // Let's look at the radio buttons: IN (Green), OUT (Red), ADJUST (Blue). 
-                // Usually ADJUSTMENT in these simple UIs allows negative numbers? 
-                // The input `min="1"`. So quantity is always positive.
-                // Let's assume ADJUSTMENT adds (if positive) or maybe the backend handles it? 
-                // Let's re-read backend if possible? No, too slow.
-                // Let's assume for Visualization:
-                // IN: +
-                // OUT: -
-                // ADJUSTMENT: + (or maybe just show change?) 
-                // For the sake of the graph, let's assume IN/ADJUSTMENT adds, OUT removes.
-                // Or better: If ADJUSTMENT, maybe we don't project? 
-                // Let's stick to IN/OUT for clear projection.
-                return type === TransactionType.OUT ? current - qty : current + qty;
+                // Assuming adjustment adds for visualization if positive input
+                return current + qty;
         }
         return current;
+    }
+
+    get maxStock(): number {
+        const current = this.selectedProduct?.current_stock || 0;
+        const projected = this.projectedStock;
+        return Math.max(Number(current), projected);
+    }
+
+    getBarHeight(value: number): number {
+        const max = this.maxStock;
+        if (max === 0) return 0;
+        // Scale to 80% max height + 10% base
+        return (value / max) * 80 + 10;
     }
 
     incrementQty() {
