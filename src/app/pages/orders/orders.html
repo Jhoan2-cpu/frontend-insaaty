@@ -1,200 +1,196 @@
-<div class="min-h-screen bg-gray-50 animate__fadeIn">
-    <div class="max-w-7xl mx-auto p-6">
-        <div class="space-y-6">
+<div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 animate__fadeIn">
+    <div class="space-y-6">
 
-            <!-- Header -->
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">{{ 'ORDERS.TITLE' | translate }}</h1>
-                    <p class="mt-2 text-sm text-gray-600">{{ 'ORDERS.DESCRIPTION' | translate }}</p>
-                </div>
-                <button (click)="toggleOrderForm()" [class.bg-gray-600]="showOrderForm"
-                    [class.bg-blue-600]="!showOrderForm"
-                    class="inline-flex items-center gap-2 px-4 py-2.5 text-white rounded-lg hover:bg-blue700 transition font-medium">
-                    <i [class.fa-times]="showOrderForm" [class.fa-plus]="!showOrderForm" class="fas"></i>
-                    <span *ngIf="!showOrderForm">{{ 'ORDERS.NEW_ORDER' | translate }}</span>
-                    <span *ngIf="showOrderForm">{{ 'ORDERS.CANCEL' | translate }}</span>
-                </button>
+        <!-- Header -->
+        <div class="flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">{{ 'ORDERS.TITLE' | translate }}</h1>
+                <p class="mt-2 text-sm text-gray-600">{{ 'ORDERS.DESCRIPTION' | translate }}</p>
             </div>
+            <button (click)="toggleOrderForm()" [class.bg-gray-600]="showOrderForm" [class.bg-blue-600]="!showOrderForm"
+                class="inline-flex items-center gap-2 px-4 py-2.5 text-white rounded-lg hover:bg-blue700 transition font-medium">
+                <i [class.fa-times]="showOrderForm" [class.fa-plus]="!showOrderForm" class="fas"></i>
+                <span *ngIf="!showOrderForm">{{ 'ORDERS.NEW_ORDER' | translate }}</span>
+                <span *ngIf="showOrderForm">{{ 'ORDERS.CANCEL' | translate }}</span>
+            </button>
+        </div>
 
-            <!-- Order Form (Accordion) -->
-            @if (showOrderForm) {
-            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 animate__fadeIn">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">{{ 'ORDERS.NEW_ORDER' | translate }}</h2>
+        <!-- Order Form (Accordion) -->
+        @if (showOrderForm) {
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 animate__fadeIn">
+            <h2 class="text-xl font-bold text-gray-900 mb-4">{{ 'ORDERS.NEW_ORDER' | translate }}</h2>
 
-                <form [formGroup]="orderForm" class="space-y-4">
-                    <!-- Add Product Section -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-1.5">{{
-                                'ORDERS.FORM.SELECT_PRODUCT' | translate }}</label>
-                            <select formControlName="product_id"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg">
-                                <option value="">{{ 'ORDERS.FORM.SELECT_PRODUCT' | translate }}</option>
-                                <option *ngFor="let product of products" [value]="product.id">
-                                    {{ product.name }} ({{ product.sku }}) - Stock: {{ product.current_stock }} - ${{
-                                    product.price_sale }}
-                                </option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1.5">{{ 'ORDERS.FORM.QUANTITY' |
-                                translate }}</label>
-                            <input type="number" formControlName="quantity" min="1"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg">
-                        </div>
+            <form [formGroup]="orderForm" class="space-y-4">
+                <!-- Add Product Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">{{
+                            'ORDERS.FORM.SELECT_PRODUCT' | translate }}</label>
+                        <select formControlName="product_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                            <option value="">{{ 'ORDERS.FORM.SELECT_PRODUCT' | translate }}</option>
+                            <option *ngFor="let product of products" [value]="product.id">
+                                {{ product.name }} ({{ product.sku }}) - Stock: {{ product.current_stock }} - ${{
+                                product.price_sale }}
+                            </option>
+                        </select>
                     </div>
-
-                    <button type="button" (click)="addItem()" [disabled]="!orderForm.get('product_id')?.value"
-                        class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50">
-                        <i class="fas fa-plus mr-2"></i>{{ 'ORDERS.FORM.ADD_ITEM' | translate }}
-                    </button>
-
-                    <!-- Items Table -->
-                    @if (temporaryItems.length > 0) {
-                    <div class="mt-4">
-                        <table class="w-full">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-4 py-2 text-left text-sm font-semibold">{{ 'ORDERS.FORM.PRODUCT' |
-                                        translate }}</th>
-                                    <th class="px-4 py-2 text-center text-sm font-semibold">{{ 'ORDERS.FORM.QUANTITY' |
-                                        translate }}</th>
-                                    <th class="px-4 py-2 text-right text-sm font-semibold">{{ 'ORDERS.FORM.UNIT_PRICE' |
-                                        translate }}</th>
-                                    <th class="px-4 py-2 text-right text-sm font-semibold">{{ 'ORDERS.FORM.SUBTOTAL' |
-                                        translate }}</th>
-                                    <th class="px-4 py-2"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of temporaryItems; let i = index" class="border-t">
-                                    <td class="px-4 py-2">{{ item.product.name }}</td>
-                                    <td class="px-4 py-2 text-center">{{ item.quantity }}</td>
-                                    <td class="px-4 py-2 text-right">${{ item.product.price_sale }}</td>
-                                    <td class="px-4 py-2 text-right font-semibold">${{ item.subtotal.toFixed(2) }}</td>
-                                    <td class="px-4 py-2">
-                                        <button type="button" (click)="removeItem(i)"
-                                            class="text-red-600 hover:text-red-800">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot class="bg-gray-50 border-t-2">
-                                <tr>
-                                    <td colspan="3" class="px-4 py-3 text-right font-bold">{{ 'ORDERS.TOTAL' | translate
-                                        }}:</td>
-                                    <td class="px-4 py-3 text-right text-lg font-bold text-blue-600">${{
-                                        totalAmount.toFixed(2) }}</td>
-                                    <td></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    }
-
-                    <!-- Notes -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5">{{ 'ORDERS.NOTES' | translate
-                            }}</label>
-                        <textarea formControlName="notes" rows="2"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg"></textarea>
+                        <label class="block text-sm font-medium text-gray-700 mb-1.5">{{ 'ORDERS.FORM.QUANTITY' |
+                            translate }}</label>
+                        <input type="number" formControlName="quantity" min="1"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg">
                     </div>
+                </div>
 
-                    <!-- Actions -->
-                    <div class="flex items-center gap-3 pt-4 border-t">
-                        <button type="button" (click)="toggleOrderForm()" [disabled]="isSaving"
-                            class="flex-1 px-4 py-2.5 text-gray-700 bg-white border rounded-lg hover:bg-gray-50">
-                            {{ 'ORDERS.CANCEL' | translate }}
-                        </button>
-                        <button type="button" (click)="saveOrder()" [disabled]="isSaving || temporaryItems.length === 0"
-                            class="flex-1 px-4 py-2.5 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50">
-                            @if (isSaving) {
-                            <i class="fas fa-spinner fa-spin mr-2"></i>{{ 'ORDERS.SAVING' | translate }}
-                            } @else {
-                            <i class="fas fa-save mr-2"></i>{{ 'ORDERS.SAVE' | translate }}
-                            }
-                        </button>
-                    </div>
-                </form>
-            </div>
-            }
+                <button type="button" (click)="addItem()" [disabled]="!orderForm.get('product_id')?.value"
+                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50">
+                    <i class="fas fa-plus mr-2"></i>{{ 'ORDERS.FORM.ADD_ITEM' | translate }}
+                </button>
 
-            <!-- Filters -->
-            <div class="bg-white rounded-xl border shadow-sm p-4">
-                <div class="flex flex-wrap gap-2">
-                    <button *ngFor="let filter of filters" (click)="applyFilter(filter.value)"
-                        [class.bg-blue-600]="currentFilter === filter.value"
-                        [class.text-white]="currentFilter === filter.value"
-                        [class.bg-gray-100]="currentFilter !== filter.value"
-                        class="px-4 py-2 rounded-lg font-medium transition">
-                        {{ filter.label | translate }}
+                <!-- Items Table -->
+                @if (temporaryItems.length > 0) {
+                <div class="mt-4">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2 text-left text-sm font-semibold">{{ 'ORDERS.FORM.PRODUCT' |
+                                    translate }}</th>
+                                <th class="px-4 py-2 text-center text-sm font-semibold">{{ 'ORDERS.FORM.QUANTITY' |
+                                    translate }}</th>
+                                <th class="px-4 py-2 text-right text-sm font-semibold">{{ 'ORDERS.FORM.UNIT_PRICE' |
+                                    translate }}</th>
+                                <th class="px-4 py-2 text-right text-sm font-semibold">{{ 'ORDERS.FORM.SUBTOTAL' |
+                                    translate }}</th>
+                                <th class="px-4 py-2"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of temporaryItems; let i = index" class="border-t">
+                                <td class="px-4 py-2">{{ item.product.name }}</td>
+                                <td class="px-4 py-2 text-center">{{ item.quantity }}</td>
+                                <td class="px-4 py-2 text-right">${{ item.product.price_sale }}</td>
+                                <td class="px-4 py-2 text-right font-semibold">${{ item.subtotal.toFixed(2) }}</td>
+                                <td class="px-4 py-2">
+                                    <button type="button" (click)="removeItem(i)"
+                                        class="text-red-600 hover:text-red-800">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="bg-gray-50 border-t-2">
+                            <tr>
+                                <td colspan="3" class="px-4 py-3 text-right font-bold">{{ 'ORDERS.TOTAL' | translate
+                                    }}:</td>
+                                <td class="px-4 py-3 text-right text-lg font-bold text-blue-600">${{
+                                    totalAmount.toFixed(2) }}</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                }
+
+                <!-- Notes -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">{{ 'ORDERS.NOTES' | translate
+                        }}</label>
+                    <textarea formControlName="notes" rows="2"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg"></textarea>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-3 pt-4 border-t">
+                    <button type="button" (click)="toggleOrderForm()" [disabled]="isSaving"
+                        class="flex-1 px-4 py-2.5 text-gray-700 bg-white border rounded-lg hover:bg-gray-50">
+                        {{ 'ORDERS.CANCEL' | translate }}
+                    </button>
+                    <button type="button" (click)="saveOrder()" [disabled]="isSaving || temporaryItems.length === 0"
+                        class="flex-1 px-4 py-2.5 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50">
+                        @if (isSaving) {
+                        <i class="fas fa-spinner fa-spin mr-2"></i>{{ 'ORDERS.SAVING' | translate }}
+                        } @else {
+                        <i class="fas fa-save mr-2"></i>{{ 'ORDERS.SAVE' | translate }}
+                        }
                     </button>
                 </div>
-            </div>
+            </form>
+        </div>
+        }
 
-            <!-- Orders Table -->
-            <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
-                @if (isLoading) {
-                <div class="p-12 text-center">
-                    <i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i>
-                    <p class="mt-4 text-gray-600">{{ 'ORDERS.LOADING' | translate }}</p>
-                </div>
-                } @else if (orders.length === 0) {
-                <div class="p-12 text-center">
-                    <i class="fas fa-inbox text-5xl text-gray-400 mb-4"></i>
-                    <p class="text-gray-600">{{ 'ORDERS.NO_ORDERS' | translate }}</p>
-                </div>
-                } @else {
-                <table class="w-full">
-                    <thead class="bg-gray-50 border-b">
-                        <tr>
-                            <th class="px-6 py-4 text-left text-sm font-semibold">#</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold">{{ 'ORDERS.ORDER_NUMBER' | translate
-                                }}</th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold">{{ 'ORDERS.CREATED_AT' | translate }}
-                            </th>
-                            <th class="px-6 py-4 text-left text-sm font-semibold">{{ 'ORDERS.STATUS' | translate }}</th>
-                            <th class="px-6 py-4 text-right text-sm font-semibold">{{ 'ORDERS.TOTAL' | translate }}</th>
-                            <th class="px-6 py-4 text-center text-sm font-semibold">{{ 'ORDERS.ACTIONS.TITLE' |
-                                translate }}</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y">
-                        <tr *ngFor="let order of orders; let i = index" class="hover:bg-gray-50">
-                            <td class="px-6 py-4 text-sm text-gray-500">{{ i + 1 + (currentPage - 1) * pageSize }}</td>
-                            <td class="px-6 py-4 font-medium">{{ order.order_number }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-600">{{ formatDate(order.created_at) }}</td>
-                            <td class="px-6 py-4">
-                                <span [class]="getStatusClass(order.status)"
-                                    class="px-3 py-1 rounded-full text-xs font-semibold">
-                                    {{ 'ORDERS.STATUSES.' + order.status | translate }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-right font-semibold text-blue-600">${{ order.total }}</td>
-                            <td class="px-6 py-4 text-center">
-                                <button (click)="viewDetail(order)" class="text-blue-600 hover:text-blue-800 mr-3">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                }
-            </div>
-
-            <!-- Pagination -->
-            @if (totalPages > 1) {
-            <div class="flex justify-center gap-2">
-                <button *ngFor="let page of [].constructor(totalPages); let i = index" (click)="goToPage(i + 1)"
-                    [class.bg-blue-600]="currentPage === i + 1" [class.text-white]="currentPage === i + 1"
-                    class="px-4 py-2 border rounded-lg hover:bg-gray-100">
-                    {{ i + 1 }}
+        <!-- Filters -->
+        <div class="bg-white rounded-xl border shadow-sm p-4">
+            <div class="flex flex-wrap gap-2">
+                <button *ngFor="let filter of filters" (click)="applyFilter(filter.value)"
+                    [class.bg-blue-600]="currentFilter === filter.value"
+                    [class.text-white]="currentFilter === filter.value"
+                    [class.bg-gray-100]="currentFilter !== filter.value"
+                    class="px-4 py-2 rounded-lg font-medium transition">
+                    {{ filter.label | translate }}
                 </button>
             </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="bg-white rounded-xl border shadow-sm overflow-hidden">
+            @if (isLoading) {
+            <div class="p-12 text-center">
+                <i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i>
+                <p class="mt-4 text-gray-600">{{ 'ORDERS.LOADING' | translate }}</p>
+            </div>
+            } @else if (orders.length === 0) {
+            <div class="p-12 text-center">
+                <i class="fas fa-inbox text-5xl text-gray-400 mb-4"></i>
+                <p class="text-gray-600">{{ 'ORDERS.NO_ORDERS' | translate }}</p>
+            </div>
+            } @else {
+            <table class="w-full">
+                <thead class="bg-gray-50 border-b">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-sm font-semibold">#</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold">{{ 'ORDERS.ORDER_NUMBER' | translate
+                            }}</th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold">{{ 'ORDERS.CREATED_AT' | translate }}
+                        </th>
+                        <th class="px-6 py-4 text-left text-sm font-semibold">{{ 'ORDERS.STATUS' | translate }}</th>
+                        <th class="px-6 py-4 text-right text-sm font-semibold">{{ 'ORDERS.TOTAL' | translate }}</th>
+                        <th class="px-6 py-4 text-center text-sm font-semibold">{{ 'ORDERS.ACTIONS.TITLE' |
+                            translate }}</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y">
+                    <tr *ngFor="let order of orders; let i = index" class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ i + 1 + (currentPage - 1) * pageSize }}</td>
+                        <td class="px-6 py-4 font-medium">{{ order.order_number }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-600">{{ formatDate(order.created_at) }}</td>
+                        <td class="px-6 py-4">
+                            <span [class]="getStatusClass(order.status)"
+                                class="px-3 py-1 rounded-full text-xs font-semibold">
+                                {{ 'ORDERS.STATUSES.' + order.status | translate }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-right font-semibold text-blue-600">${{ order.total }}</td>
+                        <td class="px-6 py-4 text-center">
+                            <button (click)="viewDetail(order)" class="text-blue-600 hover:text-blue-800 mr-3">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             }
         </div>
+
+        <!-- Pagination -->
+        @if (totalPages > 1) {
+        <div class="flex justify-center gap-2">
+            <button *ngFor="let page of [].constructor(totalPages); let i = index" (click)="goToPage(i + 1)"
+                [class.bg-blue-600]="currentPage === i + 1" [class.text-white]="currentPage === i + 1"
+                class="px-4 py-2 border rounded-lg hover:bg-gray-100">
+                {{ i + 1 }}
+            </button>
+        </div>
+        }
     </div>
 </div>
 
