@@ -128,6 +128,46 @@ export class MovementCreate implements OnInit {
         return (value / max) * 80 + 10;
     }
 
+    get selectedProduct(): Product | undefined {
+        const id = this.form.get('product_id')?.value;
+        const product = this.products.find(p => p.id == id);
+        if (product) {
+            product.current_stock = Number(product.current_stock);
+        }
+        return product;
+    }
+
+    get projectedStock(): number {
+        const product = this.selectedProduct;
+        if (!product) return 0;
+
+        const current = Number(product.current_stock) || 0;
+        const qty = this.form.get('quantity')?.value || 0;
+        const type = this.form.get('type')?.value;
+
+        switch (type) {
+            case TransactionType.IN:
+                return current + qty;
+            case TransactionType.OUT:
+                return current - qty;
+            case TransactionType.ADJUSTMENT:
+                return current + qty;
+        }
+        return current;
+    }
+
+    get maxStock(): number {
+        const current = this.selectedProduct?.current_stock || 0;
+        const projected = this.projectedStock;
+        return Math.max(Number(current), projected);
+    }
+
+    getBarHeight(value: number): number {
+        const max = this.maxStock;
+        if (max === 0) return 0;
+        return (value / max) * 80 + 10;
+    }
+
     incrementQty() {
         const current = this.form.get('quantity')?.value || 0;
         this.form.patchValue({ quantity: current + 1 });
