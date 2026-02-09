@@ -272,16 +272,21 @@
         }
     },
     "SUPPLIERS": {
-        "TITLE": "Proveedor",
+        "TITLE": "Proveedores",
+        "LABEL": "Proveedor",
         "MANAGEMENT": "Gestión de Proveedores",
         "NEW_SUPPLIER": "Nuevo Proveedor",
+        "EDIT_SUPPLIER": "Editar Proveedor",
         "NAME": "Nombre",
         "CONTACT": "Contacto",
+        "CONTACT_PERSON": "Persona de Contacto",
         "EMAIL": "Email",
         "PHONE": "Teléfono",
         "ADDRESS": "Dirección",
         "WEBSITE": "Sitio Web",
-        "NOTES": "Notas"
+        "NOTES": "Notas",
+        "PRODUCTS_COUNT": "Productos",
+        "NO_SUPPLIERS": "No hay proveedores registrados"
     },
     "ORDERS": {
         "TITLE": "Pedidos",
@@ -384,20 +389,6 @@
         "CONFIRM": "Sí, eliminar",
         "CANCEL": "Cancelar",
         "DELETE": "Eliminar"
-    },
-    "SUPPLIERS": {
-        "NEW_SUPPLIER": "Nuevo Proveedor",
-        "PRODUCTS_COUNT": "Productos",
-        "NO_SUPPLIERS": "No hay proveedores registrados",
-        "CONTACT_PERSON": "Persona de Contacto",
-        "NOTES": "Notas",
-        "EDIT_SUPPLIER": "Editar Proveedor",
-        "NAME": "Nombre",
-        "ADDRESS": "Dirección",
-        "WEBSITE": "Sitio Web",
-        "TITLE": "Proveedores",
-        "PHONE": "Teléfono",
-        "EMAIL": "Email"
     },
     "SETTINGS": {
         "TITLE": "Configuración",

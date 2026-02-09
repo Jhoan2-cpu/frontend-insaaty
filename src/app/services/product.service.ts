@@ -14,6 +14,11 @@ export interface Product {
     current_stock: number;
     created_at: string;
     updated_at: string;
+    supplier_id?: number | null;
+    supplier?: {
+        id: number;
+        name: string;
+    };
 }
 
 export interface ProductsResponse {
@@ -36,6 +41,7 @@ export interface CreateProductDto {
     price_sale: number;
     min_stock?: number;
     current_stock?: number;
+    supplier_id?: number;
 }
 
 @Injectable({

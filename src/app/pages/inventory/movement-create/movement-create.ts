@@ -5,7 +5,6 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InventoryService, TransactionType } from '../../../services/inventory.service';
 import { ProductService, Product } from '../../../services/product.service';
-import { SuppliersService, Supplier } from '../../../services/suppliers.service';
 import { ToastService } from '../../../services/toast.service';
 
 @Component({
@@ -19,14 +18,12 @@ export class MovementCreate implements OnInit {
     isSaving = false;
     isLoadingProducts = true;
     products: Product[] = [];
-    suppliers: Supplier[] = [];
     TransactionType = TransactionType;
 
     constructor(
         private fb: FormBuilder,
         private inventoryService: InventoryService,
         private productService: ProductService,
-        private suppliersService: SuppliersService,
         private toast: ToastService,
         private translate: TranslateService,
         private router: Router
@@ -35,14 +32,12 @@ export class MovementCreate implements OnInit {
             type: [TransactionType.IN, Validators.required],
             product_id: ['', Validators.required],
             quantity: [1, [Validators.required, Validators.min(1)]],
-            reason: ['', Validators.required],
-            supplier_id: [null]
+            reason: ['', Validators.required]
         });
     }
 
     ngOnInit() {
         this.loadProducts();
-        this.loadSuppliers();
     }
 
     loadProducts() {
@@ -62,17 +57,6 @@ export class MovementCreate implements OnInit {
         });
     }
 
-    loadSuppliers() {
-        this.suppliersService.getSuppliers({ page: 1, limit: 100 }).subscribe({
-            next: (res) => {
-                this.suppliers = res.data;
-            },
-            error: (err) => {
-                console.error('Error loading suppliers:', err);
-            }
-        });
-    }
-
     submit() {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
@@ -86,8 +70,7 @@ export class MovementCreate implements OnInit {
             product_id: parseInt(formValue.product_id),
             type: formValue.type,
             quantity: formValue.quantity,
-            reason: formValue.reason,
-            supplier_id: formValue.supplier_id ? parseInt(formValue.supplier_id) : undefined
+            reason: formValue.reason
         }).subscribe({
             next: () => {
                 this.toast.success(this.translate.instant('INVENTORY.MOVEMENT_SUCCESS'));

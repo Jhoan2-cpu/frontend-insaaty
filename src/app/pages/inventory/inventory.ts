@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductService, Product, CreateProductDto } from '../../services/product.service';
+import { SuppliersService, Supplier } from '../../services/suppliers.service';
 
 @Component({
   selector: 'app-inventory',
@@ -20,6 +21,7 @@ import { ProductService, Product, CreateProductDto } from '../../services/produc
 })
 export class Inventory implements OnInit {
   products: Product[] = [];
+  suppliers: Supplier[] = [];
 
   // Filtros
   currentFilter = 'all';
@@ -58,6 +60,7 @@ export class Inventory implements OnInit {
 
   constructor(
     private productService: ProductService,
+    private suppliersService: SuppliersService,
     private translate: TranslateService,
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder
@@ -66,6 +69,16 @@ export class Inventory implements OnInit {
   ngOnInit() {
     this.translate.setDefaultLang('es');
     this.loadProducts();
+    this.loadSuppliers();
+  }
+
+  loadSuppliers() {
+    this.suppliersService.getSuppliers({ page: 1, limit: 100 }).subscribe({
+      next: (res) => {
+        this.suppliers = res.data;
+      },
+      error: (err) => console.error('Error loading suppliers', err)
+    });
   }
 
   loadProducts() {
@@ -182,7 +195,8 @@ export class Inventory implements OnInit {
       price_cost: [0, [Validators.required, Validators.min(0.01)]],
       price_sale: [0, [Validators.required, Validators.min(0.01)]],
       min_stock: [10, [Validators.min(0)]],
-      current_stock: [{ value: 0, disabled: this.isEditMode }, [Validators.min(0)]]
+      current_stock: [{ value: 0, disabled: this.isEditMode }, [Validators.min(0)]],
+      supplier_id: [null]
     });
 
     // Auto-calculate margin
@@ -224,7 +238,8 @@ export class Inventory implements OnInit {
           price_cost: product.price_cost,
           price_sale: product.price_sale,
           min_stock: product.min_stock,
-          current_stock: product.current_stock
+          current_stock: product.current_stock,
+          supplier_id: product.supplier_id
         });
         this.calculateMargin();
         this.openMenuId = null;
@@ -250,7 +265,8 @@ export class Inventory implements OnInit {
       price_cost: formValue.price_cost,
       price_sale: formValue.price_sale,
       min_stock: formValue.min_stock,
-      current_stock: formValue.current_stock
+      current_stock: formValue.current_stock,
+      supplier_id: formValue.supplier_id ? Number(formValue.supplier_id) : undefined
     };
 
     const request$ = this.isEditMode && this.editingProductId

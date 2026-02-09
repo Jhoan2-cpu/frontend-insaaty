@@ -272,16 +272,21 @@
         }
     },
     "SUPPLIERS": {
-        "TITLE": "Supplier",
+        "TITLE": "Suppliers",
+        "LABEL": "Supplier",
         "MANAGEMENT": "Supplier Management",
         "NEW_SUPPLIER": "New Supplier",
+        "EDIT_SUPPLIER": "Edit Supplier",
         "NAME": "Name",
         "CONTACT": "Contact",
+        "CONTACT_PERSON": "Contact Person",
         "EMAIL": "Email",
         "PHONE": "Phone",
         "ADDRESS": "Address",
         "WEBSITE": "Website",
-        "NOTES": "Notes"
+        "NOTES": "Notes",
+        "PRODUCTS_COUNT": "Products",
+        "NO_SUPPLIERS": "No suppliers registered"
     },
     "ORDERS": {
         "TITLE": "Orders",
@@ -384,20 +389,6 @@
         "CONFIRM": "Yes, delete",
         "CANCEL": "Cancel",
         "DELETE": "Delete"
-    },
-    "SUPPLIERS": {
-        "NEW_SUPPLIER": "New Supplier",
-        "PRODUCTS_COUNT": "Products",
-        "NO_SUPPLIERS": "No suppliers registered",
-        "CONTACT_PERSON": "Contact Person",
-        "NOTES": "Notes",
-        "EDIT_SUPPLIER": "Edit Supplier",
-        "NAME": "Name",
-        "ADDRESS": "Address",
-        "WEBSITE": "Website",
-        "TITLE": "Suppliers",
-        "PHONE": "Phone",
-        "EMAIL": "Email"
     },
     "SETTINGS": {
         "TITLE": "Settings",
