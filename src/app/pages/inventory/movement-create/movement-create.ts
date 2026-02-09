@@ -108,8 +108,7 @@ export class MovementCreate implements OnInit {
             case TransactionType.OUT:
                 return current - qty;
             case TransactionType.ADJUSTMENT:
-                // Assuming adjustment adds for visualization if positive input
-                return current + qty;
+                return qty;
         }
         return current;
     }

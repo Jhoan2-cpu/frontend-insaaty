@@ -172,14 +172,19 @@
                             class="bg-white border border-gray-200 p-3 rounded-xl text-center relative overflow-hidden">
                             <span class="block text-xs text-gray-500 font-bold uppercase mb-1">Movimiento</span>
                             <span class="text-xl font-bold"
-                                [class.text-green-600]="form.get('type')?.value === TransactionType.IN || form.get('type')?.value === TransactionType.ADJUSTMENT"
+                                [class.text-green-600]="form.get('type')?.value === TransactionType.IN"
+                                [class.text-purple-600]="form.get('type')?.value === TransactionType.ADJUSTMENT"
                                 [class.text-red-600]="form.get('type')?.value === TransactionType.OUT">
-                                {{ form.get('type')?.value === TransactionType.OUT ? '-' : '+' }}{{
+                                {{ form.get('type')?.value === TransactionType.ADJUSTMENT ? '' :
+                                (form.get('type')?.value === TransactionType.OUT ? '-' : '+') }}{{
                                 form.get('quantity')?.value }}
                             </span>
                         </div>
                         <div class="bg-blue-50 p-3 rounded-xl text-center border border-blue-100">
-                            <span class="block text-xs text-blue-600 font-bold uppercase mb-1">Proyectado</span>
+                            <span class="block text-xs text-blue-600 font-bold uppercase mb-1">
+                                {{ form.get('type')?.value === TransactionType.ADJUSTMENT ? 'Stock Final' : 'Proyectado'
+                                }}
+                            </span>
                             <span class="text-xl font-bold text-blue-700">{{ projectedStock }}</span>
                             <span class="text-xs text-blue-400">unid.</span>
                         </div>
@@ -211,7 +216,8 @@
                             <!-- Bar After -->
                             <div class="flex flex-col items-center gap-2 group w-20 h-full justify-end">
                                 <div class="w-16 rounded-t-lg transition-all duration-500 relative relative overflow-hidden"
-                                    [class.bg-blue-500]="form.get('type')?.value !== TransactionType.OUT"
+                                    [class.bg-blue-500]="form.get('type')?.value === TransactionType.IN"
+                                    [class.bg-purple-500]="form.get('type')?.value === TransactionType.ADJUSTMENT"
                                     [class.bg-orange-500]="form.get('type')?.value === TransactionType.OUT"
                                     [style.height.%]="getBarHeight(projectedStock)">
 
