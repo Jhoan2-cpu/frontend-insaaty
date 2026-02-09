@@ -271,6 +271,18 @@
             "DELETE": "Delete"
         }
     },
+    "SUPPLIERS": {
+        "TITLE": "Supplier",
+        "MANAGEMENT": "Supplier Management",
+        "NEW_SUPPLIER": "New Supplier",
+        "NAME": "Name",
+        "CONTACT": "Contact",
+        "EMAIL": "Email",
+        "PHONE": "Phone",
+        "ADDRESS": "Address",
+        "WEBSITE": "Website",
+        "NOTES": "Notes"
+    },
     "ORDERS": {
         "TITLE": "Orders",
         "DESCRIPTION": "Manage your business orders",

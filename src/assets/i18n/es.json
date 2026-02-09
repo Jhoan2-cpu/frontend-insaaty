@@ -271,6 +271,18 @@
             "DELETE": "Eliminar"
         }
     },
+    "SUPPLIERS": {
+        "TITLE": "Proveedor",
+        "MANAGEMENT": "Gestión de Proveedores",
+        "NEW_SUPPLIER": "Nuevo Proveedor",
+        "NAME": "Nombre",
+        "CONTACT": "Contacto",
+        "EMAIL": "Email",
+        "PHONE": "Teléfono",
+        "ADDRESS": "Dirección",
+        "WEBSITE": "Sitio Web",
+        "NOTES": "Notas"
+    },
     "ORDERS": {
         "TITLE": "Pedidos",
         "DESCRIPTION": "Gestiona los pedidos de tu negocio",

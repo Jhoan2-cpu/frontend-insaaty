@@ -27,6 +27,11 @@ export interface InventoryTransaction {
         full_name: string;
         email?: string;
     };
+    supplier?: {
+        id: number;
+        name: string;
+    };
+    supplier_id?: number;
 }
 
 export interface InventorySummary {
@@ -41,6 +46,7 @@ export interface CreateTransactionDto {
     type: TransactionType;
     quantity: number;
     reason?: string;
+    supplier_id?: number;
 }
 
 @Injectable({
