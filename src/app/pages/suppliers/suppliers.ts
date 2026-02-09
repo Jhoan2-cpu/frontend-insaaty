@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
 import { SuppliersService, Supplier, SuppliersResponse } from '../../services/suppliers.service';
 
 @Component({
@@ -30,11 +31,19 @@ export class Suppliers implements OnInit {
 
   constructor(
     private suppliersService: SuppliersService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.loadSuppliers();
+
+    // Check for query params
+    this.route.queryParams.subscribe(params => {
+      if (params['action'] === 'create') {
+        this.openCreateForm();
+      }
+    });
   }
 
   loadSuppliers() {
@@ -56,7 +65,7 @@ export class Suppliers implements OnInit {
         this.isLoading = false;
         this.cdr.detectChanges();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error loading suppliers:', err);
         this.isLoading = false;
         this.cdr.detectChanges();
@@ -103,7 +112,7 @@ export class Suppliers implements OnInit {
           this.closeForm();
           this.loadSuppliers();
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Error updating supplier:', err);
           this.isSubmitting = false;
           this.cdr.detectChanges();
@@ -116,7 +125,7 @@ export class Suppliers implements OnInit {
           this.closeForm();
           this.loadSuppliers();
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Error creating supplier:', err);
           this.isSubmitting = false;
           this.cdr.detectChanges();
@@ -131,7 +140,7 @@ export class Suppliers implements OnInit {
         next: () => {
           this.loadSuppliers();
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Error deleting supplier:', err);
         }
       });

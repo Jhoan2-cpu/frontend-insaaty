@@ -200,7 +200,7 @@
 
 <!-- Detail Modal -->
 @if (showDetailModal && selectedOrder) {
-<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" (click)="closeDetail()">
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] p-4" (click)="closeDetail()">
     <div class="bg-white rounded-xl max-w-2xl w-full p-6 animate__fadeIn" (click)="$event.stopPropagation()">
         <div class="flex justify-between items-start mb-4">
             <div>
