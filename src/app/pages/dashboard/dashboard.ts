@@ -2,6 +2,9 @@ import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, Inject, PLATFO
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart, registerables } from 'chart.js';
+import { ReportsService, KPIs, LowStockProduct, SalesReportData } from '../../services/reports.service';
+import { InventoryService, InventoryTransaction } from '../../services/inventory.service';
+import { forkJoin } from 'rxjs';
 
 Chart.register(...registerables);
 
@@ -16,25 +19,27 @@ export class Dashboard implements OnInit, AfterViewInit {
   @ViewChild('volumeChart') volumeChart!: ElementRef;
 
   chart: any;
+  loading = true;
 
-  // Mock data for low stock
-  lowStockItems = [
-    { nameKey: 'Wireless Mouse', qty: 2, status: 'CRITICAL', icon: 'fa-mouse' },
-    { nameKey: 'HDMI Cable 6ft', qty: 5, status: 'LOW', icon: 'fa-plug' },
-    { nameKey: 'Keycaps Set', qty: 8, status: 'LOW', icon: 'fa-keyboard' },
-    { nameKey: 'USB-C Hub', qty: 3, status: 'CRITICAL', icon: 'fa-usb' }
-  ];
+  // Real data
+  kpis: KPIs = {
+    totalSales: 0,
+    totalOrders: 0,
+    completedOrders: 0,
+    pendingOrders: 0,
+    totalProfit: 0,
+    productsCount: 0,
+    lowStockCount: 0
+  };
 
-  // Mock data for recent transactions
-  recentTransactions = [
-    { id: '#TRX-4402', type: 'STOCK_IN', date: 'Oct 24, 2023 - 10:42 AM', items: '240 Units', status: 'PENDING' },
-    { id: '#TRX-4401', type: 'STOCK_OUT', date: 'Oct 24, 2023 - 09:15 AM', items: '12 Units', status: 'COMPLETED' },
-    { id: '#TRX-4399', type: 'STOCK_OUT', date: 'Oct 23, 2023 - 04:30 PM', items: '50 Units', status: 'COMPLETED' },
-    { id: '#TRX-4398', type: 'TRANSFER', date: 'Oct 23, 2023 - 02:15 PM', items: '100 Units', status: 'COMPLETED' }
-  ];
+  lowStockItems: LowStockProduct[] = [];
+  recentTransactions: any[] = []; // Using any to map fields easily for display
+  salesData: SalesReportData[] = [];
 
   constructor(
     private translate: TranslateService,
+    private reportsService: ReportsService,
+    private inventoryService: InventoryService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -42,15 +47,59 @@ export class Dashboard implements OnInit, AfterViewInit {
     this.translate.setDefaultLang('es');
     const savedLang = this.translate.currentLang || 'es';
     this.translate.use(savedLang);
+
+    this.loadDashboardData();
   }
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.initChart();
-    }
+    // Chart initialization moved to fetch success to ensure data exists
+  }
+
+  loadDashboardData() {
+    this.loading = true;
+
+    forkJoin({
+      kpis: this.reportsService.getKPIs(),
+      lowStock: this.reportsService.getLowStockProducts(),
+      transactions: this.inventoryService.getTransactions({ page: 1, limit: 10 }),
+      sales: this.reportsService.getSalesReport()
+    }).subscribe({
+      next: (res) => {
+        this.kpis = res.kpis;
+        this.lowStockItems = res.lowStock;
+        this.salesData = res.sales;
+
+        // Map transactions to display format
+        this.recentTransactions = res.transactions.data.map(t => ({
+          id: `#TRX-${t.id}`,
+          type: t.type,
+          date: new Date(t.created_at).toLocaleDateString() + ' ' + new Date(t.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          items: `${t.quantity} Units`,
+          status: 'COMPLETED', // Inventory transactions are instant/completed
+          productName: t.product?.name
+        }));
+
+        this.loading = false;
+
+        if (isPlatformBrowser(this.platformId)) {
+          setTimeout(() => this.initChart(), 0);
+        }
+      },
+      error: (err) => {
+        console.error('Error loading dashboard data', err);
+        this.loading = false;
+      }
+    });
   }
 
   initChart() {
+    if (!this.volumeChart) return;
+
+    // Destroy existing chart if any
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
     const ctx = this.volumeChart.nativeElement.getContext('2d');
 
     // Gradient fill
@@ -58,13 +107,22 @@ export class Dashboard implements OnInit, AfterViewInit {
     gradient.addColorStop(0, 'rgba(59, 130, 246, 0.2)'); // Blue with opacity
     gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
 
+    // Prepare data
+    const labels = this.salesData.length > 0
+      ? this.salesData.map(d => new Date(d.date).toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short' }))
+      : ['No Data'];
+
+    const data = this.salesData.length > 0
+      ? this.salesData.map(d => d.totalSales)
+      : [0];
+
     this.chart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['Aug 1', 'Aug 5', 'Aug 10', 'Aug 15', 'Aug 20', 'Aug 25', 'Aug 30'],
+        labels: labels,
         datasets: [{
-          label: 'Transaction Volume',
-          data: [65, 59, 80, 55, 95, 45, 85],
+          label: 'Sales Volume',
+          data: data,
           borderColor: '#3b82f6', // Blue-500
           backgroundColor: gradient,
           borderWidth: 3,
@@ -90,7 +148,10 @@ export class Dashboard implements OnInit, AfterViewInit {
             bodyColor: '#fff',
             padding: 12,
             cornerRadius: 8,
-            displayColors: false
+            displayColors: false,
+            callbacks: {
+              label: (context) => `Sales: $${context.raw}`
+            }
           }
         },
         scales: {
@@ -127,16 +188,18 @@ export class Dashboard implements OnInit, AfterViewInit {
       case 'PENDING': return 'bg-yellow-100 text-yellow-700';
       case 'COMPLETED': return 'bg-green-100 text-green-700';
       case 'CANCELLED': return 'bg-red-100 text-red-700';
+      case 'ADJUSTMENT': return 'bg-purple-100 text-purple-700';
       default: return 'bg-gray-100 text-gray-700';
     }
   }
 
   getIconClass(type: string): string {
     switch (type) {
-      case 'STOCK_IN': return 'fa-arrow-down text-green-500';
-      case 'STOCK_OUT': return 'fa-arrow-up text-blue-500';
-      case 'TRANSFER': return 'fa-exchange-alt text-purple-500';
+      case 'IN': return 'fa-arrow-down text-green-500';
+      case 'OUT': return 'fa-arrow-up text-blue-500';
+      case 'ADJUSTMENT': return 'fa-exchange-alt text-purple-500';
       default: return 'fa-circle';
     }
   }
 }
+
