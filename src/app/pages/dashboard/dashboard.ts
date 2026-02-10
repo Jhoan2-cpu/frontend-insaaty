@@ -4,7 +4,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart, registerables } from 'chart.js';
 import { ReportsService, KPIs, LowStockProduct, SalesReportData } from '../../services/reports.service';
 import { InventoryService, InventoryTransaction } from '../../services/inventory.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 Chart.register(...registerables);
 
@@ -59,10 +60,33 @@ export class Dashboard implements OnInit, AfterViewInit {
     this.loading = true;
 
     forkJoin({
-      kpis: this.reportsService.getKPIs(),
-      lowStock: this.reportsService.getLowStockProducts(),
-      transactions: this.inventoryService.getTransactions({ page: 1, limit: 10 }),
-      sales: this.reportsService.getSalesReport()
+      kpis: this.reportsService.getKPIs().pipe(
+        catchError(err => {
+          console.error('Failed to load KPIs', err);
+          return of({
+            totalSales: 0, totalOrders: 0, completedOrders: 0,
+            pendingOrders: 0, totalProfit: 0, productsCount: 0, lowStockCount: 0
+          } as KPIs);
+        })
+      ),
+      lowStock: this.reportsService.getLowStockProducts().pipe(
+        catchError(err => {
+          console.error('Failed to load Low Stock', err);
+          return of([] as LowStockProduct[]);
+        })
+      ),
+      transactions: this.inventoryService.getTransactions({ page: 1, limit: 10 }).pipe(
+        catchError(err => {
+          console.error('Failed to load Transactions', err);
+          return of({ data: [], meta: {} });
+        })
+      ),
+      sales: this.reportsService.getSalesReport().pipe(
+        catchError(err => {
+          console.error('Failed to load Sales', err);
+          return of([] as SalesReportData[]);
+        })
+      )
     }).subscribe({
       next: (res) => {
         this.kpis = res.kpis;
@@ -70,14 +94,16 @@ export class Dashboard implements OnInit, AfterViewInit {
         this.salesData = res.sales;
 
         // Map transactions to display format
-        this.recentTransactions = res.transactions.data.map(t => ({
-          id: `#TRX-${t.id}`,
-          type: t.type,
-          date: new Date(t.created_at).toLocaleDateString() + ' ' + new Date(t.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          items: `${t.quantity} Units`,
-          status: 'COMPLETED', // Inventory transactions are instant/completed
-          productName: t.product?.name
-        }));
+        if (res.transactions && res.transactions.data) {
+          this.recentTransactions = res.transactions.data.map(t => ({
+            id: `#TRX-${t.id}`,
+            type: t.type,
+            date: new Date(t.created_at).toLocaleDateString() + ' ' + new Date(t.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            items: `${t.quantity} Units`,
+            status: 'COMPLETED', // Inventory transactions are instant/completed
+            productName: t.product?.name
+          }));
+        }
 
         this.loading = false;
 
@@ -86,7 +112,7 @@ export class Dashboard implements OnInit, AfterViewInit {
         }
       },
       error: (err) => {
-        console.error('Error loading dashboard data', err);
+        console.error('Critical error loading dashboard data', err);
         this.loading = false;
       }
     });
