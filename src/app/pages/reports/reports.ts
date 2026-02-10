@@ -43,7 +43,6 @@ export class Reports implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('REPORTS.TITLE');
     this.loadAllData();
   }
 

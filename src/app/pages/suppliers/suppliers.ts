@@ -38,7 +38,6 @@ export class Suppliers implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('SUPPLIERS.TITLE');
     this.loadSuppliers();
 
     // Check for query params

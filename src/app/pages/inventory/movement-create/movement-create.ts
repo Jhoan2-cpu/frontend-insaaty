@@ -39,7 +39,6 @@ export class MovementCreate implements OnInit {
     }
 
     ngOnInit() {
-        this.titleService.setTitle('INVENTORY.MOVEMENT_TITLE');
         this.loadProducts();
     }
 

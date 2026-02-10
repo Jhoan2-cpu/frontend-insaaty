@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute, RouterModule } from '@angular/router';
+import { filter, map, mergeMap } from 'rxjs/operators';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { OrderService } from '../../services/order.service';
@@ -31,7 +32,9 @@ export class Layout implements OnInit {
     private translate: TranslateService,
     private authService: AuthService,
     private orderService: OrderService,
-    public titleService: TitleService
+    public titleService: TitleService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -54,6 +57,22 @@ export class Layout implements OnInit {
     if (window.location.pathname.includes('/inventory')) {
       this.isInventoryOpen = true;
     }
+
+    // Subscribe to router events to update title
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      map(() => this.activatedRoute),
+      map(route => {
+        while (route.firstChild) route = route.firstChild;
+        return route;
+      }),
+      filter(route => route.outlet === 'primary'),
+      mergeMap(route => route.data)
+    ).subscribe(data => {
+      if (data['title']) {
+        this.titleService.setTitle(data['title']);
+      }
+    });
   }
 
   loadPendingCount() {

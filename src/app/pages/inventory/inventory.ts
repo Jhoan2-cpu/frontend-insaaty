@@ -70,7 +70,6 @@ export class Inventory implements OnInit {
 
   ngOnInit() {
     this.translate.setDefaultLang('es');
-    this.titleService.setTitle('INVENTORY.TITLE');
     this.loadProducts();
     this.loadSuppliers();
   }
@@ -79,6 +78,7 @@ export class Inventory implements OnInit {
     this.suppliersService.getSuppliers({ page: 1, limit: 100 }).subscribe({
       next: (res) => {
         this.suppliers = res.data;
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error loading suppliers', err)
     });

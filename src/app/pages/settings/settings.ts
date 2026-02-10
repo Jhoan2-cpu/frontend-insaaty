@@ -55,7 +55,6 @@ export class Settings implements OnInit {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('SETTINGS.TITLE');
     this.loadProfile();
   }
 

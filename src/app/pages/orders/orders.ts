@@ -56,7 +56,6 @@ export class Orders implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('SIDEBAR.ORDERS');
     this.loadOrders();
     this.initOrderForm();
   }

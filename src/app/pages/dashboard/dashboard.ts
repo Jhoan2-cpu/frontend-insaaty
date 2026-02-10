@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart, registerables } from 'chart.js';
@@ -43,6 +43,7 @@ export class Dashboard implements OnInit, AfterViewInit {
     private reportsService: ReportsService,
     private inventoryService: InventoryService,
     private titleService: TitleService,
+    private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -50,7 +51,6 @@ export class Dashboard implements OnInit, AfterViewInit {
     this.translate.setDefaultLang('es');
     const savedLang = this.translate.currentLang || 'es';
     this.translate.use(savedLang);
-    this.titleService.setTitle('SIDEBAR.DASHBOARD');
 
     this.loadDashboardData();
   }
@@ -109,6 +109,7 @@ export class Dashboard implements OnInit, AfterViewInit {
         }
 
         this.loading = false;
+        this.cdr.detectChanges();
 
         if (isPlatformBrowser(this.platformId)) {
           setTimeout(() => this.initChart(), 0);
@@ -117,6 +118,7 @@ export class Dashboard implements OnInit, AfterViewInit {
       error: (err) => {
         console.error('Critical error loading dashboard data', err);
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }

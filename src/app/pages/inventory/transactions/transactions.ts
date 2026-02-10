@@ -25,7 +25,6 @@ export class Transactions implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.titleService.setTitle('INVENTORY.HISTORY');
         this.loadHistory();
     }
 
