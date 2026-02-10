@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReportsService, SalesReportData, TopProduct, LowStockProduct, KPIs } from '../../services/reports.service';
+import { TitleService } from '../../services/title.service';
 import { Chart } from 'chart.js/auto';
 
 @Component({
@@ -37,10 +38,12 @@ export class Reports implements OnInit, AfterViewInit {
 
   constructor(
     private reportsService: ReportsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private titleService: TitleService
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('REPORTS.TITLE');
     this.loadAllData();
   }
 

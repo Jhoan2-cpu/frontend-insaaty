@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InventoryService, TransactionType } from '../../../services/inventory.service';
 import { ProductService, Product } from '../../../services/product.service';
+import { TitleService } from '../../../services/title.service';
 import { ToastService } from '../../../services/toast.service';
 
 @Component({
@@ -26,7 +27,8 @@ export class MovementCreate implements OnInit {
         private productService: ProductService,
         private toast: ToastService,
         private translate: TranslateService,
-        private router: Router
+        private router: Router,
+        private titleService: TitleService
     ) {
         this.form = this.fb.group({
             type: [TransactionType.IN, Validators.required],
@@ -37,6 +39,7 @@ export class MovementCreate implements OnInit {
     }
 
     ngOnInit() {
+        this.titleService.setTitle('INVENTORY.MOVEMENT_TITLE');
         this.loadProducts();
     }
 

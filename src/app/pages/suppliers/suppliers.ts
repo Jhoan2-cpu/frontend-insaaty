@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { SuppliersService, Supplier, SuppliersResponse } from '../../services/suppliers.service';
+import { TitleService } from '../../services/title.service';
 
 @Component({
   selector: 'app-suppliers',
@@ -32,10 +33,12 @@ export class Suppliers implements OnInit {
   constructor(
     private suppliersService: SuppliersService,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService: TitleService
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('SUPPLIERS.TITLE');
     this.loadSuppliers();
 
     // Check for query params

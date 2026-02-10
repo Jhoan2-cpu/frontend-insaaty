@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { OrderService } from '../../services/order.service';
+import { TitleService } from '../../services/title.service';
 import { ToastComponent } from '../toast/toast.component';
 
 @Component({
@@ -29,7 +30,8 @@ export class Layout implements OnInit {
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    public titleService: TitleService
   ) { }
 
   ngOnInit() {

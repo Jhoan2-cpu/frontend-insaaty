@@ -152,17 +152,22 @@
             </button>
 
             <!-- Language Selector -->
-            <div class="ml-auto flex items-center gap-2">
-                <button (click)="switchLanguage('es')" [class.bg-blue-600]="currentLang === 'es'"
-                    [class.text-white]="currentLang === 'es'" [class.text-gray-600]="currentLang !== 'es'"
-                    class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100">
-                    ES
-                </button>
-                <button (click)="switchLanguage('en')" [class.bg-blue-600]="currentLang === 'en'"
-                    [class.text-white]="currentLang === 'en'" [class.text-gray-600]="currentLang !== 'en'"
-                    class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100">
-                    EN
-                </button>
+            <div class="ml-auto flex justify-between gap-4 w-full">
+                <h1 class="text-2xl font-bold text-gray-800 hidden md:block">
+                    {{ titleService.currentTitle | async | translate }}
+                </h1>
+                <div class="flex items-center gap-2">
+                    <button (click)="switchLanguage('es')" [class.bg-blue-600]="currentLang === 'es'"
+                        [class.text-white]="currentLang === 'es'" [class.text-gray-600]="currentLang !== 'es'"
+                        class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100">
+                        ES
+                    </button>
+                    <button (click)="switchLanguage('en')" [class.bg-blue-600]="currentLang === 'en'"
+                        [class.text-white]="currentLang === 'en'" [class.text-gray-600]="currentLang !== 'en'"
+                        class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100">
+                        EN
+                    </button>
+                </div>
             </div>
         </div>
 

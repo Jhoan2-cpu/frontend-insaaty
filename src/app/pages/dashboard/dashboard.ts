@@ -4,6 +4,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart, registerables } from 'chart.js';
 import { ReportsService, KPIs, LowStockProduct, SalesReportData } from '../../services/reports.service';
 import { InventoryService, InventoryTransaction } from '../../services/inventory.service';
+import { TitleService } from '../../services/title.service';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -41,6 +42,7 @@ export class Dashboard implements OnInit, AfterViewInit {
     private translate: TranslateService,
     private reportsService: ReportsService,
     private inventoryService: InventoryService,
+    private titleService: TitleService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -48,6 +50,7 @@ export class Dashboard implements OnInit, AfterViewInit {
     this.translate.setDefaultLang('es');
     const savedLang = this.translate.currentLang || 'es';
     this.translate.use(savedLang);
+    this.titleService.setTitle('SIDEBAR.DASHBOARD');
 
     this.loadDashboardData();
   }

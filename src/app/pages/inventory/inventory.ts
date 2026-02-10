@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductService, Product, CreateProductDto } from '../../services/product.service';
 import { SuppliersService, Supplier } from '../../services/suppliers.service';
+import { TitleService } from '../../services/title.service';
 
 @Component({
   selector: 'app-inventory',
@@ -63,11 +64,13 @@ export class Inventory implements OnInit {
     private suppliersService: SuppliersService,
     private translate: TranslateService,
     private cdr: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private titleService: TitleService
   ) { }
 
   ngOnInit() {
     this.translate.setDefaultLang('es');
+    this.titleService.setTitle('INVENTORY.TITLE');
     this.loadProducts();
     this.loadSuppliers();
   }

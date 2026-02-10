@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { InventoryService, InventoryTransaction } from '../../../services/inventory.service';
+import { TitleService } from '../../../services/title.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -19,10 +20,12 @@ export class Transactions implements OnInit {
 
     constructor(
         private inventoryService: InventoryService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private titleService: TitleService
     ) { }
 
     ngOnInit() {
+        this.titleService.setTitle('INVENTORY.HISTORY');
         this.loadHistory();
     }
 

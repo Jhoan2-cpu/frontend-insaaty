@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { TranslateModule } from '@ngx-translate/core';
 import { OrderService, Order, OrderStatus, CreateOrderDto, UpdateOrderDto } from '../../services/order.service';
 import { ProductService, Product } from '../../services/product.service';
+import { TitleService } from '../../services/title.service';
 
 @Component({
   selector: 'app-orders',
@@ -50,10 +51,12 @@ export class Orders implements OnInit {
     private orderService: OrderService,
     private productService: ProductService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private titleService: TitleService
   ) { }
 
   ngOnInit() {
+    this.titleService.setTitle('SIDEBAR.ORDERS');
     this.loadOrders();
     this.initOrderForm();
   }

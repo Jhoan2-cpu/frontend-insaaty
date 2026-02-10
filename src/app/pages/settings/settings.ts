@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
+import { TitleService } from '../../services/title.service';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -27,7 +28,8 @@ export class Settings implements OnInit {
     private authService: AuthService,
     private toast: ToastService,
     private translate: TranslateService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private titleService: TitleService
   ) {
     this.profileForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
@@ -53,6 +55,7 @@ export class Settings implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('SETTINGS.TITLE');
     this.loadProfile();
   }
 
