@@ -245,7 +245,7 @@
     "INVENTORY": {
         "BREADCRUMB": "Inventory",
         "TITLE": "Product Management",
-        "HISTORY": "History",
+        "TRANSACTIONS": "Transactions",
         "MOVEMENT_TITLE": "Register Movement",
         "MOVEMENT_TYPE": "Movement Type",
         "MOVEMENT_SUBTITLE": "Record a new stock movement or adjustment.",
@@ -282,7 +282,7 @@
             "EDIT": "Edit",
             "DELETE": "Delete"
         },
-        "TRANSACTIONS": {
+        "TRANSACTIONS_VIEW": {
             "SUBTITLE": "View all stock movements and adjustments.",
             "HEADERS": {
                 "DATE": "Date",

@@ -40,7 +40,7 @@ export const routes: Routes = [
                     {
                         path: 'transactions',
                         loadComponent: () => import('./pages/inventory/transactions/transactions').then(m => m.Transactions),
-                        data: { title: 'INVENTORY.HISTORY' }
+                        data: { title: 'INVENTORY.TRANSACTIONS' }
                     },
                     {
                         path: 'movements/new',

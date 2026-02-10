@@ -245,7 +245,7 @@
     "INVENTORY": {
         "BREADCRUMB": "Inventario",
         "TITLE": "Gestión de Productos",
-        "HISTORY": "Historial",
+        "TRANSACTIONS": "Transacciones",
         "MOVEMENT_TITLE": "Registrar Movimiento",
         "MOVEMENT_TYPE": "Tipo de Movimiento",
         "MOVEMENT_SUBTITLE": "Registrar un nuevo movimiento de stock o ajuste.",
@@ -282,7 +282,7 @@
             "EDIT": "Editar",
             "DELETE": "Eliminar"
         },
-        "TRANSACTIONS": {
+        "TRANSACTIONS_VIEW": {
             "SUBTITLE": "Ver todos los movimientos de stock y ajustes.",
             "HEADERS": {
                 "DATE": "Fecha",
