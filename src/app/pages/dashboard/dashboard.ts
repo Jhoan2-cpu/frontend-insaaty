@@ -100,14 +100,17 @@ export class Dashboard implements OnInit, AfterViewInit {
 
         // Map transactions to display format
         if (res.transactions && res.transactions.data) {
-          this.recentTransactions = res.transactions.data.map(t => ({
-            id: `#TRX-${t.id}`,
+          this.allTransactions = res.transactions.data.map(t => ({
+            id: t.id, // Just the ID number
             type: t.type,
+            // Map to INVENTORY.MOVEMENT.TYPES keys
+            typeKey: `INVENTORY.MOVEMENT.TYPES.${t.type}`,
             date: new Date(t.created_at).toLocaleDateString() + ' ' + new Date(t.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             items: `${t.quantity} Units`,
             status: 'COMPLETED', // Inventory transactions are instant/completed
             productName: t.product?.name
           }));
+          this.filterTransactions();
         }
 
         this.loading = false;
@@ -123,6 +126,31 @@ export class Dashboard implements OnInit, AfterViewInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  // Filter Logic
+  allTransactions: any[] = [];
+  showFilterMenu = false;
+  currentFilter: 'ALL' | 'IN' | 'OUT' | 'ADJUSTMENT' = 'ALL';
+
+  toggleFilterMenu() {
+    this.showFilterMenu = !this.showFilterMenu;
+  }
+
+  setFilter(filter: 'ALL' | 'IN' | 'OUT' | 'ADJUSTMENT') {
+    this.currentFilter = filter;
+    this.filterTransactions();
+    this.showFilterMenu = false;
+  }
+
+  filterTransactions() {
+    if (this.currentFilter === 'ALL') {
+      this.recentTransactions = [...this.allTransactions].slice(0, 5);
+    } else {
+      this.recentTransactions = this.allTransactions
+        .filter(t => t.type === this.currentFilter)
+        .slice(0, 5);
+    }
   }
 
   setChartPeriod(period: '30' | '90') {

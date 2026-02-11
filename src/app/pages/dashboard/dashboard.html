@@ -215,11 +215,40 @@
                     <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">{{
                         'DASHBOARD.LATEST_5' | translate }}</span>
                 </div>
-                <button
-                    class="text-gray-500 hover:text-gray-700 text-sm font-medium flex items-center gap-2 border border-gray-300 px-3 py-1.5 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all">
-                    <i class="fas fa-filter"></i>
-                    {{ 'DASHBOARD.FILTER' | translate }}
-                </button>
+                <div class="relative">
+                    <button (click)="toggleFilterMenu()"
+                        class="text-gray-500 hover:text-gray-700 text-sm font-medium flex items-center gap-2 border border-gray-300 px-3 py-1.5 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all">
+                        <i class="fas fa-filter"></i>
+                        {{ 'DASHBOARD.FILTER' | translate }}
+                    </button>
+
+                    <!-- Filter Dropdown -->
+                    @if (showFilterMenu) {
+                    <div
+                        class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-100 py-1 animate__animated animate__fadeIn animate__faster">
+                        <button (click)="setFilter('ALL')" [class.bg-blue-50]="currentFilter === 'ALL'"
+                            [class.text-blue-600]="currentFilter === 'ALL'"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            {{ 'ORDERS.ALL' | translate }}
+                        </button>
+                        <button (click)="setFilter('IN')" [class.bg-blue-50]="currentFilter === 'IN'"
+                            [class.text-blue-600]="currentFilter === 'IN'"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            {{ 'INVENTORY.MOVEMENT.TYPES.IN' | translate }}
+                        </button>
+                        <button (click)="setFilter('OUT')" [class.bg-blue-50]="currentFilter === 'OUT'"
+                            [class.text-blue-600]="currentFilter === 'OUT'"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            {{ 'INVENTORY.MOVEMENT.TYPES.OUT' | translate }}
+                        </button>
+                        <button (click)="setFilter('ADJUSTMENT')" [class.bg-blue-50]="currentFilter === 'ADJUSTMENT'"
+                            [class.text-blue-600]="currentFilter === 'ADJUSTMENT'"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            {{ 'INVENTORY.MOVEMENT.TYPES.ADJUSTMENT' | translate }}
+                        </button>
+                    </div>
+                    }
+                </div>
             </div>
 
             <div class="overflow-x-auto">
@@ -232,14 +261,13 @@
                             <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.DATE' | translate }}</th>
                             <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.ITEMS' | translate }}</th>
                             <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.STATUS' | translate }}</th>
-                            <th class="px-6 py-4 font-semibold text-right">{{ 'DASHBOARD.ACTION' | translate }}
-                            </th>
+                            <!-- Action column removed -->
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @if (recentTransactions.length === 0 && !loading) {
                         <tr>
-                            <td colspan="6" class="py-8 text-center text-gray-400">
+                            <td colspan="5" class="py-8 text-center text-gray-400">
                                 {{ 'DASHBOARD.NO_TRANSACTIONS' | translate }}
                             </td>
                         </tr>
@@ -253,7 +281,7 @@
                                         <i class="fas" [class]="getIconClass(trx.type)"></i>
                                     </div>
                                     <span class="text-sm text-gray-600 font-medium">
-                                        {{ ('DASHBOARD.' + trx.type) | translate }}
+                                        {{ trx.typeKey | translate }}
                                     </span>
                                 </div>
                             </td>
@@ -269,10 +297,7 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <button
-                                    class="text-gray-400 hover:text-blue-600 transition-colors w-8 h-8 rounded-full hover:bg-blue-50 flex items-center justify-center ml-auto">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
+                                <!-- Action button removed -->
                             </td>
                         </tr>
                         }
