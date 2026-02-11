@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RouterModule } from '@angular/router'; // Import RouterModule
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart, registerables } from 'chart.js';
 import { ReportsService, KPIs, LowStockProduct, SalesReportData } from '../../services/reports.service';
@@ -13,7 +14,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, RouterModule], // Add RouterModule here
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -22,6 +23,7 @@ export class Dashboard implements OnInit, AfterViewInit {
 
   chart: any;
   loading = true;
+  chartPeriod: '30' | '90' = '30'; // Track active period
 
   // Real data
   kpis: KPIs = {
@@ -123,6 +125,13 @@ export class Dashboard implements OnInit, AfterViewInit {
     });
   }
 
+  setChartPeriod(period: '30' | '90') {
+    this.chartPeriod = period;
+    // In a real app, we would reload data here. For now, we update the UI visual state.
+    // If we had an API for 90 days, we would call it here.
+    this.initChart();
+  }
+
   initChart() {
     if (!this.volumeChart) return;
 
@@ -139,6 +148,7 @@ export class Dashboard implements OnInit, AfterViewInit {
     gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
 
     // Prepare data
+    // Mock different data for 90 days if needed, otherwise use same salesData
     const labels = this.salesData.length > 0
       ? this.salesData.map(d => new Date(d.date).toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short' }))
       : ['No Data'];

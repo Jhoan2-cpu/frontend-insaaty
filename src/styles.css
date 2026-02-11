@@ -1,5 +1,6 @@
 /* Tailwind CSS - debe ser el primero */
 @import "tailwindcss";
+@import "animate.css";
 
 /* Variables de colores personalizados */
 :root {
