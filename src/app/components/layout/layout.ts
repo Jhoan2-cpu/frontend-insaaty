@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { OrderService } from '../../services/order.service';
 import { TitleService } from '../../services/title.service';
 import { ToastComponent } from '../toast/toast.component';
+import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component';
 
 @Component({
   selector: 'app-layout',
@@ -15,7 +16,8 @@ import { ToastComponent } from '../toast/toast.component';
     CommonModule,
     RouterModule,
     TranslateModule,
-    ToastComponent
+    ToastComponent,
+    BreadcrumbsComponent
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.css'
