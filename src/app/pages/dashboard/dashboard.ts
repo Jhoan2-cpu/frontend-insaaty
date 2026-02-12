@@ -200,15 +200,32 @@ export class Dashboard implements OnInit, AfterViewInit {
     gradient.addColorStop(0, 'rgba(59, 130, 246, 0.2)'); // Blue with opacity
     gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
 
-    // Prepare data
-    // Mock different data for 90 days if needed, otherwise use same salesData
-    const labels = this.salesData.length > 0
-      ? this.salesData.map(d => new Date(d.date).toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short' }))
-      : ['No Data'];
+    // Generate all dates for the selected period
+    const labels: string[] = [];
+    const data: number[] = [];
+    const periodDays = parseInt(this.chartPeriod);
+    const today = new Date();
 
-    const data = this.salesData.length > 0
-      ? this.salesData.map(d => d.totalSales)
-      : [0];
+    // Create map for O(1) lookup
+    const salesMap = new Map<string, number>();
+    this.salesData.forEach(d => {
+      const dateStr = new Date(d.date).toISOString().split('T')[0];
+      salesMap.set(dateStr, d.totalSales);
+    });
+
+    // Loop backwards from today to (today - period)
+    // We want the chart to go from left (oldest) to right (newest)
+    for (let i = periodDays - 1; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(today.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+
+      // Label format (e.g., "Feb 10")
+      labels.push(d.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short' }));
+
+      // Data interpolation
+      data.push(salesMap.get(dateStr) || 0);
+    }
 
     this.chart = new Chart(ctx, {
       type: 'line',
@@ -257,7 +274,8 @@ export class Dashboard implements OnInit, AfterViewInit {
               color: '#9ca3af',
               font: {
                 size: 11
-              }
+              },
+              maxTicksLimit: periodDays === 90 ? 15 : 10 // Limit ticks for cleaner look
             },
             border: {
               display: false
