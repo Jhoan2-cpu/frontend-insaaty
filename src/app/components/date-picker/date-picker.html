@@ -1,0 +1,60 @@
+<div class="relative group">
+    <input type="text" [value]="formattedDate" [placeholder]="placeholder" readonly (click)="toggleCalendar()"
+        class="w-full pl-3 pr-10 py-2.5 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-600 focus:bg-white focus:border-emerald-200 focus:ring-0 focus:outline-none focus:shadow-md transition-all shadow-sm placeholder-gray-400 cursor-pointer">
+    <i class="fas fa-calendar absolute right-3 top-3 text-gray-300 group-hover:text-emerald-500 transition-colors cursor-pointer"
+        (click)="toggleCalendar()"></i>
+
+    <!-- Calendar Popup -->
+    <div *ngIf="isOpen"
+        class="absolute z-[60] top-full left-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 w-[280px] animate__animated animate__fadeIn animate__faster">
+
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-100">
+            <button (click)="pickerView === 'calendar' ? prevMonth() : changeYear(-1); $event.stopPropagation()"
+                class="p-2 hover:bg-emerald-50 rounded-full transition-colors text-gray-400 hover:text-emerald-600">
+                <i class="fas fa-chevron-left text-xs"></i>
+            </button>
+
+            <button (click)="togglePickerView(); $event.stopPropagation()"
+                class="font-bold text-gray-800 capitalize hover:text-emerald-600 hover:bg-emerald-50 px-2 py-1 rounded transition-colors text-sm">
+                {{ pickerView === 'calendar' ? getMonthName() : currentYear }}
+            </button>
+
+            <button (click)="pickerView === 'calendar' ? nextMonth() : changeYear(1); $event.stopPropagation()"
+                class="p-2 hover:bg-emerald-50 rounded-full transition-colors text-gray-400 hover:text-emerald-600">
+                <i class="fas fa-chevron-right text-xs"></i>
+            </button>
+        </div>
+
+        <!-- Days Header (Calendar View) -->
+        <div *ngIf="pickerView === 'calendar'" class="grid grid-cols-7 mb-2">
+            <span *ngFor="let day of weekDays"
+                class="text-center text-[10px] text-emerald-600 font-bold uppercase tracking-wider">
+                {{ day | translate }}
+            </span>
+        </div>
+
+        <!-- Calendar Grid (Calendar View) -->
+        <div *ngIf="pickerView === 'calendar'" class="grid grid-cols-7 gap-1">
+            <button *ngFor="let day of calendarDays" (click)="selectDate(day); $event.stopPropagation()"
+                [disabled]="!day" [class.invisible]="!day"
+                class="h-8 w-8 rounded-full flex items-center justify-center text-sm transition-all duration-200"
+                [class.hover:bg-emerald-50]="day && !isSelected(day)" [class.text-gray-700]="day && !isSelected(day)"
+                [class.bg-emerald-500]="isSelected(day)" [class.text-white]="isSelected(day)"
+                [class.shadow-md]="isSelected(day)" [class.font-bold]="isSelected(day)">
+                {{ day }}
+            </button>
+        </div>
+
+        <!-- Month Selection Grid (Months View) -->
+        <div *ngIf="pickerView === 'months'" class="grid grid-cols-3 gap-2">
+            <button *ngFor="let month of monthIndices" (click)="selectMonth(month); $event.stopPropagation()"
+                class="h-10 rounded-lg flex items-center justify-center text-xs font-medium transition-all duration-200 capitalize"
+                [class.bg-emerald-500]="month === currentMonth" [class.text-white]="month === currentMonth"
+                [class.shadow-md]="month === currentMonth" [class.hover:bg-emerald-50]="month !== currentMonth"
+                [class.text-gray-700]="month !== currentMonth">
+                {{ getMonthLabel(month) }}
+            </button>
+        </div>
+    </div>
+</div>

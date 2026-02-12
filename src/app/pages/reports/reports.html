@@ -24,9 +24,9 @@
 
         <!-- Date Picker para Custom -->
         <div *ngIf="dateFilter === 'custom'" class="custom-date-picker">
-            <input type="date" [(ngModel)]="customStartDate" />
-            <span>-</span>
-            <input type="date" [(ngModel)]="customEndDate" />
+            <app-date-picker [(date)]="customStartDate" placeholder="Fecha inicio"></app-date-picker>
+            <span class="text-emerald-600 font-medium">-</span>
+            <app-date-picker [(date)]="customEndDate" placeholder="Fecha fin"></app-date-picker>
             <button (click)="applyCustomDateFilter()">
                 {{ 'REPORTS.APPLY' | translate }}
             </button>

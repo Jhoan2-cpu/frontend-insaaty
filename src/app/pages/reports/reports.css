@@ -61,10 +61,37 @@
 }
 
 .custom-date-picker input {
-    padding: 0.5rem;
+    padding: 0.6rem 1rem;
     border: 1px solid #d1fae5;
     border-radius: 0.5rem;
     background: rgba(255, 255, 255, 0.9);
+    color: #064e3b;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.custom-date-picker input:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    background: white;
+}
+
+.custom-date-picker input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(33%) sepia(87%) saturate(420%) hue-rotate(113deg) brightness(92%) contrast(89%);
+    /* Emerald shade */
+    background-size: contain;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.custom-date-picker input::-webkit-calendar-picker-indicator:hover {
+    background-color: #ecfdf5;
+    transform: scale(1.1);
 }
 
 .custom-date-picker button {

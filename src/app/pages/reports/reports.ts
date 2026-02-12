@@ -6,11 +6,12 @@ import { ReportsService, SalesReportData, TopProduct, LowStockProduct, KPIs } fr
 import { TitleService } from '../../services/title.service';
 import { Chart } from 'chart.js/auto';
 import { finalize } from 'rxjs/operators';
+import { DatePicker } from '../../components/date-picker/date-picker';
 
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule, DatePicker],
   templateUrl: './reports.html',
   styleUrls: ['./reports.css']
 })
