@@ -257,6 +257,10 @@
         "TRANSACTIONS": "Transacciones",
         "TRANSACTION_HISTORY": "Historial de Auditoría",
         "TRANSACTION_DESCRIPTION": "Visualiza y analiza todos los movimientos de stock en tiempo real.",
+        "AUDIT_TIP": {
+            "TITLE": "Consejo de Auditoría",
+            "DESCRIPTION": "Usa el filtro 'Ajuste' para rastrear discrepancias y correcciones manuales. Las auditorías regulares mantienen el 99% de precisión."
+        },
         "MOVEMENT_TITLE": "Registrar Movimiento",
         "MOVEMENT_TYPE": "Tipo de Movimiento",
         "MOVEMENT_SUBTITLE": "Registrar un nuevo movimiento de stock o ajuste.",

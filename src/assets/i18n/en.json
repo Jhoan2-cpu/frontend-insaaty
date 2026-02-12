@@ -257,6 +257,10 @@
         "TRANSACTIONS": "Transactions",
         "TRANSACTION_HISTORY": "Audit History",
         "TRANSACTION_DESCRIPTION": "View and analyze all stock movements in real-time.",
+        "AUDIT_TIP": {
+            "TITLE": "Audit Tip",
+            "DESCRIPTION": "Use the 'Adjustment' type filter to track inventory discrepancies and manual corrections. Regular audits help maintain 99% stock accuracy."
+        },
         "MOVEMENT_TITLE": "Register Movement",
         "MOVEMENT_TYPE": "Movement Type",
         "MOVEMENT_SUBTITLE": "Record a new stock movement or adjustment.",
