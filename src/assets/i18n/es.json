@@ -196,7 +196,7 @@
         "TODAYS_TRANSACTIONS": "Transacciones Hoy",
         "VS_YESTERDAY": "vs ayer",
         "TRANSACTION_VOLUME": "Volumen de Transacciones",
-        "VOLUME_SUBTITLE": "Movimiento de stock entrante y saliente en los últimos 30 días.",
+        "VOLUME_SUBTITLE": "Movimiento de stock entrante y saliente en los últimos {{days}} días.",
         "DAYS_30": "30 Días",
         "DAYS_90": "90 Días",
         "LOW_STOCK_ALERT": "Alerta Stock Bajo",

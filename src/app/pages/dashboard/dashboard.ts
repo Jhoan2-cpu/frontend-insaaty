@@ -137,10 +137,36 @@ export class Dashboard implements OnInit, AfterViewInit {
     this.showFilterMenu = !this.showFilterMenu;
   }
 
-  setFilter(filter: 'ALL' | 'IN' | 'OUT' | 'ADJUSTMENT') {
-    this.currentFilter = filter;
-    this.filterTransactions();
-    this.showFilterMenu = false;
+  refreshChartData() {
+    const endDate = new Date();
+    const startDate = new Date();
+    startDate.setDate(endDate.getDate() - parseInt(this.chartPeriod));
+
+    // Format dates as YYYY-MM-DD for backend
+    const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
+    console.log(`Refreshing chart: ${this.chartPeriod} days`, {
+      start: formatDate(startDate),
+      end: formatDate(endDate)
+    });
+
+    this.reportsService.getSalesReport({
+      startDate: formatDate(startDate),
+      endDate: formatDate(endDate)
+    }).subscribe({
+      next: (data) => {
+        console.log(`Received ${data.length} data points`);
+        this.salesData = data;
+        this.initChart();
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error fetching sales data', err)
+    });
+  }
+
+  setChartPeriod(period: '30' | '90') {
+    this.chartPeriod = period;
+    this.refreshChartData();
   }
 
   filterTransactions() {
@@ -153,11 +179,10 @@ export class Dashboard implements OnInit, AfterViewInit {
     }
   }
 
-  setChartPeriod(period: '30' | '90') {
-    this.chartPeriod = period;
-    // In a real app, we would reload data here. For now, we update the UI visual state.
-    // If we had an API for 90 days, we would call it here.
-    this.initChart();
+  setFilter(filter: 'ALL' | 'IN' | 'OUT' | 'ADJUSTMENT') {
+    this.currentFilter = filter;
+    this.filterTransactions();
+    this.showFilterMenu = false;
   }
 
   initChart() {
