@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* Tailwind CSS - debe ser el primero */
 @import "tailwindcss";
 @import "animate.css";
@@ -7,7 +8,6 @@
   --primary: #3B82F6;
   --primary-dark: #2563EB;
   --primary-light: #60A5FA;
-  --secondary: #6B7280;
   --accent: #8B5CF6;
   --success: #10B981;
   --danger: #EF4444;

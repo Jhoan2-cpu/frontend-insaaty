@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
     selector: 'app-inventory-transactions',
     standalone: true,
-    imports: [CommonModule, TranslateModule, RouterLink, FormsModule],
+    imports: [CommonModule, TranslateModule, FormsModule],
     templateUrl: './transactions.html'
 })
 export class Transactions implements OnInit {
