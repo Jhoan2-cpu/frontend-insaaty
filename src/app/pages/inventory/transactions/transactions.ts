@@ -59,9 +59,14 @@ export class Transactions implements OnInit {
     calendarDays: (number | null)[] = [];
     weekDays = ['COMMON.WEEKDAYS.SU', 'COMMON.WEEKDAYS.MO', 'COMMON.WEEKDAYS.TU', 'COMMON.WEEKDAYS.WE', 'COMMON.WEEKDAYS.TH', 'COMMON.WEEKDAYS.FR', 'COMMON.WEEKDAYS.SA'];
 
+    // New: Date Selection Mode
+    pickerView: 'calendar' | 'months' = 'calendar';
+    monthIndices = Array.from({ length: 12 }, (_, i) => i);
+
     toggleStartDatePicker() {
         this.showStartDatePicker = !this.showStartDatePicker;
         this.showEndDatePicker = false;
+        this.pickerView = 'calendar';
         if (this.showStartDatePicker) {
             this.generateCalendar();
         }
@@ -70,9 +75,31 @@ export class Transactions implements OnInit {
     toggleEndDatePicker() {
         this.showEndDatePicker = !this.showEndDatePicker;
         this.showStartDatePicker = false;
+        this.pickerView = 'calendar';
         if (this.showEndDatePicker) {
             this.generateCalendar();
         }
+    }
+
+    togglePickerView() {
+        this.pickerView = this.pickerView === 'calendar' ? 'months' : 'calendar';
+    }
+
+    selectMonth(month: number) {
+        this.currentMonth = month;
+        this.pickerView = 'calendar';
+        this.generateCalendar();
+    }
+
+    changeYear(offset: number) {
+        this.currentYear += offset;
+        this.generateCalendar();
+    }
+
+    getMonthLabel(monthIndex: number): string {
+        const date = new Date(this.currentYear, monthIndex, 1);
+        const lang = this.translate.currentLang || 'es';
+        return date.toLocaleString(lang, { month: 'short' });
     }
 
     generateCalendar() {
@@ -108,25 +135,37 @@ export class Transactions implements OnInit {
         this.generateCalendar();
     }
 
-    selectStartDate(day: number) {
+    selectStartDate(day: number | null) {
         if (!day) return;
         const date = new Date(this.currentYear, this.currentMonth, day);
         this.filters.startDate = this.formatDate(date);
         this.showStartDatePicker = false;
     }
 
-    selectEndDate(day: number) {
+    selectEndDate(day: number | null) {
         if (!day) return;
         const date = new Date(this.currentYear, this.currentMonth, day);
         this.filters.endDate = this.formatDate(date);
         this.showEndDatePicker = false;
     }
 
-    formatDate(date: Date): string {
-        const year = date.getFullYear();
-        const month = ('0' + (date.getMonth() + 1)).slice(-2);
-        const day = ('0' + date.getDate()).slice(-2);
-        return `${year}-${month}-${day}`;
+    onDateInput(event: any, type: 'start' | 'end') {
+        const value = event.target.value;
+        if (value.length === 10) {
+            const parts = value.split('/');
+            if (parts.length === 3) {
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10) - 1;
+                const year = parseInt(parts[2], 10);
+                const date = new Date(year, month, day);
+
+                if (!isNaN(date.getTime())) {
+                    this.currentMonth = month;
+                    this.currentYear = year;
+                    this.generateCalendar();
+                }
+            }
+        }
     }
 
     isDateSelected(day: number | null, type: 'start' | 'end'): boolean {
@@ -136,6 +175,13 @@ export class Transactions implements OnInit {
 
         const dateStr = this.formatDate(new Date(this.currentYear, this.currentMonth, day));
         return targetDate === dateStr;
+    }
+
+    formatDate(date: Date): string {
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const day = ('0' + date.getDate()).slice(-2);
+        return `${day}/${month}/${year}`;
     }
 
     getMonthName(): string {
