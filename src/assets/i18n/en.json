@@ -248,7 +248,18 @@
         "APPLY_FILTERS": "Apply Filters",
         "DATE": "Date",
         "PREVIOUS": "Previous",
-        "NEXT": "Next"
+        "NEXT": "Next",
+        "START": "Start",
+        "END": "End",
+        "WEEKDAYS": {
+            "SU": "Su",
+            "MO": "Mo",
+            "TU": "Tu",
+            "WE": "We",
+            "TH": "Th",
+            "FR": "Fr",
+            "SA": "Sa"
+        }
     },
     "INVENTORY": {
         "TYPE": "Type",

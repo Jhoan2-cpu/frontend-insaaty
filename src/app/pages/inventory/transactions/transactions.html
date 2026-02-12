@@ -70,12 +70,93 @@
                             {{ 'COMMON.DATE_RANGE' | translate }}
                         </label>
                         <div class="grid grid-cols-2 gap-2">
-                            <input type="date" [(ngModel)]="filters.startDate"
-                                class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all text-gray-600 placeholder-gray-400 appearance-none"
-                                placeholder="Start">
-                            <input type="date" [(ngModel)]="filters.endDate"
-                                class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all text-gray-600 placeholder-gray-400 appearance-none"
-                                placeholder="End">
+                            <!-- Start Date -->
+                            <div class="relative group">
+                                <div (click)="toggleStartDatePicker()"
+                                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-600 cursor-pointer hover:bg-gray-100 transition-all flex items-center justify-between">
+                                    <span [class.text-gray-400]="!filters.startDate">{{ filters.startDate ||
+                                        ('COMMON.START' | translate) }}</span>
+                                    <i
+                                        class="fas fa-calendar text-gray-400 group-hover:text-emerald-500 transition-colors"></i>
+                                </div>
+                                <div *ngIf="showStartDatePicker"
+                                    class="absolute z-50 top-full left-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 p-4 w-64 animate__animated animate__fadeIn animate__faster">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <button (click)="prevMonth(); $event.stopPropagation()"
+                                            class="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-500 hover:text-emerald-600">
+                                            <i class="fas fa-chevron-left text-xs"></i>
+                                        </button>
+                                        <span class="font-bold text-gray-700 capitalize text-sm">{{ getMonthName()
+                                            }}</span>
+                                        <button (click)="nextMonth(); $event.stopPropagation()"
+                                            class="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-500 hover:text-emerald-600">
+                                            <i class="fas fa-chevron-right text-xs"></i>
+                                        </button>
+                                    </div>
+                                    <div class="grid grid-cols-7 mb-2">
+                                        <span *ngFor="let day of weekDays"
+                                            class="text-center text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                                            {{ day | translate }}
+                                        </span>
+                                    </div>
+                                    <div class="grid grid-cols-7 gap-1">
+                                        <button *ngFor="let day of calendarDays"
+                                            (click)="selectStartDate(day); $event.stopPropagation()" [disabled]="!day"
+                                            [class.invisible]="!day"
+                                            class="h-7 w-7 rounded-lg flex items-center justify-center text-xs hover:bg-emerald-50 text-gray-600 transition-colors"
+                                            [class.bg-emerald-500]="isDateSelected(day, 'start')"
+                                            [class.text-white]="isDateSelected(day, 'start')">
+                                            {{ day }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div *ngIf="showStartDatePicker" (click)="toggleStartDatePicker()"
+                                    class="fixed inset-0 z-40 bg-transparent cursor-default"></div>
+                            </div>
+
+                            <!-- End Date -->
+                            <div class="relative group">
+                                <div (click)="toggleEndDatePicker()"
+                                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-600 cursor-pointer hover:bg-gray-100 transition-all flex items-center justify-between">
+                                    <span [class.text-gray-400]="!filters.endDate">{{ filters.endDate || ('COMMON.END' |
+                                        translate) }}</span>
+                                    <i
+                                        class="fas fa-calendar text-gray-400 group-hover:text-emerald-500 transition-colors"></i>
+                                </div>
+                                <div *ngIf="showEndDatePicker"
+                                    class="absolute z-50 top-full right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 p-4 w-64 animate__animated animate__fadeIn animate__faster">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <button (click)="prevMonth(); $event.stopPropagation()"
+                                            class="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-500 hover:text-emerald-600">
+                                            <i class="fas fa-chevron-left text-xs"></i>
+                                        </button>
+                                        <span class="font-bold text-gray-700 capitalize text-sm">{{ getMonthName()
+                                            }}</span>
+                                        <button (click)="nextMonth(); $event.stopPropagation()"
+                                            class="p-1 hover:bg-gray-100 rounded-full transition-colors text-gray-500 hover:text-emerald-600">
+                                            <i class="fas fa-chevron-right text-xs"></i>
+                                        </button>
+                                    </div>
+                                    <div class="grid grid-cols-7 mb-2">
+                                        <span *ngFor="let day of weekDays"
+                                            class="text-center text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                                            {{ day | translate }}
+                                        </span>
+                                    </div>
+                                    <div class="grid grid-cols-7 gap-1">
+                                        <button *ngFor="let day of calendarDays"
+                                            (click)="selectEndDate(day); $event.stopPropagation()" [disabled]="!day"
+                                            [class.invisible]="!day"
+                                            class="h-7 w-7 rounded-lg flex items-center justify-center text-xs hover:bg-emerald-50 text-gray-600 transition-colors"
+                                            [class.bg-emerald-500]="isDateSelected(day, 'end')"
+                                            [class.text-white]="isDateSelected(day, 'end')">
+                                            {{ day }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div *ngIf="showEndDatePicker" (click)="toggleEndDatePicker()"
+                                    class="fixed inset-0 z-40 bg-transparent cursor-default"></div>
+                            </div>
                         </div>
                     </div>
 
