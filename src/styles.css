@@ -46,6 +46,26 @@ body {
   background: #a1a1a1;
 }
 
+/* Sidebar scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
+  /* slate-700 */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+  /* slate-600 */
+}
+
 /* Clases de utilidad personalizadas */
 .gradient-primary {
   background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
