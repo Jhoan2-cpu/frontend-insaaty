@@ -410,6 +410,7 @@
         "ALL": "Todos",
         "LOADING": "Cargando pedidos...",
         "NO_ORDERS": "No hay pedidos",
+        "SEARCH_PLACEHOLDER": "Buscar por número o cliente...",
         "STATUSES": {
             "PENDING": "Pendiente",
             "PROCESSING": "Procesando",

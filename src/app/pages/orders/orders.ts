@@ -28,6 +28,10 @@ export class Orders implements OnInit {
     { label: 'ORDERS.STATUSES.CANCELLED', value: 'CANCELLED' },
   ];
 
+  // Búsqueda
+  searchTerm = '';
+  searchTimeout: any;
+
   // Paginación
   currentPage = 1;
   pageSize = 10;
@@ -47,6 +51,9 @@ export class Orders implements OnInit {
   // Ver detalle
   selectedOrder?: Order;
   showDetailModal = false;
+
+  // Sort dropdown state
+  showSortDropdown = false;
 
   constructor(
     private orderService: OrderService,
@@ -69,6 +76,26 @@ export class Orders implements OnInit {
     });
   }
 
+  onSearch(event: any) {
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.searchTerm = event.target.value;
+      this.currentPage = 1;
+      this.loadOrders();
+    }, 300);
+  }
+
+  toggleSortDropdown() {
+    this.showSortDropdown = !this.showSortDropdown;
+  }
+
+  selectSort(sort: string) {
+    this.currentSort = sort;
+    this.showSortDropdown = false;
+    this.currentPage = 1;
+    this.loadOrders();
+  }
+
   updateSort(event: any) {
     this.currentSort = event.target.value;
     this.currentPage = 1; // Reset to first page
@@ -83,7 +110,8 @@ export class Orders implements OnInit {
       page: this.currentPage,
       limit: this.pageSize,
       status: status,
-      sort: this.currentSort
+      sort: this.currentSort,
+      search: this.searchTerm
     }).subscribe({
       next: (response) => {
         this.orders = response.data;

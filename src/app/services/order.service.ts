@@ -79,12 +79,14 @@ export class OrderService {
         limit?: number;
         status?: OrderStatus;
         sort?: string;
+        search?: string;
     }): Observable<OrdersResponse> {
         let httpParams = new HttpParams();
         if (params?.page) httpParams = httpParams.set('page', params.page.toString());
         if (params?.limit) httpParams = httpParams.set('limit', params.limit.toString());
         if (params?.status) httpParams = httpParams.set('status', params.status);
         if (params?.sort) httpParams = httpParams.set('sort', params.sort);
+        if (params?.search) httpParams = httpParams.set('search', params.search);
 
         return this.http.get<OrdersResponse>(this.apiUrl, { params: httpParams });
     }
