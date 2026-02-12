@@ -74,16 +74,45 @@
                             <label class="block text-sm font-bold text-gray-700">
                                 {{ 'SUPPLIERS.LABEL' | translate }}
                             </label>
-                            <div class="flex gap-2">
-                                <select formControlName="supplier_id"
-                                    class="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none">
-                                    <option [ngValue]="null">-- {{ 'COMMON.NONE' | translate }} --</option>
-                                    <option *ngFor="let supplier of suppliers" [value]="supplier.id">
-                                        {{ supplier.name }}
-                                    </option>
-                                </select>
+                            <div class="flex gap-2 relative z-20">
+                                <div class="relative w-full">
+                                    <!-- Custom Dropdown Trigger -->
+                                    <div (click)="toggleSupplierDropdown()"
+                                        class="w-full px-4 py-3 bg-white border rounded-lg text-gray-900 transition-all cursor-pointer flex justify-between items-center select-none"
+                                        [class.border-emerald-500]="showSupplierDropdown"
+                                        [class.ring-1]="showSupplierDropdown"
+                                        [class.ring-emerald-500]="showSupplierDropdown"
+                                        [class.border-gray-200]="!showSupplierDropdown">
+                                        <span class="truncate block">{{ getSelectedSupplierName() }}</span>
+                                        <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform duration-200"
+                                            [class.rotate-180]="showSupplierDropdown"></i>
+                                    </div>
+
+                                    <!-- Dropdown List -->
+                                    @if (showSupplierDropdown) {
+                                    <div
+                                        class="absolute left-0 right-0 top-full mt-1 bg-white border border-gray-100 rounded-lg shadow-xl z-50 max-h-60 overflow-y-auto animate__animated animate__fadeIn animate__faster">
+                                        <div (click)="selectSupplier(null)"
+                                            class="px-4 py-2.5 text-sm hover:bg-emerald-50 hover:text-emerald-700 cursor-pointer transition-colors border-b border-gray-50 text-gray-500">
+                                            -- {{ 'COMMON.NONE' | translate }} --
+                                        </div>
+                                        @for (supplier of suppliers; track supplier.id) {
+                                        <div (click)="selectSupplier(supplier)"
+                                            class="px-4 py-2.5 text-sm hover:bg-emerald-50 hover:text-emerald-700 cursor-pointer transition-colors text-gray-700"
+                                            [class.bg-emerald-50]="productForm.get('supplier_id')?.value === supplier.id"
+                                            [class.text-emerald-700]="productForm.get('supplier_id')?.value === supplier.id"
+                                            [class.font-medium]="productForm.get('supplier_id')?.value === supplier.id">
+                                            {{ supplier.name }}
+                                        </div>
+                                        }
+                                    </div>
+                                    <!-- Backdrop for closing -->
+                                    <div class="fixed inset-0 z-40 cursor-default" (click)="toggleSupplierDropdown()">
+                                    </div>
+                                    }
+                                </div>
                                 <a routerLink="/suppliers" [queryParams]="{ action: 'create' }"
-                                    class="px-4 py-3 bg-emerald-50 text-emerald-600 rounded-lg hover:bg-emerald-100 transition-colors flex items-center justify-center min-w-[3rem]"
+                                    class="px-4 py-3 bg-emerald-50 text-emerald-600 rounded-lg hover:bg-emerald-100 transition-colors flex items-center justify-center min-w-[3rem] shadow-sm border border-emerald-100"
                                     title="{{ 'SUPPLIERS.NEW_SUPPLIER' | translate }}">
                                     <i class="fas fa-plus"></i>
                                 </a>

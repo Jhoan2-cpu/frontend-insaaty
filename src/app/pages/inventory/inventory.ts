@@ -226,6 +226,25 @@ export class Inventory implements OnInit {
     }
   }
 
+  // Custom Supplier Dropdown
+  showSupplierDropdown = false;
+
+  toggleSupplierDropdown() {
+    this.showSupplierDropdown = !this.showSupplierDropdown;
+  }
+
+  selectSupplier(supplier: Supplier | null) {
+    this.productForm.patchValue({ supplier_id: supplier ? supplier.id : null });
+    this.showSupplierDropdown = false;
+  }
+
+  getSelectedSupplierName(): string {
+    const supplierId = this.productForm.get('supplier_id')?.value;
+    if (!supplierId) return '-- ' + this.translate.instant('COMMON.NONE') + ' --';
+    const supplier = this.suppliers.find(s => s.id === supplierId);
+    return supplier ? supplier.name : '-- ' + this.translate.instant('COMMON.NONE') + ' --';
+  }
+
   editProduct(productId: number) {
     this.productService.getProduct(productId).subscribe({
       next: (product) => {
