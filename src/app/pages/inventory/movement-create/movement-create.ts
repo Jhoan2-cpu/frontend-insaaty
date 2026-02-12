@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InventoryService, TransactionType } from '../../../services/inventory.service';
 import { ProductService, Product } from '../../../services/product.service';
@@ -23,6 +23,7 @@ export class MovementCreate implements OnInit {
 
     showProductDropdown = false;
     private intervalId: any;
+    private returnUrl: string = '/inventory/transactions';
 
     constructor(
         private fb: FormBuilder,
@@ -32,7 +33,8 @@ export class MovementCreate implements OnInit {
         private translate: TranslateService,
         private router: Router,
         private titleService: TitleService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private route: ActivatedRoute
     ) {
         this.form = this.fb.group({
             type: [TransactionType.IN, Validators.required],
@@ -40,6 +42,9 @@ export class MovementCreate implements OnInit {
             quantity: [1, [Validators.required, Validators.min(1)]],
             reason: ['', Validators.required]
         });
+
+        // Capture returnUrl
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inventory/transactions';
     }
 
     startIncrement() {
@@ -124,7 +129,7 @@ export class MovementCreate implements OnInit {
         }).subscribe({
             next: () => {
                 this.toast.success(this.translate.instant('INVENTORY.MOVEMENT_SUCCESS'));
-                this.router.navigate(['/inventory/transactions']);
+                this.router.navigate([this.returnUrl]);
                 this.isSaving = false;
             },
             error: (err) => {
@@ -179,6 +184,6 @@ export class MovementCreate implements OnInit {
 
 
     cancel() {
-        this.router.navigate(['/inventory']);
+        this.router.navigate([this.returnUrl]);
     }
 }
