@@ -340,23 +340,17 @@ export class Reports implements OnInit, AfterViewInit {
   }
 
   exportToPdf() {
-    const dateRange = `Filtro: ${this.dateFilter.toUpperCase()}`;
+    const params = this.getDateParams();
 
     switch (this.activeTab) {
       case 'sales':
-        if (this.salesData.length) {
-          this.pdfService.generateSalesReport(this.salesData, dateRange);
-        }
+        this.pdfService.generateSalesReport(params.startDate, params.endDate);
         break;
       case 'products':
-        if (this.topProducts.length) {
-          this.pdfService.generateTopProductsReport(this.topProducts, dateRange);
-        }
+        this.pdfService.generateTopProductsReport(params.startDate, params.endDate);
         break;
       case 'movements':
-        if (this.movementsData.length) {
-          this.pdfService.generateMovementsReport(this.movementsData, dateRange);
-        }
+        this.pdfService.generateMovementsReport(params.startDate, params.endDate);
         break;
     }
   }

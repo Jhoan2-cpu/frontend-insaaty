@@ -44,7 +44,8 @@
         <div class="kpi-card green">
             <div class="kpi-icon"><i class="fas fa-money-bill-wave"></i></div>
             <div class="kpi-content">
-                <div class="kpi-value">\${{ kpis.totalSales.toLocaleString('en-US', {minimumFractionDigits: 2}) }}</div>
+                <div class="kpi-value">\${{ kpis?.totalSales?.toLocaleString('en-US', {minimumFractionDigits: 2}) ??
+                    '0.00' }}</div>
                 <div class="kpi-label">{{ 'REPORTS.TOTAL_SALES' | translate }}</div>
             </div>
         </div>
@@ -52,7 +53,7 @@
         <div class="kpi-card blue">
             <div class="kpi-icon"><i class="fas fa-box-open"></i></div>
             <div class="kpi-content">
-                <div class="kpi-value">{{ kpis.completedOrders }}</div>
+                <div class="kpi-value">{{ kpis?.completedOrders }}</div>
                 <div class="kpi-label">{{ 'REPORTS.COMPLETED_ORDERS' | translate }}</div>
             </div>
         </div>
@@ -60,7 +61,8 @@
         <div class="kpi-card yellow">
             <div class="kpi-icon"><i class="fas fa-chart-line"></i></div>
             <div class="kpi-content">
-                <div class="kpi-value">\${{ kpis.totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2}) }}
+                <div class="kpi-value">\${{ kpis?.totalProfit?.toLocaleString('en-US', {minimumFractionDigits: 2}) ??
+                    '0.00' }}
                 </div>
                 <div class="kpi-label">{{ 'REPORTS.TOTAL_PROFIT' | translate }}</div>
             </div>
