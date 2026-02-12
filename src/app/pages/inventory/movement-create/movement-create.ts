@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -22,6 +22,7 @@ export class MovementCreate implements OnInit {
     TransactionType = TransactionType;
 
     showProductDropdown = false;
+    private intervalId: any;
 
     constructor(
         private fb: FormBuilder,
@@ -30,7 +31,8 @@ export class MovementCreate implements OnInit {
         private toast: ToastService,
         private translate: TranslateService,
         private router: Router,
-        private titleService: TitleService
+        private titleService: TitleService,
+        private cdr: ChangeDetectorRef
     ) {
         this.form = this.fb.group({
             type: [TransactionType.IN, Validators.required],
@@ -38,6 +40,41 @@ export class MovementCreate implements OnInit {
             quantity: [1, [Validators.required, Validators.min(1)]],
             reason: ['', Validators.required]
         });
+    }
+
+    startIncrement() {
+        this.increment();
+        this.intervalId = setInterval(() => {
+            this.increment();
+        }, 100);
+    }
+
+    startDecrement() {
+        this.decrement();
+        this.intervalId = setInterval(() => {
+            this.decrement();
+        }, 100);
+    }
+
+    stopInterval() {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+            this.intervalId = null;
+        }
+    }
+
+    increment() {
+        const current = Number(this.form.get('quantity')?.value) || 0;
+        this.form.patchValue({ quantity: current + 1 });
+        this.cdr.markForCheck();
+    }
+
+    decrement() {
+        const current = Number(this.form.get('quantity')?.value) || 0;
+        if (current > 1) {
+            this.form.patchValue({ quantity: current - 1 });
+            this.cdr.markForCheck();
+        }
     }
 
     toggleProductDropdown() {
@@ -112,7 +149,7 @@ export class MovementCreate implements OnInit {
         if (!product) return 0;
 
         const current = Number(product.current_stock) || 0;
-        const qty = this.form.get('quantity')?.value || 0;
+        const qty = Number(this.form.get('quantity')?.value) || 0;
         const type = this.form.get('type')?.value;
 
         switch (type) {
@@ -139,17 +176,7 @@ export class MovementCreate implements OnInit {
         return (value / max) * 80 + 10;
     }
 
-    incrementQty() {
-        const current = this.form.get('quantity')?.value || 0;
-        this.form.patchValue({ quantity: current + 1 });
-    }
 
-    decrementQty() {
-        const current = this.form.get('quantity')?.value || 0;
-        if (current > 1) {
-            this.form.patchValue({ quantity: current - 1 });
-        }
-    }
 
     cancel() {
         this.router.navigate(['/inventory']);
