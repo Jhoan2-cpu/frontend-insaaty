@@ -34,6 +34,8 @@
     "@ngx-translate/http-loader": "^17.0.0",
     "animate.css": "^4.1.1",
     "chart.js": "^4.5.1",
+    "jspdf": "^4.1.0",
+    "jspdf-autotable": "^5.0.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

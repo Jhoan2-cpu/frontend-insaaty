@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ReportsService, SalesReportData, TopProduct, LowStockProduct, KPIs } from '../../services/reports.service';
 import { InventoryService, InventoryTransaction } from '../../services/inventory.service';
 import { TitleService } from '../../services/title.service';
+import { PdfService } from '../../services/pdf.service';
 import { Chart } from 'chart.js/auto';
 import { finalize } from 'rxjs/operators';
 import { DatePicker } from '../../components/date-picker/date-picker';
@@ -44,6 +45,7 @@ export class Reports implements OnInit, AfterViewInit {
   constructor(
     private reportsService: ReportsService,
     private inventoryService: InventoryService,
+    private pdfService: PdfService,
     private cdr: ChangeDetectorRef,
     private titleService: TitleService
   ) { }
@@ -334,6 +336,28 @@ export class Reports implements OnInit, AfterViewInit {
     // Crear gráfico si cambiamos a tab de ventas
     if (tab === 'sales' && this.salesData.length) {
       setTimeout(() => this.createSalesChart(), 100);
+    }
+  }
+
+  exportToPdf() {
+    const dateRange = `Filtro: ${this.dateFilter.toUpperCase()}`;
+
+    switch (this.activeTab) {
+      case 'sales':
+        if (this.salesData.length) {
+          this.pdfService.generateSalesReport(this.salesData, dateRange);
+        }
+        break;
+      case 'products':
+        if (this.topProducts.length) {
+          this.pdfService.generateTopProductsReport(this.topProducts, dateRange);
+        }
+        break;
+      case 'movements':
+        if (this.movementsData.length) {
+          this.pdfService.generateMovementsReport(this.movementsData, dateRange);
+        }
+        break;
     }
   }
 }
