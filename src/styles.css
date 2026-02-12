@@ -1,7 +1,5 @@
-@charset "UTF-8";
 /* Tailwind CSS - debe ser el primero */
 @import "tailwindcss";
-@import "animate.css";
 
 @layer theme {
   :root {
