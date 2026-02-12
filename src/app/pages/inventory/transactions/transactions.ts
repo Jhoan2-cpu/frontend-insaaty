@@ -4,11 +4,12 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InventoryService, InventoryTransaction } from '../../../services/inventory.service';
 import { TitleService } from '../../../services/title.service';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-inventory-transactions',
     standalone: true,
-    imports: [CommonModule, TranslateModule, RouterLink],
+    imports: [CommonModule, TranslateModule, RouterLink, FormsModule],
     templateUrl: './transactions.html'
 })
 export class Transactions implements OnInit {
@@ -18,11 +19,31 @@ export class Transactions implements OnInit {
     historyPageSize = 10;
     historyLoading = false;
 
+    // Filters
+    filters = {
+        keyword: '',
+        user: 'all',
+        startDate: '',
+        endDate: '',
+        type: 'all'
+    };
+
     constructor(
         private inventoryService: InventoryService,
         private cdr: ChangeDetectorRef,
         private titleService: TitleService
     ) { }
+
+    clearFilters() {
+        this.filters = {
+            keyword: '',
+            user: 'all',
+            startDate: '',
+            endDate: '',
+            type: 'all'
+        };
+        this.loadHistory();
+    }
 
     ngOnInit() {
         this.loadHistory();
