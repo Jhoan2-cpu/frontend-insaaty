@@ -3,99 +3,103 @@
 @import "tailwindcss";
 @import "animate.css";
 
-/* Variables de colores personalizados */
-:root {
-  --primary: #3B82F6;
-  --primary-dark: #2563EB;
-  --primary-light: #60A5FA;
-  --accent: #8B5CF6;
-  --success: #10B981;
-  --danger: #EF4444;
-  --warning: #F59E0B;
-  --info: #0EA5E9;
-  --dark: #1F2937;
-  --light: #F9FAFB;
+@layer theme {
+  :root {
+    --primary: #10B981;
+    /* Emerald 500 */
+    --primary-dark: #059669;
+    /* Emerald 600 */
+    --primary-light: #34D399;
+    /* Emerald 400 */
+    --accent: #8B5CF6;
+    --success: #10B981;
+    --danger: #EF4444;
+    --warning: #F59E0B;
+    --background: #F3F4F6;
+    --card-bg: #FFFFFF;
+    --text-main: #1F2937;
+    --text-secondary: #6B7280;
+    --border: #E5E7EB;
+  }
 }
 
-/* Base styles */
-html {
-  scroll-behavior: smooth;
-}
-
+/* Base Styles */
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
 }
 
-/* Scrollbar personalizado */
+/* Animations using animate.css classes */
+.animate__animated {
+  animation-duration: 0.5s;
+}
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #CBD5E1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: #94A3B8;
 }
 
-/* Sidebar scrollbar */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
+/* Leaflet Map Z-Index Fix */
+.leaflet-pane {
+  z-index: 1 !important;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 2 !important;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #334155;
-  /* slate-700 */
-  border-radius: 10px;
+/* Fix for mat-form-field appearance */
+.mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #475569;
-  /* slate-600 */
-}
-
-/* Clases de utilidad personalizadas */
-.gradient-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-}
-
-.gradient-hero {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Hover effects */
-.hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-}
-
-/* Glass effect */
-.glass {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* Custom Utilities */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Angular/Tailwind specific fixes */
+.cdk-overlay-container {
+  z-index: 9999 !important;
+}
+
+/* Ensure dropdowns are visible */
+.relative {
+  position: relative;
+}
+
+/* Status Badges */
+.badge {
+  @apply px-2 py-1 rounded text-xs font-semibold;
+}
+
+.badge-success {
+  @apply bg-emerald-100 text-emerald-800;
+}
+
+.badge-warning {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.badge-danger {
+  @apply bg-red-100 text-red-800;
 }

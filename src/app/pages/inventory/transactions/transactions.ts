@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
     selector: 'app-inventory-transactions',
     standalone: true,
-    imports: [CommonModule, TranslateModule, FormsModule],
+    imports: [CommonModule, TranslateModule, FormsModule, RouterLink],
     templateUrl: './transactions.html'
 })
 export class Transactions implements OnInit {
@@ -239,7 +239,12 @@ export class Transactions implements OnInit {
         this.historyLoading = true;
         this.inventoryService.getTransactions({
             page: this.historyPage,
-            limit: this.historyPageSize
+            limit: this.historyPageSize,
+            type: this.filters.type,
+            startDate: this.filters.startDate,
+            endDate: this.filters.endDate,
+            userId: this.filters.user === 'all' ? undefined : Number(this.filters.user),
+            search: this.filters.keyword
         }).subscribe({
             next: (res) => {
                 this.historyData = res.data;
