@@ -72,6 +72,29 @@ export class Transactions implements OnInit {
         return user ? user.name : 'COMMON.ALL_USERS';
     }
 
+    // Type Dropdown State
+    showTypeDropdown = false;
+    transactionTypes = [
+        { id: 'all', name: 'INVENTORY.MOVEMENT.TYPES.ALL' },
+        { id: 'IN', name: 'INVENTORY.MOVEMENT.TYPES.IN' },
+        { id: 'OUT', name: 'INVENTORY.MOVEMENT.TYPES.OUT' },
+        { id: 'ADJUSTMENT', name: 'INVENTORY.MOVEMENT.TYPES.ADJUSTMENT' }
+    ];
+
+    toggleTypeDropdown() {
+        this.showTypeDropdown = !this.showTypeDropdown;
+    }
+
+    selectType(type: any) {
+        this.filters.type = type.id;
+        this.showTypeDropdown = false;
+    }
+
+    getSelectedTypeName(): string {
+        const type = this.transactionTypes.find(t => t.id === this.filters.type);
+        return type ? type.name : 'INVENTORY.MOVEMENT.TYPES.ALL';
+    }
+
     // Date Picker State
     showStartDatePicker = false;
     showEndDatePicker = false;

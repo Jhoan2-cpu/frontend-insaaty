@@ -326,6 +326,7 @@
         },
         "MOVEMENT": {
             "TYPES": {
+                "ALL": "ALL",
                 "IN": "IN",
                 "OUT": "OUT",
                 "ADJUSTMENT": "ADJUSTMENT"
