@@ -268,32 +268,45 @@ export class Reports implements OnInit, AfterViewInit {
   }
 
   getDateParams(): { startDate?: string; endDate?: string } {
-    const today = new Date();
+    const now = new Date();
     let startDate: Date | undefined;
-    let endDate = today;
+    let endDate = new Date(now);
+
+    // Ensure endDate covers the full day
+    endDate.setHours(23, 59, 59, 999);
 
     switch (this.dateFilter) {
       case 'today':
-        startDate = today;
+        startDate = new Date(now);
+        startDate.setHours(0, 0, 0, 0);
         break;
       case 'week':
-        startDate = new Date(today);
-        startDate.setDate(today.getDate() - 7);
+        startDate = new Date(now);
+        startDate.setDate(now.getDate() - 7);
+        startDate.setHours(0, 0, 0, 0);
         break;
       case 'month':
-        startDate = new Date(today);
-        startDate.setMonth(today.getMonth() - 1);
+        startDate = new Date(now);
+        startDate.setMonth(now.getMonth() - 1);
+        startDate.setHours(0, 0, 0, 0);
         break;
       case 'year':
-        startDate = new Date(today);
-        startDate.setFullYear(today.getFullYear() - 1);
+        startDate = new Date(now);
+        startDate.setFullYear(now.getFullYear() - 1);
+        startDate.setHours(0, 0, 0, 0);
         break;
       case 'custom':
         if (this.customStartDate && this.customEndDate) {
           // Custom dates from picker are YYYY-MM-DD
+          const sDate = new Date(this.customStartDate);
+          sDate.setHours(0, 0, 0, 0); // Start of start date
+
+          const eDate = new Date(this.customEndDate);
+          eDate.setHours(23, 59, 59, 999); // End of end date
+
           return {
-            startDate: new Date(this.customStartDate).toISOString(),
-            endDate: new Date(this.customEndDate).toISOString()
+            startDate: sDate.toISOString(),
+            endDate: eDate.toISOString()
           };
         }
         return {};
