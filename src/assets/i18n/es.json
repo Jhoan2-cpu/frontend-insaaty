@@ -469,6 +469,7 @@
     },
     "REPORTS": {
         "TITLE": "Reportes",
+        "EXPORT_PDF": "Exportar PDF",
         "SALES_TAB": "Ventas",
         "PRODUCTS_TAB": "Productos",
         "MOVEMENTS_TAB": "Movimientos",

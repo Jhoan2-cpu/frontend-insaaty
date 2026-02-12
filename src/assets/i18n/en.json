@@ -475,7 +475,8 @@
         "LOADING_DETAIL": "Loading order details..."
     },
     "REPORTS": {
-        "TITLE": "Reports",
+        "TITLE": "Reports & Analytics",
+        "EXPORT_PDF": "Export PDF",
         "SALES_TAB": "Sales",
         "PRODUCTS_TAB": "Products",
         "MOVEMENTS_TAB": "Movements",

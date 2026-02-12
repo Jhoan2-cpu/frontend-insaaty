@@ -31,6 +31,13 @@
                 {{ 'REPORTS.APPLY' | translate }}
             </button>
         </div>
+
+        <!-- Botón Exportar PDF -->
+        <button (click)="exportToPdf()" [disabled]="isLoadingKPIs || isLoadingSales || isLoadingProducts"
+            class="ml-auto flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            <i class="fas fa-file-pdf"></i>
+            {{ 'REPORTS.EXPORT_PDF' | translate }}
+        </button>
     </div>
 
     <!-- Loading KPIs -->
