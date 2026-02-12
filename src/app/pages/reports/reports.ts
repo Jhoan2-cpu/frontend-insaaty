@@ -160,29 +160,23 @@ export class Reports implements OnInit, AfterViewInit {
   loadMovements(params?: { startDate?: string; endDate?: string }) {
     this.isLoadingMovements = true;
 
-    // Convert ISO/Date string params to format expected by API if needed
-    // Assuming API takes YYYY-MM-DD or ISO strings. 
-    // InventoryService.getTransactions expects specific format? 
-    // In transactions.ts it passed filters.startDate which was formatted 'DD/MM/YYYY'.
-    // Here getDateParams returns ISO strings (YYYY-MM-DDTHH:mm:ss.sssZ). 
-    // I might need to format them if the backend strictly expects DD/MM/YYYY, 
-    // but usually ISO is safer for APIs. Let's try passing provided params first, 
-    // but seeing transactions.ts implementation, it uses formatDate() to DD/MM/YYYY.
-    // Let's check if we need to format.
+    // InventoryService expects DD/MM/YYYY format
+    // params come as ISO strings from getDateParams
+    let formattedStartDate = '';
+    let formattedEndDate = '';
 
-    // Actually, let's look at `reports.ts`: `getDateParams` returns objects with `startDate` and `endDate` as ISO strings.
-    // In `transactions.ts`, `filters.startDate` is bound to the date picker which returns DD/MM/YYYY.
-    // If the backend handles both, great. If not, I might need to format.
-    // For now, I will pass the params as is, assuming the generic `InventoryService` can handle it 
-    // or the backend is flexible. If it fails, I'll fix the format.
-
-    // However, `InventoryService.getTransactions` signature in `transactions.ts` call takes an object.
+    if (params?.startDate) {
+      formattedStartDate = this.formatDate(new Date(params.startDate));
+    }
+    if (params?.endDate) {
+      formattedEndDate = this.formatDate(new Date(params.endDate));
+    }
 
     this.inventoryService.getTransactions({
       page: 1,
       limit: 50, // Limit to 50 for the report view
-      startDate: params?.startDate,
-      endDate: params?.endDate,
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
       type: 'all'
     })
       .pipe(finalize(() => {
@@ -297,13 +291,9 @@ export class Reports implements OnInit, AfterViewInit {
       case 'custom':
         if (this.customStartDate && this.customEndDate) {
           // Custom dates from picker are YYYY-MM-DD
-          // Convert to DD/MM/YYYY
-          const [startYear, startMonth, startDay] = this.customStartDate.split('-');
-          const [endYear, endMonth, endDay] = this.customEndDate.split('-');
-
           return {
-            startDate: `${startDay}/${startMonth}/${startYear}`,
-            endDate: `${endDay}/${endMonth}/${endYear}`
+            startDate: new Date(this.customStartDate).toISOString(),
+            endDate: new Date(this.customEndDate).toISOString()
           };
         }
         return {};
@@ -311,8 +301,8 @@ export class Reports implements OnInit, AfterViewInit {
 
     if (startDate) {
       return {
-        startDate: this.formatDate(startDate),
-        endDate: this.formatDate(endDate)
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString()
       };
     }
     return {};
