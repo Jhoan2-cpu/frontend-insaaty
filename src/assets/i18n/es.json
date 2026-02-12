@@ -395,10 +395,14 @@
         "ORDER_NUMBER": "Número de Pedido",
         "STATUS": "Estado",
         "TOTAL": "Total",
+        "TOTAL_TO_PAY": "Total a Pagar",
         "CREATED_AT": "Fecha",
         "NOTES": "Notas",
+        "NOTES_PLACEHOLDER": "Escribe aquí cualquier observación relevante...",
         "CANCEL": "Cancelar",
+        "CANCEL_AND_RETURN": "Cancelar y volver",
         "SAVE": "Guardar Pedido",
+        "SAVE_ORDER": "Guardar Pedido",
         "SAVING": "Guardando...",
         "SORT_BY": "Ordenar por",
         "SORT": {
@@ -424,7 +428,11 @@
             "PRODUCT": "Producto",
             "UNIT_PRICE": "Precio Unitario",
             "SUBTOTAL": "Subtotal",
-            "REMOVE": "Eliminar"
+            "REMOVE": "Eliminar",
+            "SELECT_PRODUCT_PLACEHOLDER": "Buscar o seleccionar producto...",
+            "NO_ITEMS": "No hay productos agregados",
+            "SUBTITLE": "Ingresa los detalles a continuación para crear un nuevo pedido.",
+            "ADD": "Agregar"
         },
         "DETAIL": {
             "TITLE": "Detalle del Pedido",

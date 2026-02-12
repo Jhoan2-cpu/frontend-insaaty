@@ -395,10 +395,14 @@
         "ORDER_NUMBER": "Order Number",
         "STATUS": "Status",
         "TOTAL": "Total",
+        "TOTAL_TO_PAY": "Total to Pay",
         "CREATED_AT": "Date",
         "NOTES": "Notes",
+        "NOTES_PLACEHOLDER": "Write any relevant notes here...",
         "CANCEL": "Cancel",
+        "CANCEL_AND_RETURN": "Cancel & Return",
         "SAVE": "Save Order",
+        "SAVE_ORDER": "Save Order",
         "SAVING": "Saving...",
         "SORT_BY": "Sort by",
         "SORT": {
@@ -431,7 +435,11 @@
                 "CUSTOMER": "Customer",
                 "NO_CUSTOMER": "No customer assigned",
                 "TOTAL": "Total"
-            }
+            },
+            "SELECT_PRODUCT_PLACEHOLDER": "Search or select a product...",
+            "NO_ITEMS": "No items added yet",
+            "SUBTITLE": "Enter the details below to create a new order.",
+            "ADD": "Add"
         },
         "DETAIL": {
             "TITLE": "Order Details",
