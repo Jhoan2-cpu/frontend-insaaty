@@ -52,8 +52,18 @@ export const routes: Routes = [
             },
             {
                 path: 'orders',
-                loadComponent: () => import('./pages/orders/orders').then(m => m.Orders),
-                data: { title: 'SIDEBAR.ORDERS', breadcrumb: 'SIDEBAR.ORDERS' }
+                data: { title: 'SIDEBAR.ORDERS', breadcrumb: 'SIDEBAR.ORDERS' },
+                children: [
+                    {
+                        path: '',
+                        loadComponent: () => import('./pages/orders/orders').then(m => m.Orders),
+                    },
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./pages/orders/order-detail/order-detail').then(m => m.OrderDetail),
+                        data: { title: 'ORDERS.DETAIL.TITLE', breadcrumb: 'ORDERS.DETAIL.TITLE' }
+                    }
+                ]
             },
             {
                 path: 'reports',

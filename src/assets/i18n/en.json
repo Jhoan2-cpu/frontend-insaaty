@@ -424,17 +424,21 @@
             "PRODUCT": "Product",
             "UNIT_PRICE": "Unit Price",
             "SUBTOTAL": "Subtotal",
-            "REMOVE": "Remove"
-        },
-        "ACTIONS": {
-            "TITLE": "Actions",
-            "VIEW_DETAIL": "View Detail",
-            "CHANGE_STATUS": "Change Status",
-            "PROCESS": "Process",
-            "CANCEL": "Cancel",
-            "COMPLETE": "Complete"
+            "REMOVE": "Remove",
+            "DETAIL": {
+                "TITLE": "Order Details",
+                "ITEMS": "Items",
+                "CUSTOMER": "Customer",
+                "NO_CUSTOMER": "No customer assigned",
+                "TOTAL": "Total"
+            }
         },
         "DETAIL": {
+            "TITLE": "Order Details",
+            "ITEMS": "Items",
+            "CUSTOMER": "Customer",
+            "NO_CUSTOMER": "No customer assigned",
+            "TOTAL": "Total",
             "STATUS": "Status:",
             "PRODUCTS": "Products:",
             "NOTES": "Notes:",
@@ -443,9 +447,20 @@
                 "QUANTITY": "Quantity",
                 "PRICE": "Price",
                 "SUBTOTAL": "Subtotal"
-            },
-            "TOTAL": "Total:"
-        }
+            }
+        },
+        "ACTIONS": {
+            "TITLE": "Actions",
+            "VIEW_DETAIL": "View Detail",
+            "CHANGE_STATUS": "Change Status",
+            "PROCESS": "Process",
+            "CANCEL": "Cancel",
+            "COMPLETE": "Complete",
+            "DELETE": "Delete"
+        },
+        "SEND_EMAIL": "Send Email",
+        "BACK_TO_LIST": "Back to List",
+        "LOADING_DETAIL": "Loading order details..."
     },
     "REPORTS": {
         "TITLE": "Reports",

@@ -106,4 +106,8 @@ export class OrderService {
     getPendingCount(): Observable<number> {
         return this.http.get<number>(`${this.apiUrl}/stats/pending-count`);
     }
+
+    remove(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
 }

@@ -426,15 +426,12 @@
             "SUBTOTAL": "Subtotal",
             "REMOVE": "Eliminar"
         },
-        "ACTIONS": {
-            "TITLE": "Acciones",
-            "VIEW_DETAIL": "Ver Detalle",
-            "CHANGE_STATUS": "Cambiar Estado",
-            "PROCESS": "Procesar",
-            "CANCEL": "Cancelar",
-            "COMPLETE": "Completar"
-        },
         "DETAIL": {
+            "TITLE": "Detalle del Pedido",
+            "ITEMS": "Items",
+            "CUSTOMER": "Cliente",
+            "NO_CUSTOMER": "Sin cliente asignado",
+            "TOTAL": "Total",
             "STATUS": "Estado:",
             "PRODUCTS": "Productos:",
             "NOTES": "Notas:",
@@ -443,9 +440,20 @@
                 "QUANTITY": "Cantidad",
                 "PRICE": "Precio",
                 "SUBTOTAL": "Subtotal"
-            },
-            "TOTAL": "Total:"
-        }
+            }
+        },
+        "ACTIONS": {
+            "TITLE": "Acciones",
+            "VIEW_DETAIL": "Ver Detalle",
+            "CHANGE_STATUS": "Cambiar Estado",
+            "PROCESS": "Procesar",
+            "CANCEL": "Cancelar",
+            "COMPLETE": "Completar",
+            "DELETE": "Eliminar"
+        },
+        "SEND_EMAIL": "Enviar Email",
+        "BACK_TO_LIST": "Volver al listado",
+        "LOADING_DETAIL": "Cargando detalle del pedido..."
     },
     "REPORTS": {
         "TITLE": "Reportes",

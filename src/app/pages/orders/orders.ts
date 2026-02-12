@@ -49,8 +49,8 @@ export class Orders implements OnInit {
   totalAmount = 0;
 
   // Ver detalle
-  selectedOrder?: Order;
-  showDetailModal = false;
+  // selectedOrder?: Order; // No longer needed
+  // showDetailModal = false; // No longer needed
 
   // Sort dropdown state
   showSortDropdown = false;
@@ -217,48 +217,12 @@ export class Orders implements OnInit {
     });
   }
 
-  viewDetail(order: Order) {
-    this.selectedOrder = order;
-    this.showDetailModal = true;
-  }
-
-  closeDetail() {
-    this.showDetailModal = false;
-    this.selectedOrder = undefined;
-  }
-
-  processOrder() {
-    if (!this.selectedOrder) return;
-    this.changeStatus(this.selectedOrder.id, OrderStatus.PROCESSING);
-  }
-
-  completeOrder() {
-    if (!this.selectedOrder) return;
-    this.changeStatus(this.selectedOrder.id, OrderStatus.COMPLETED);
-  }
-
-  cancelOrder() {
-    if (!this.selectedOrder) return;
-    this.changeStatus(this.selectedOrder.id, OrderStatus.CANCELLED);
-  }
-
-  changeStatus(orderId: number, newStatus: OrderStatus) {
-    if (!confirm(`¿Cambiar estado a ${newStatus}?`)) return;
-
-    this.orderService.updateStatus(orderId, { status: newStatus }).subscribe({
-      next: () => {
-        console.log('✓ Status updated');
-        this.loadOrders();
-        if (this.selectedOrder?.id === orderId) {
-          this.closeDetail();
-        }
-      },
-      error: (error) => {
-        console.error('Error updating status:', error);
-        alert(error.error?.message || 'Error al cambiar el estado');
-      }
-    });
-  }
+  /* Methods moved to OrderDetail
+  processOrder() { ... }
+  completeOrder() { ... }
+  cancelOrder() { ... }
+  changeStatus() { ... }
+  */
 
   applyFilter(filter: string) {
     this.currentFilter = filter as OrderStatus | 'all';

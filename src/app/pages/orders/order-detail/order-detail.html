@@ -1,0 +1,146 @@
+<div class="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8 animate__animated animate__fadeIn animate__faster">
+    <div class="max-w-5xl mx-auto space-y-6">
+        <!-- Breadcrumb & Back -->
+        <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+            <a routerLink="/orders" class="hover:text-emerald-600 transition-colors flex items-center gap-1">
+                <i class="fas fa-arrow-left"></i> {{ 'ORDERS.BACK_TO_LIST' | translate }}
+            </a>
+            <span class="text-gray-300">/</span>
+            <span class="text-gray-900 font-medium" *ngIf="order">{{ order.order_number }}</span>
+        </div>
+
+        @if (isLoading) {
+        <div class="flex justify-center items-center py-20">
+            <div class="text-center">
+                <i class="fas fa-spinner fa-spin text-4xl text-emerald-500 mb-4"></i>
+                <p class="text-gray-500">{{ 'ORDERS.LOADING_DETAIL' | translate }}</p>
+            </div>
+        </div>
+        } @else if (order) {
+        <!-- Helper functions for status checking -->
+        <!-- Variables for template use -->
+
+        <!-- Header Section -->
+        <div
+            class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ order.order_number }}</h1>
+                <div class="flex items-center gap-3 text-sm text-gray-500">
+                    <i class="far fa-calendar"></i>
+                    <span>{{ order.created_at | date:'medium' }}</span>
+                    <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                    <span [class]="getStatusClass(order.status)"
+                        class="px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wide">
+                        {{ 'ORDERS.STATUSES.' + order.status | translate }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center gap-3">
+                @if (order.status === 'PENDING') {
+                <button (click)="updateStatus(OrderStatus.PROCESSING)" [disabled]="isSaving"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-sm font-medium disabled:opacity-50 flex items-center gap-2">
+                    <i class="fas fa-cog" [class.fa-spin]="isSaving"></i>
+                    {{ 'ORDERS.ACTIONS.PROCESS' | translate }}
+                </button>
+                <button (click)="deleteOrder()" [disabled]="isSaving"
+                    class="px-4 py-2 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition font-medium disabled:opacity-50">
+                    {{ 'ORDERS.ACTIONS.DELETE' | translate }}
+                </button>
+                }
+                @if (order.status === 'PROCESSING') {
+                <button (click)="updateStatus(OrderStatus.COMPLETED)" [disabled]="isSaving"
+                    class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition shadow-sm font-medium disabled:opacity-50 flex items-center gap-2">
+                    <i class="fas fa-check" [class.fa-spin]="isSaving"></i>
+                    {{ 'ORDERS.ACTIONS.COMPLETE' | translate }}
+                </button>
+                <button (click)="updateStatus(OrderStatus.CANCELLED)" [disabled]="isSaving"
+                    class="px-4 py-2 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition font-medium disabled:opacity-50">
+                    {{ 'ORDERS.ACTIONS.CANCEL' | translate }}
+                </button>
+                }
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Order Items -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-100 bg-gray-50/50">
+                        <h3 class="font-bold text-gray-800">{{ 'ORDERS.DETAIL.ITEMS' | translate }}</h3>
+                    </div>
+                    <div class="divide-y divide-gray-100">
+                        <div *ngFor="let item of order.order_items"
+                            class="p-4 sm:px-6 flex items-center justify-between hover:bg-gray-50 transition">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-gray-900">{{ item.product.name }}</p>
+                                    <p class="text-sm text-gray-500">{{ 'PRODUCT_MODAL.SKU' | translate }}: {{
+                                        item.product.sku }}</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold text-gray-900">${{ item.subtotal | number:'1.2-2' }}</p>
+                                <p class="text-sm text-gray-500">{{ item.quantity }} x ${{ item.unit_price |
+                                    number:'1.2-2' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600 font-medium">{{ 'ORDERS.TOTAL' | translate }}</span>
+                            <span class="text-2xl font-bold text-emerald-600">${{ order.total | number:'1.2-2' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes (if any) -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6" *ngIf="order.notes">
+                    <h3 class="font-bold text-gray-800 mb-2">{{ 'ORDERS.FORM.NOTES' | translate }}</h3>
+                    <p
+                        class="text-gray-600 bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm whitespace-pre-wrap">
+                        {{ order.notes }}</p>
+                </div>
+            </div>
+
+            <!-- Customer Info -->
+            <div class="space-y-6">
+                <!-- Customer Card -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fas fa-user-circle text-emerald-500"></i>
+                        {{ 'ORDERS.DETAIL.CUSTOMER' | translate }}
+                    </h3>
+                    @if (order.user) {
+                    <div class="space-y-3">
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider">{{ 'AUTH.FULL_NAME'
+                                | translate }}</p>
+                            <p class="font-medium text-gray-900">{{ order.user.full_name }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider">{{ 'AUTH.EMAIL' |
+                                translate }}</p>
+                            <p class="font-medium text-gray-900">{{ order.user.email }}</p>
+                        </div>
+                        <div class="pt-3 border-t border-gray-100">
+                            <a href="mailto:{{ order.user.email }}"
+                                class="text-emerald-600 hover:text-emerald-700 text-sm font-medium flex items-center gap-2">
+                                <i class="far fa-envelope"></i> {{ 'ORDERS.SEND_EMAIL' | translate }}
+                            </a>
+                        </div>
+                    </div>
+                    } @else {
+                    <p class="text-gray-500 italic">{{ 'ORDERS.DETAIL.NO_CUSTOMER' | translate }}</p>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
