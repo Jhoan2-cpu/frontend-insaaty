@@ -240,12 +240,20 @@
         "UPDATE": "Update",
         "PAGE": "Page",
         "OF": "of",
-        "NONE": "None"
+        "NONE": "None",
+        "FILTERS": "Audit Filters",
+        "CLEAR": "Clear",
+        "ALL_USERS": "All Users",
+        "DATE_RANGE": "Date Range",
+        "APPLY_FILTERS": "Apply Filters",
+        "DATE": "Date"
     },
     "INVENTORY": {
         "BREADCRUMB": "Inventory",
         "TITLE": "Product Management",
         "TRANSACTIONS": "Transactions",
+        "TRANSACTION_HISTORY": "Audit History",
+        "TRANSACTION_DESCRIPTION": "View and analyze all stock movements in real-time.",
         "MOVEMENT_TITLE": "Register Movement",
         "MOVEMENT_TYPE": "Movement Type",
         "MOVEMENT_SUBTITLE": "Record a new stock movement or adjustment.",

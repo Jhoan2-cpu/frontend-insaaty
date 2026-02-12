@@ -240,12 +240,20 @@
         "UPDATE": "Actualizar",
         "PAGE": "Página",
         "OF": "de",
-        "NONE": "Ninguno"
+        "NONE": "Ninguno",
+        "FILTERS": "Filtros de Auditoría",
+        "CLEAR": "Limpiar",
+        "ALL_USERS": "Todos los usuarios",
+        "DATE_RANGE": "Rango de Fecha",
+        "APPLY_FILTERS": "Aplicar Filtros",
+        "DATE": "Fecha"
     },
     "INVENTORY": {
         "BREADCRUMB": "Inventario",
         "TITLE": "Gestión de Productos",
         "TRANSACTIONS": "Transacciones",
+        "TRANSACTION_HISTORY": "Historial de Auditoría",
+        "TRANSACTION_DESCRIPTION": "Visualiza y analiza todos los movimientos de stock en tiempo real.",
         "MOVEMENT_TITLE": "Registrar Movimiento",
         "MOVEMENT_TYPE": "Tipo de Movimiento",
         "MOVEMENT_SUBTITLE": "Registrar un nuevo movimiento de stock o ajuste.",
