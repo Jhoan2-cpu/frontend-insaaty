@@ -251,6 +251,7 @@
         "NEXT": "Siguiente"
     },
     "INVENTORY": {
+        "TYPE": "Tipo",
         "BREADCRUMB": "Inventario",
         "TITLE": "Gestión de Productos",
         "USER": "Usuario",
@@ -464,6 +465,7 @@
         "COMING_SOON": "Próximamente..."
     },
     "PRODUCT_MODAL": {
+        "PRODUCT": "Producto",
         "TITLE_NEW": "Nuevo Producto",
         "TITLE_EDIT": "Editar Producto",
         "SKU": "SKU",
