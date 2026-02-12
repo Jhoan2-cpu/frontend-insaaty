@@ -77,10 +77,12 @@ export class OrderDetail implements OnInit {
             next: (updatedOrder) => {
                 this.order = updatedOrder;
                 this.isSaving = false;
+                this.cdr.detectChanges();
             },
             error: (error) => {
                 console.error('Error updating status:', error);
                 this.isSaving = false;
+                this.cdr.detectChanges();
             }
         });
     }
@@ -95,6 +97,7 @@ export class OrderDetail implements OnInit {
             error: (error) => {
                 console.error('Error deleting order:', error);
                 this.isSaving = false;
+                this.cdr.detectChanges();
             }
         });
     }
