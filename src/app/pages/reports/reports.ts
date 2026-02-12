@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReportsService, SalesReportData, TopProduct, LowStockProduct, KPIs } from '../../services/reports.service';
+import { InventoryService, InventoryTransaction } from '../../services/inventory.service';
 import { TitleService } from '../../services/title.service';
 import { Chart } from 'chart.js/auto';
 import { finalize } from 'rxjs/operators';
@@ -28,6 +29,7 @@ export class Reports implements OnInit, AfterViewInit {
   salesData: SalesReportData[] = [];
   topProducts: TopProduct[] = [];
   lowStockProducts: LowStockProduct[] = [];
+  movementsData: InventoryTransaction[] = [];
 
   // Chart instance
   salesChart: Chart | null = null;
@@ -37,9 +39,11 @@ export class Reports implements OnInit, AfterViewInit {
   isLoadingSales = false;
   isLoadingProducts = false;
   isLoadingLowStock = false;
+  isLoadingMovements = false;
 
   constructor(
     private reportsService: ReportsService,
+    private inventoryService: InventoryService,
     private cdr: ChangeDetectorRef,
     private titleService: TitleService
   ) { }
@@ -58,6 +62,7 @@ export class Reports implements OnInit, AfterViewInit {
     this.loadSalesReport(dateParams);
     this.loadTopProducts(dateParams);
     this.loadLowStockProducts();
+    this.loadMovements(dateParams);
   }
 
   loadKPIs(params?: { startDate?: string; endDate?: string }) {
@@ -148,6 +153,49 @@ export class Reports implements OnInit, AfterViewInit {
         },
         error: (err) => {
           console.error('Error loading low stock products:', err);
+        }
+      });
+  }
+
+  loadMovements(params?: { startDate?: string; endDate?: string }) {
+    this.isLoadingMovements = true;
+
+    // Convert ISO/Date string params to format expected by API if needed
+    // Assuming API takes YYYY-MM-DD or ISO strings. 
+    // InventoryService.getTransactions expects specific format? 
+    // In transactions.ts it passed filters.startDate which was formatted 'DD/MM/YYYY'.
+    // Here getDateParams returns ISO strings (YYYY-MM-DDTHH:mm:ss.sssZ). 
+    // I might need to format them if the backend strictly expects DD/MM/YYYY, 
+    // but usually ISO is safer for APIs. Let's try passing provided params first, 
+    // but seeing transactions.ts implementation, it uses formatDate() to DD/MM/YYYY.
+    // Let's check if we need to format.
+
+    // Actually, let's look at `reports.ts`: `getDateParams` returns objects with `startDate` and `endDate` as ISO strings.
+    // In `transactions.ts`, `filters.startDate` is bound to the date picker which returns DD/MM/YYYY.
+    // If the backend handles both, great. If not, I might need to format.
+    // For now, I will pass the params as is, assuming the generic `InventoryService` can handle it 
+    // or the backend is flexible. If it fails, I'll fix the format.
+
+    // However, `InventoryService.getTransactions` signature in `transactions.ts` call takes an object.
+
+    this.inventoryService.getTransactions({
+      page: 1,
+      limit: 50, // Limit to 50 for the report view
+      startDate: params?.startDate,
+      endDate: params?.endDate,
+      type: 'all'
+    })
+      .pipe(finalize(() => {
+        this.isLoadingMovements = false;
+        this.cdr.detectChanges();
+      }))
+      .subscribe({
+        next: (res) => {
+          this.movementsData = res.data;
+          console.log('✓ Movements loaded:', res.data);
+        },
+        error: (err) => {
+          console.error('Error loading movements:', err);
         }
       });
   }
@@ -248,18 +296,33 @@ export class Reports implements OnInit, AfterViewInit {
         break;
       case 'custom':
         if (this.customStartDate && this.customEndDate) {
+          // Custom dates from picker are YYYY-MM-DD
+          // Convert to DD/MM/YYYY
+          const [startYear, startMonth, startDay] = this.customStartDate.split('-');
+          const [endYear, endMonth, endDay] = this.customEndDate.split('-');
+
           return {
-            startDate: new Date(this.customStartDate).toISOString(),
-            endDate: new Date(this.customEndDate).toISOString()
+            startDate: `${startDay}/${startMonth}/${startYear}`,
+            endDate: `${endDay}/${endMonth}/${endYear}`
           };
         }
         return {};
     }
 
-    return startDate ? {
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString()
-    } : {};
+    if (startDate) {
+      return {
+        startDate: this.formatDate(startDate),
+        endDate: this.formatDate(endDate)
+      };
+    }
+    return {};
+  }
+
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${day}/${month}/${year}`;
   }
 
   changeTab(tab: 'sales' | 'products' | 'movements') {

@@ -191,9 +191,79 @@
         </div>
     </div>
 
-    <!-- Tab Content: Movements (placeholder) -->
+    <!-- Tab Content: Movements -->
     <div *ngIf="activeTab === 'movements'" class="tab-content">
-        <h2>{{ 'REPORTS.MOVEMENTS_TAB' | translate }}</h2>
-        <p class="coming-soon">{{ 'REPORTS.COMING_SOON' | translate }}</p>
+        <div class="products-section">
+            <h2>{{ 'REPORTS.MOVEMENTS_HISTORY' | translate }}</h2>
+
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{{ 'REPORTS.DATE' | translate }}</th>
+                            <th>{{ 'REPORTS.PRODUCT' | translate }}</th>
+                            <th>{{ 'INVENTORY.TYPE' | translate }}</th>
+                            <th>{{ 'INVENTORY.QUANTITY' | translate }}</th>
+                            <th>{{ 'INVENTORY.USER' | translate }}</th>
+                            <th>{{ 'INVENTORY.REASON' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of movementsData">
+                            <td>
+                                <div class="flex flex-col">
+                                    <span class="font-medium">{{ item.created_at | date:'mediumDate' }}</span>
+                                    <span class="text-xs text-gray-400">{{ item.created_at | date:'shortTime' }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flex flex-col">
+                                    <span class="font-medium">{{ item.product?.name }}</span>
+                                    <span class="text-xs text-emerald-600 font-mono">{{ item.product?.sku }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wide border"
+                                    [class.bg-emerald-50]="item.type === 'IN'"
+                                    [class.text-emerald-700]="item.type === 'IN'"
+                                    [class.border-emerald-200]="item.type === 'IN'"
+                                    [class.bg-rose-50]="item.type === 'OUT'" [class.text-rose-700]="item.type === 'OUT'"
+                                    [class.border-rose-200]="item.type === 'OUT'"
+                                    [class.bg-blue-50]="item.type === 'ADJUSTMENT'"
+                                    [class.text-blue-700]="item.type === 'ADJUSTMENT'"
+                                    [class.border-blue-200]="item.type === 'ADJUSTMENT'">
+                                    {{ item.type }}
+                                </span>
+                            </td>
+                            <td class="font-bold text-right" [class.text-emerald-600]="item.type === 'IN'"
+                                [class.text-rose-600]="item.type === 'OUT'"
+                                [class.text-blue-600]="item.type === 'ADJUSTMENT'">
+                                {{ item.type === 'OUT' ? '-' : '+' }}{{ item.quantity }}
+                            </td>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
+                                        {{ item.user?.full_name?.charAt(0) || 'U' }}
+                                    </div>
+                                    <span class="text-sm truncate max-w-[100px]">{{ item.user?.full_name }}</span>
+                                </div>
+                            </td>
+                            <td class="text-sm text-gray-500 max-w-[200px] truncate" title="{{ item.reason }}">
+                                {{ item.reason || '-' }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="isLoadingMovements" class="loading-state py-12 flex justify-center">
+                <div class="spinner border-emerald-500"></div>
+            </div>
+
+            <div *ngIf="movementsData.length === 0 && !isLoadingMovements" class="empty-state">
+                <p>{{ 'REPORTS.NO_MOVEMENTS_DATA' | translate }}</p>
+            </div>
+        </div>
     </div>
 </div>
