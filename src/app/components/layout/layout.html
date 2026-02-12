@@ -27,20 +27,21 @@
                 <nav class="space-y-2">
                     <!-- Dashboard -->
                     <a routerLink="/dashboard"
-                        routerLinkActive="bg-[#1e293b] text-emerald-400 border-l-4 border-emerald-500"
+                        routerLinkActive="bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500"
                         [routerLinkActiveOptions]="{exact: true}"
-                        class="flex items-center px-4 py-3 text-gray-400 hover:bg-[#1e293b] hover:text-white rounded-r-xl transition-all duration-200 group">
-                        <i class="fas fa-th-large w-6 text-center mr-3 transition-transform group-hover:scale-110"></i>
+                        class="flex items-center px-4 py-3 text-gray-400 hover:bg-emerald-500/5 hover:text-white rounded-r-xl transition-all duration-200 group">
+                        <i
+                            class="fas fa-th-large w-6 text-center mr-3 transition-transform group-hover:scale-110 text-emerald-500"></i>
                         <span class="font-medium tracking-wide">{{ 'SIDEBAR.DASHBOARD' | translate }}</span>
                     </a>
 
                     <!-- Inventory Accordion -->
                     <div>
                         <button (click)="toggleInventory()" [class.text-emerald-400]="isInventoryOpen"
-                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:bg-[#1e293b] hover:text-white rounded-r-xl transition-all duration-200 group">
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:bg-emerald-500/5 hover:text-white rounded-r-xl transition-all duration-200 group">
                             <div class="flex items-center">
                                 <i
-                                    class="fas fa-boxes w-6 text-center mr-3 transition-transform group-hover:scale-110"></i>
+                                    class="fas fa-boxes w-6 text-center mr-3 transition-transform group-hover:scale-110 text-emerald-500"></i>
                                 <span class="font-medium tracking-wide">{{ 'SIDEBAR.INVENTORY' | translate }}</span>
                             </div>
                             <i class="fas fa-chevron-right text-[10px] transition-transform duration-300"
@@ -74,25 +75,26 @@
                     </div>
 
                     <a routerLink="/orders"
-                        routerLinkActive="bg-[#1e293b] text-emerald-400 border-l-4 border-emerald-500"
-                        class="flex items-center justify-between px-4 py-3 text-gray-400 hover:bg-[#1e293b] hover:text-white rounded-r-xl transition-all duration-200 group">
+                        routerLinkActive="bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500"
+                        class="flex items-center justify-between px-4 py-3 text-gray-400 hover:bg-emerald-500/5 hover:text-white rounded-r-xl transition-all duration-200 group">
                         <div class="flex items-center">
                             <i
-                                class="fas fa-shopping-cart w-6 text-center mr-3 transition-transform group-hover:scale-110"></i>
+                                class="fas fa-shopping-cart w-6 text-center mr-3 transition-transform group-hover:scale-110 text-orange-500"></i>
                             <span class="font-medium tracking-wide">{{ 'SIDEBAR.ORDERS' | translate }}</span>
                         </div>
                         @if (pendingOrdersCount > 0) {
                         <span
-                            class="bg-orange-500/20 text-orange-400 py-0.5 px-2 rounded-md text-[10px] font-bold border border-orange-500/20">
+                            class="bg-orange-800/80 text-orange-200 py-0.5 px-2.5 rounded-full text-[10px] font-bold border border-orange-500/30">
                             {{ pendingOrdersCount }}
                         </span>
                         }
                     </a>
 
                     <a routerLink="/reports"
-                        routerLinkActive="bg-[#1e293b] text-emerald-400 border-l-4 border-emerald-500"
-                        class="flex items-center px-4 py-3 text-gray-400 hover:bg-[#1e293b] hover:text-white rounded-r-xl transition-all duration-200 group">
-                        <i class="fas fa-chart-pie w-6 text-center mr-3 transition-transform group-hover:scale-110"></i>
+                        routerLinkActive="bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500"
+                        class="flex items-center px-4 py-3 text-gray-400 hover:bg-emerald-500/5 hover:text-white rounded-r-xl transition-all duration-200 group">
+                        <i
+                            class="fas fa-chart-pie w-6 text-center mr-3 transition-transform group-hover:scale-110 text-yellow-500"></i>
                         <span class="font-medium tracking-wide">{{ 'SIDEBAR.REPORTS' | translate }}</span>
                     </a>
                 </nav>
@@ -105,15 +107,17 @@
                 </h3>
                 <nav class="space-y-2">
                     <a routerLink="/suppliers"
-                        routerLinkActive="bg-[#1e293b] text-emerald-400 border-l-4 border-emerald-500"
-                        class="flex items-center px-4 py-3 text-gray-400 hover:bg-[#1e293b] hover:text-white rounded-r-xl transition-all duration-200 group">
-                        <i class="fas fa-users w-6 text-center mr-3 transition-transform group-hover:scale-110"></i>
+                        routerLinkActive="bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500"
+                        class="flex items-center px-4 py-3 text-gray-400 hover:bg-emerald-500/5 hover:text-white rounded-r-xl transition-all duration-200 group">
+                        <i
+                            class="fas fa-users w-6 text-center mr-3 transition-transform group-hover:scale-110 text-blue-500"></i>
                         <span class="font-medium tracking-wide">{{ 'SIDEBAR.SUPPLIERS' | translate }}</span>
                     </a>
                     <a routerLink="/settings"
-                        routerLinkActive="bg-[#1e293b] text-emerald-400 border-l-4 border-emerald-500"
-                        class="flex items-center px-4 py-3 text-gray-400 hover:bg-[#1e293b] hover:text-white rounded-r-xl transition-all duration-200 group">
-                        <i class="fas fa-cog w-6 text-center mr-3 transition-transform group-hover:scale-110"></i>
+                        routerLinkActive="bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500"
+                        class="flex items-center px-4 py-3 text-gray-400 hover:bg-emerald-500/5 hover:text-white rounded-r-xl transition-all duration-200 group">
+                        <i
+                            class="fas fa-cog w-6 text-center mr-3 transition-transform group-hover:scale-110 text-purple-500"></i>
                         <span class="font-medium tracking-wide">{{ 'SIDEBAR.SETTINGS' | translate }}</span>
                     </a>
                 </nav>
