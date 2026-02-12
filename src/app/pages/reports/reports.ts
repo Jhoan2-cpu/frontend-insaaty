@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ReportsService, SalesReportData, TopProduct, LowStockProduct, KPIs } from '../../services/reports.service';
 import { TitleService } from '../../services/title.service';
 import { Chart } from 'chart.js/auto';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reports',
@@ -63,86 +64,91 @@ export class Reports implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
     console.log('📊 Loading KPIs with params:', params);
 
-    this.reportsService.getKPIs(params).subscribe({
-      next: (data) => {
-        this.kpis = data;
+    this.reportsService.getKPIs(params)
+      .pipe(finalize(() => {
         this.isLoadingKPIs = false;
-        console.log('✅ KPIs loaded - isLoading:', this.isLoadingKPIs);
         this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('❌ Error loading KPIs:', err);
-        this.isLoadingKPIs = false;
-
-        // Establecer KPIs vacíos en caso de error
-        this.kpis = {
-          totalSales: 0,
-          totalOrders: 0,
-          completedOrders: 0,
-          pendingOrders: 0,
-          totalProfit: 0,
-          productsCount: 0,
-          lowStockCount: 0
-        };
-        this.cdr.detectChanges();
-      }
-    });
+      }))
+      .subscribe({
+        next: (data) => {
+          this.kpis = data;
+          console.log('✅ KPIs loaded');
+        },
+        error: (err) => {
+          console.error('❌ Error loading KPIs:', err);
+          // Establecer KPIs vacíos en caso de error
+          this.kpis = {
+            totalSales: 0,
+            totalOrders: 0,
+            completedOrders: 0,
+            pendingOrders: 0,
+            totalProfit: 0,
+            productsCount: 0,
+            lowStockCount: 0
+          };
+        }
+      });
   }
 
   loadSalesReport(params?: { startDate?: string; endDate?: string }) {
     this.isLoadingSales = true;
-    this.reportsService.getSalesReport(params).subscribe({
-      next: (data) => {
-        this.salesData = data;
-        this.isLoadingSales = false;
-        console.log('✓ Sales report loaded:', data);
-        this.cdr.detectChanges();
 
-        // Crear o actualizar gráfico
-        if (this.activeTab === 'sales') {
-          setTimeout(() => this.createSalesChart(), 100);
-        }
-      },
-      error: (err) => {
-        console.error('Error loading sales report:', err);
+    this.reportsService.getSalesReport(params)
+      .pipe(finalize(() => {
         this.isLoadingSales = false;
         this.cdr.detectChanges();
-      }
-    });
+      }))
+      .subscribe({
+        next: (data) => {
+          this.salesData = data;
+          console.log('✓ Sales report loaded:', data);
+          // Crear o actualizar gráfico
+          if (this.activeTab === 'sales') {
+            setTimeout(() => this.createSalesChart(), 100);
+          }
+        },
+        error: (err) => {
+          console.error('Error loading sales report:', err);
+        }
+      });
   }
 
   loadTopProducts(params?: { limit?: number; startDate?: string; endDate?: string }) {
     this.isLoadingProducts = true;
-    this.reportsService.getTopProducts({ ...params, limit: 10 }).subscribe({
-      next: (data) => {
-        this.topProducts = data;
-        this.isLoadingProducts = false;
-        console.log('✓ Top products loaded:', data);
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Error loading top products:', err);
+
+    this.reportsService.getTopProducts({ ...params, limit: 10 })
+      .pipe(finalize(() => {
         this.isLoadingProducts = false;
         this.cdr.detectChanges();
-      }
-    });
+      }))
+      .subscribe({
+        next: (data) => {
+          this.topProducts = data;
+          console.log('✓ Top products loaded:', data);
+        },
+        error: (err) => {
+          console.error('Error loading top products:', err);
+        }
+      });
   }
 
   loadLowStockProducts() {
     this.isLoadingLowStock = true;
-    this.reportsService.getLowStockProducts().subscribe({
-      next: (data) => {
-        this.lowStockProducts = data;
-        this.isLoadingLowStock = false;
-        console.log('✓ Low stock products loaded:', data);
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Error loading low stock products:', err);
+
+    this.reportsService.getLowStockProducts()
+      .pipe(finalize(() => {
         this.isLoadingLowStock = false;
         this.cdr.detectChanges();
-      }
-    });
+      }))
+      .subscribe({
+        next: (data) => {
+          this.lowStockProducts = data;
+          console.log('✓ Low stock products loaded:', data);
+        },
+        error: (err) => {
+          console.error('Error loading low stock products:', err);
+        }
+      });
   }
 
   createSalesChart() {
