@@ -50,6 +50,28 @@ export class Transactions implements OnInit {
         this.loadHistory();
     }
 
+    // User Dropdown State
+    showUserDropdown = false;
+    users = [
+        { id: 'all', name: 'COMMON.ALL_USERS' },
+        { id: 1, name: 'Admin User' },
+        { id: 2, name: 'Warehouse Staff' }
+    ]; // Mock users for now
+
+    toggleUserDropdown() {
+        this.showUserDropdown = !this.showUserDropdown;
+    }
+
+    selectUser(user: any) {
+        this.filters.user = user.id;
+        this.showUserDropdown = false;
+    }
+
+    getSelectedUserName(): string {
+        const user = this.users.find(u => u.id === this.filters.user);
+        return user ? user.name : 'COMMON.ALL_USERS';
+    }
+
     // Date Picker State
     showStartDatePicker = false;
     showEndDatePicker = false;
