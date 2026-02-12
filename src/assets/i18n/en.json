@@ -246,11 +246,14 @@
         "ALL_USERS": "All Users",
         "DATE_RANGE": "Date Range",
         "APPLY_FILTERS": "Apply Filters",
-        "DATE": "Date"
+        "DATE": "Date",
+        "PREVIOUS": "Previous",
+        "NEXT": "Next"
     },
     "INVENTORY": {
         "BREADCRUMB": "Inventory",
         "TITLE": "Product Management",
+        "USER": "User",
         "TRANSACTIONS": "Transactions",
         "TRANSACTION_HISTORY": "Audit History",
         "TRANSACTION_DESCRIPTION": "View and analyze all stock movements in real-time.",
