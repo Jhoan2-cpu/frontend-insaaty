@@ -197,7 +197,7 @@ export class Dashboard implements OnInit, AfterViewInit {
 
     // Gradient fill
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.5)'); // Blue with higher opacity for dark mode
+    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.2)'); // Blue with opacity
     gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
 
     // Generate all dates for the selected period
@@ -239,7 +239,7 @@ export class Dashboard implements OnInit, AfterViewInit {
           borderWidth: 3,
           tension: 0.4, // Smooth curves
           fill: true,
-          pointBackgroundColor: '#1e293b', // Match card bg
+          pointBackgroundColor: '#ffffff',
           pointBorderColor: '#3b82f6',
           pointBorderWidth: 2,
           pointRadius: 4,
@@ -254,14 +254,12 @@ export class Dashboard implements OnInit, AfterViewInit {
             display: false
           },
           tooltip: {
-            backgroundColor: '#0f172a', // Darker tooltip
+            backgroundColor: '#1f2937',
             titleColor: '#fff',
-            bodyColor: '#94a3b8',
+            bodyColor: '#fff',
             padding: 12,
             cornerRadius: 8,
             displayColors: false,
-            borderColor: '#334155',
-            borderWidth: 1,
             callbacks: {
               label: (context) => `Sales: $${context.raw}`
             }
@@ -273,7 +271,7 @@ export class Dashboard implements OnInit, AfterViewInit {
               display: false
             },
             ticks: {
-              color: '#64748b', // Slate-500
+              color: '#9ca3af',
               font: {
                 size: 11
               },
@@ -299,20 +297,20 @@ export class Dashboard implements OnInit, AfterViewInit {
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'PENDING': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-      case 'COMPLETED': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-      case 'CANCELLED': return 'bg-red-500/10 text-red-400 border-red-500/20';
-      case 'ADJUSTMENT': return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-      default: return 'bg-slate-700/50 text-slate-400 border-slate-600';
+      case 'PENDING': return 'bg-yellow-100 text-yellow-700';
+      case 'COMPLETED': return 'bg-green-100 text-green-700';
+      case 'CANCELLED': return 'bg-red-100 text-red-700';
+      case 'ADJUSTMENT': return 'bg-purple-100 text-purple-700';
+      default: return 'bg-gray-100 text-gray-700';
     }
   }
 
   getIconClass(type: string): string {
     switch (type) {
-      case 'IN': return 'fa-arrow-down text-emerald-400';
-      case 'OUT': return 'fa-arrow-up text-blue-400';
-      case 'ADJUSTMENT': return 'fa-exchange-alt text-purple-400';
-      default: return 'fa-circle text-slate-400';
+      case 'IN': return 'fa-arrow-down text-green-500';
+      case 'OUT': return 'fa-arrow-up text-blue-500';
+      case 'ADJUSTMENT': return 'fa-exchange-alt text-purple-500';
+      default: return 'fa-circle';
     }
   }
 }
