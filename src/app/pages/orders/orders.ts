@@ -71,6 +71,7 @@ export class Orders implements OnInit {
 
   initOrderForm() {
     this.orderForm = this.fb.group({
+      customer_name: [''],
       product_id: ['', Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]],
       notes: ['']
@@ -199,6 +200,7 @@ export class Orders implements OnInit {
         product_id: item.product.id,
         quantity: item.quantity
       })),
+      customer_name: this.orderForm.get('customer_name')?.value || undefined,
       notes: this.orderForm.get('notes')?.value || undefined
     };
 

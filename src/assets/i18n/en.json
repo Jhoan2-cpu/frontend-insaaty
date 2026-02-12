@@ -439,7 +439,9 @@
             "SELECT_PRODUCT_PLACEHOLDER": "Search or select a product...",
             "NO_ITEMS": "No items added yet",
             "SUBTITLE": "Enter the details below to create a new order.",
-            "ADD": "Add"
+            "ADD": "Add",
+            "CUSTOMER_NAME": "Customer Name",
+            "CUSTOMER_NAME_PLACEHOLDER": "Enter customer name (optional)"
         },
         "DETAIL": {
             "TITLE": "Order Details",

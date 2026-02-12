@@ -432,7 +432,9 @@
             "SELECT_PRODUCT_PLACEHOLDER": "Buscar o seleccionar producto...",
             "NO_ITEMS": "No hay productos agregados",
             "SUBTITLE": "Ingresa los detalles a continuación para crear un nuevo pedido.",
-            "ADD": "Agregar"
+            "ADD": "Agregar",
+            "CUSTOMER_NAME": "Nombre del Cliente",
+            "CUSTOMER_NAME_PLACEHOLDER": "Ingresa el nombre del cliente (opcional)"
         },
         "DETAIL": {
             "TITLE": "Detalle del Pedido",

@@ -28,6 +28,7 @@ export interface Order {
     order_number: string;
     tenant_id: number;
     user_id: number;
+    customer_name?: string;
     status: OrderStatus;
     total: number;
     notes?: string;
@@ -58,6 +59,7 @@ export interface CreateOrderItemDto {
 
 export interface CreateOrderDto {
     items: CreateOrderItemDto[];
+    customer_name?: string;
     notes?: string;
 }
 
