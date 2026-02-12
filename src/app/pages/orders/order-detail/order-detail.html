@@ -109,16 +109,10 @@
                     </div>
                 </div>
 
-                <!-- Notes (if any) -->
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6" *ngIf="order.notes">
-                    <h3 class="font-bold text-gray-800 mb-2">{{ 'ORDERS.FORM.NOTES' | translate }}</h3>
-                    <p
-                        class="text-gray-600 bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm whitespace-pre-wrap">
-                        {{ order.notes }}</p>
-                </div>
+
             </div>
 
-            <!-- Customer Info -->
+            <!-- Customer & Notes Column -->
             <div class="space-y-6">
                 <!-- Customer Card -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
@@ -126,28 +120,29 @@
                         <i class="fas fa-user-circle text-emerald-500"></i>
                         {{ 'ORDERS.DETAIL.CUSTOMER' | translate }}
                     </h3>
-                    @if (order.user) {
-                    <div class="space-y-3">
-                        <div>
-                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider">{{ 'AUTH.FULL_NAME'
-                                | translate }}</p>
-                            <p class="font-medium text-gray-900">{{ order.user.full_name }}</p>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider">{{ 'AUTH.EMAIL' |
-                                translate }}</p>
-                            <p class="font-medium text-gray-900">{{ order.user.email }}</p>
-                        </div>
-                        <div class="pt-3 border-t border-gray-100">
-                            <a href="mailto:{{ order.user.email }}"
-                                class="text-emerald-600 hover:text-emerald-700 text-sm font-medium flex items-center gap-2">
-                                <i class="far fa-envelope"></i> {{ 'ORDERS.SEND_EMAIL' | translate }}
-                            </a>
-                        </div>
+
+                    @if (order.customer_name) {
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase font-semibold tracking-wider mb-1">
+                            {{ 'ORDERS.FORM.CUSTOMER_NAME' | translate }}
+                        </p>
+                        <p class="font-medium text-gray-900 text-lg">{{ order.customer_name }}</p>
                     </div>
                     } @else {
                     <p class="text-gray-500 italic">{{ 'ORDERS.DETAIL.NO_CUSTOMER' | translate }}</p>
                     }
+                </div>
+
+                <!-- Notes Card -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6" *ngIf="order.notes">
+                    <h3 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                        <i class="far fa-sticky-note text-gray-400"></i>
+                        {{ 'ORDERS.FORM.NOTES' | translate }}
+                    </h3>
+                    <div
+                        class="bg-yellow-50/50 p-4 rounded-lg border border-yellow-100 text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+                        {{ order.notes }}
+                    </div>
                 </div>
             </div>
         </div>
