@@ -2,7 +2,7 @@
     <!-- Breadcrumb -->
     <div class="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-3">
         <nav class="flex text-sm text-gray-500">
-            <a routerLink="/dashboard" class="hover:text-blue-600 transition-colors">Dashboard</a>
+            <a routerLink="/dashboard" class="hover:text-emerald-600 transition-colors">Dashboard</a>
             <span class="mx-2">/</span>
             <span class="text-gray-900 font-semibold">{{ 'INVENTORY.BREADCRUMB' | translate }}</span>
         </nav>
@@ -18,8 +18,8 @@
                 </div>
                 <div>
                     <button (click)="toggleProductForm()" [class.bg-gray-600]="showProductForm"
-                        [class.bg-blue-600]="!showProductForm"
-                        class="inline-flex items-center gap-2 px-4 py-2.5 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm hover:shadow-md font-medium">
+                        [class.bg-emerald-600]="!showProductForm"
+                        class="inline-flex items-center gap-2 px-4 py-2.5 text-white rounded-lg hover:bg-emerald-700 transition-all shadow-sm hover:shadow-md font-medium">
                         <i [class.fa-times]="showProductForm" [class.fa-plus]="!showProductForm" class="fas"></i>
                         <span *ngIf="!showProductForm">{{ 'INVENTORY.NEW_PRODUCT' | translate }}</span>
                         <span *ngIf="showProductForm">{{ 'PRODUCT_MODAL.CANCEL' | translate }}</span>
@@ -225,8 +225,8 @@
                     <!-- Tabs -->
                     <div class="flex gap-2 flex-wrap">
                         <button *ngFor="let filter of filters" (click)="setFilter(filter.value)"
-                            [class.bg-blue-50]="currentFilter === filter.value"
-                            [class.text-blue-600]="currentFilter === filter.value"
+                            [class.bg-emerald-50]="currentFilter === filter.value"
+                            [class.text-emerald-600]="currentFilter === filter.value"
                             [class.font-semibold]="currentFilter === filter.value"
                             [class.text-gray-600]="currentFilter !== filter.value"
                             class="px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors text-sm">
@@ -238,7 +238,7 @@
                     <div class="relative max-w-md">
                         <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()"
                             [placeholder]="'INVENTORY.SEARCH_PLACEHOLDER' | translate"
-                            class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
+                            class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
                         <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                     </div>
                 </div>
@@ -280,7 +280,7 @@
                             @if (isLoading) {
                             <tr>
                                 <td colspan="6" class="px-6 py-12 text-center text-gray-500">
-                                    <i class="fas fa-spinner fa-spin text-2xl text-blue-500"></i>
+                                    <i class="fas fa-spinner fa-spin text-2xl text-emerald-500"></i>
                                     <p class="mt-2">{{ 'INVENTORY.LOADING' | translate }}</p>
                                 </td>
                             </tr>
@@ -298,7 +298,7 @@
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         <div
-                                            class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-sm">
+                                            class="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold shadow-sm">
                                             {{product.name.charAt(0).toUpperCase()}}
                                         </div>
                                         <div>
@@ -341,7 +341,7 @@
                                         <div class="py-1">
                                             <button (click)="editProduct(product.id)"
                                                 class="w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                                                <i class="fas fa-edit text-blue-600 w-4"></i>
+                                                <i class="fas fa-edit text-emerald-600 w-4"></i>
                                                 <span>{{ 'INVENTORY.ACTIONS.EDIT' | translate }}</span>
                                             </button>
                                             <hr class="border-gray-100">
@@ -381,7 +381,7 @@
                         @if (page === '...') {
                         <span class="px-4 py-2 text-gray-500">...</span>
                         } @else {
-                        <button (click)="goToPage(+page)" [class.bg-blue-600]="currentPage === page"
+                        <button (click)="goToPage(+page)" [class.bg-emerald-600]="currentPage === page"
                             [class.text-white]="currentPage === page" [class.bg-white]="currentPage !== page"
                             [class.text-gray-700]="currentPage !== page"
                             class="px-4 py-2 text-sm font-medium border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
