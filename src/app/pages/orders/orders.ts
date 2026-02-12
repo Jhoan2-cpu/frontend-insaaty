@@ -210,12 +210,14 @@ export class Orders implements OnInit {
         this.isSaving = false;
         this.showOrderForm = false;
         this.temporaryItems = [];
+        this.cdr.detectChanges();
         this.loadOrders();
       },
       error: (error) => {
         console.error('Error creating order:', error);
         alert(error.error?.message || 'Error al crear el pedido');
         this.isSaving = false;
+        this.cdr.detectChanges();
       }
     });
   }
