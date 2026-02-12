@@ -89,13 +89,39 @@
                         }
                     </a>
 
-                    <a routerLink="/reports"
-                        routerLinkActive="bg-emerald-500/10 text-emerald-400 border-l-4 border-emerald-500"
-                        class="flex items-center px-4 py-3 text-gray-400 hover:bg-emerald-500/5 hover:text-white rounded-r-xl transition-all duration-200 group">
-                        <i
-                            class="fas fa-chart-pie w-6 text-center mr-3 transition-transform group-hover:scale-110 text-yellow-500"></i>
-                        <span class="font-medium tracking-wide">{{ 'SIDEBAR.REPORTS' | translate }}</span>
-                    </a>
+                    <!-- Reports Accordion -->
+                    <div>
+                        <button (click)="toggleReports()" [class.text-emerald-400]="isReportsOpen"
+                            class="w-full flex items-center justify-between px-4 py-3 text-gray-400 hover:bg-emerald-500/5 hover:text-white rounded-r-xl transition-all duration-200 group">
+                            <div class="flex items-center">
+                                <i
+                                    class="fas fa-chart-pie w-6 text-center mr-3 transition-transform group-hover:scale-110 text-yellow-500"></i>
+                                <span class="font-medium tracking-wide">{{ 'SIDEBAR.REPORTS' | translate }}</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-[10px] transition-transform duration-300"
+                                [class.rotate-90]="isReportsOpen"></i>
+                        </button>
+
+                        <!-- Submenu -->
+                        <div class="overflow-hidden transition-all duration-300 ease-in-out"
+                            [class.max-h-0]="!isReportsOpen" [class.max-h-40]="isReportsOpen">
+                            <div class="mt-1 space-y-1 pl-12 border-l border-gray-800 ml-6">
+                                <a routerLink="/reports" routerLinkActive="text-emerald-400"
+                                    [routerLinkActiveOptions]="{exact: true}"
+                                    class="block py-2 text-sm text-gray-500 hover:text-white transition-colors relative group">
+                                    <span
+                                        class="absolute -left-[25px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-gray-700 group-hover:bg-emerald-500 transition-colors"></span>
+                                    {{ 'SIDEBAR.REPORTS_GENERAL' | translate }}
+                                </a>
+                                <a routerLink="/reports/history" routerLinkActive="text-emerald-400"
+                                    class="block py-2 text-sm text-gray-500 hover:text-white transition-colors relative group">
+                                    <span
+                                        class="absolute -left-[25px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-gray-700 group-hover:bg-emerald-500 transition-colors"></span>
+                                    {{ 'SIDEBAR.REPORTS_HISTORY' | translate }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </nav>
             </div>
 

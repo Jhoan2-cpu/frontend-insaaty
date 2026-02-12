@@ -177,6 +177,8 @@
         "INVENTORY": "Inventario",
         "ORDERS": "Pedidos",
         "REPORTS": "Reportes",
+        "REPORTS_GENERAL": "General",
+        "REPORTS_HISTORY": "Historial",
         "SETTINGS": "Configuración",
         "MAIN_MENU": "MENÚ PRINCIPAL",
         "ADMINISTRATION": "ADMINISTRACIÓN",

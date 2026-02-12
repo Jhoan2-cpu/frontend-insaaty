@@ -25,6 +25,7 @@ import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component';
 export class Layout implements OnInit {
   isSidebarOpen = true;
   isInventoryOpen = false;
+  isReportsOpen = false;
   currentLang = 'es';
   pendingOrdersCount = 0;
 
@@ -59,6 +60,9 @@ export class Layout implements OnInit {
     if (window.location.pathname.includes('/inventory')) {
       this.isInventoryOpen = true;
     }
+    if (window.location.pathname.includes('/reports')) {
+      this.isReportsOpen = true;
+    }
 
     // Subscribe to router events to update title
     this.router.events.pipe(
@@ -92,6 +96,10 @@ export class Layout implements OnInit {
 
   toggleInventory() {
     this.isInventoryOpen = !this.isInventoryOpen;
+  }
+
+  toggleReports() {
+    this.isReportsOpen = !this.isReportsOpen;
   }
 
   switchLanguage(lang: string) {

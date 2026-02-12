@@ -67,8 +67,18 @@ export const routes: Routes = [
             },
             {
                 path: 'reports',
-                loadComponent: () => import('./pages/reports/reports').then(m => m.Reports),
-                data: { title: 'REPORTS.TITLE', breadcrumb: 'REPORTS.TITLE' }
+                data: { title: 'REPORTS.TITLE', breadcrumb: 'REPORTS.TITLE' },
+                children: [
+                    {
+                        path: '',
+                        loadComponent: () => import('./pages/reports/reports').then(m => m.Reports),
+                    },
+                    {
+                        path: 'history',
+                        loadComponent: () => import('./pages/reports/report-history/report-history').then(m => m.ReportHistory),
+                        data: { title: 'REPORTS.HISTORY.TITLE', breadcrumb: 'REPORTS.HISTORY.TITLE' }
+                    }
+                ]
             },
             {
                 path: 'suppliers',
