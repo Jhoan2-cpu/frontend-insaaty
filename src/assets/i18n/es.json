@@ -400,6 +400,13 @@
         "CANCEL": "Cancelar",
         "SAVE": "Guardar Pedido",
         "SAVING": "Guardando...",
+        "SORT_BY": "Ordenar por",
+        "SORT": {
+            "NEWEST": "Más recientes",
+            "OLDEST": "Más antiguos",
+            "HIGHEST_TOTAL": "Mayor total",
+            "LOWEST_TOTAL": "Menor total"
+        },
         "ALL": "Todos",
         "LOADING": "Cargando pedidos...",
         "NO_ORDERS": "No hay pedidos",

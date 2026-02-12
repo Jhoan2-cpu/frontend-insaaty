@@ -19,6 +19,7 @@ export class Orders implements OnInit {
 
   // Filtros
   currentFilter: OrderStatus | 'all' = 'all';
+  currentSort = 'newest'; // Default sort
   filters = [
     { label: 'ORDERS.ALL', value: 'all' },
     { label: 'ORDERS.STATUSES.PENDING', value: 'PENDING' },
@@ -68,6 +69,12 @@ export class Orders implements OnInit {
     });
   }
 
+  updateSort(event: any) {
+    this.currentSort = event.target.value;
+    this.currentPage = 1; // Reset to first page
+    this.loadOrders();
+  }
+
   loadOrders() {
     this.isLoading = true;
     const status = this.currentFilter === 'all' ? undefined : this.currentFilter as OrderStatus;
@@ -75,7 +82,8 @@ export class Orders implements OnInit {
     this.orderService.getOrders({
       page: this.currentPage,
       limit: this.pageSize,
-      status: status
+      status: status,
+      sort: this.currentSort
     }).subscribe({
       next: (response) => {
         this.orders = response.data;

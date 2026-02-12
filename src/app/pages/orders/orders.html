@@ -6,9 +6,10 @@
             <div>
                 <p class="mt-2 text-sm text-gray-600">{{ 'ORDERS.DESCRIPTION' | translate }}</p>
             </div>
-            <button (click)="toggleOrderForm()" [class.bg-gray-600]="showOrderForm" [class.bg-blue-600]="!showOrderForm"
-                class="inline-flex items-center gap-2 px-4 py-2.5 text-white rounded-lg hover:bg-blue700 transition font-medium">
-                <i [class.fa-times]="showOrderForm" [class.fa-plus]="!showOrderForm" class="fas"></i>
+            <button (click)="toggleOrderForm()" [class.bg-gray-600]="showOrderForm"
+                [class.bg-emerald-600]="!showOrderForm"
+                class="inline-flex items-center gap-2 px-4 py-2.5 text-white rounded-lg hover:bg-emerald-700 transition font-medium shadow-md">
+                <i [class.fa-times]="showOrderForm" [class.fa-shopping-cart]="!showOrderForm" class="fas"></i>
                 <span *ngIf="!showOrderForm">{{ 'ORDERS.NEW_ORDER' | translate }}</span>
                 <span *ngIf="showOrderForm">{{ 'ORDERS.CANCEL' | translate }}</span>
             </button>
@@ -25,7 +26,8 @@
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">{{
                             'ORDERS.FORM.SELECT_PRODUCT' | translate }}</label>
-                        <select formControlName="product_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <select formControlName="product_id"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
                             <option value="">{{ 'ORDERS.FORM.SELECT_PRODUCT' | translate }}</option>
                             <option *ngFor="let product of products" [value]="product.id">
                                 {{ product.name }} ({{ product.sku }}) - Stock: {{ product.current_stock }} - ${{
@@ -37,12 +39,12 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1.5">{{ 'ORDERS.FORM.QUANTITY' |
                             translate }}</label>
                         <input type="number" formControlName="quantity" min="1"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
                     </div>
                 </div>
 
                 <button type="button" (click)="addItem()" [disabled]="!orderForm.get('product_id')?.value"
-                    class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50">
+                    class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 disabled:opacity-50 transition shadow-sm">
                     <i class="fas fa-plus mr-2"></i>{{ 'ORDERS.FORM.ADD_ITEM' | translate }}
                 </button>
 
@@ -81,7 +83,7 @@
                             <tr>
                                 <td colspan="3" class="px-4 py-3 text-right font-bold">{{ 'ORDERS.TOTAL' | translate
                                     }}:</td>
-                                <td class="px-4 py-3 text-right text-lg font-bold text-blue-600">${{
+                                <td class="px-4 py-3 text-right text-lg font-bold text-emerald-600">${{
                                     totalAmount.toFixed(2) }}</td>
                                 <td></td>
                             </tr>
@@ -105,7 +107,7 @@
                         {{ 'ORDERS.CANCEL' | translate }}
                     </button>
                     <button type="button" (click)="saveOrder()" [disabled]="isSaving || temporaryItems.length === 0"
-                        class="flex-1 px-4 py-2.5 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50">
+                        class="flex-1 px-4 py-2.5 text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 disabled:opacity-50 shadow-md transition">
                         @if (isSaving) {
                         <i class="fas fa-spinner fa-spin mr-2"></i>{{ 'ORDERS.SAVING' | translate }}
                         } @else {
@@ -117,16 +119,31 @@
         </div>
         }
 
-        <!-- Filters -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+        <!-- Filters & Sort -->
+        <div
+            class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+            <!-- Filters -->
             <div class="flex flex-wrap gap-2">
                 <button *ngFor="let filter of filters" (click)="applyFilter(filter.value)"
-                    [class.bg-blue-600]="currentFilter === filter.value"
+                    [class.bg-emerald-600]="currentFilter === filter.value"
                     [class.text-white]="currentFilter === filter.value"
                     [class.bg-gray-100]="currentFilter !== filter.value"
-                    class="px-4 py-2 rounded-lg font-medium transition">
+                    [class.text-gray-600]="currentFilter !== filter.value"
+                    class="px-4 py-2 rounded-lg font-medium transition hover:bg-emerald-500 hover:text-white">
                     {{ filter.label | translate }}
                 </button>
+            </div>
+
+            <!-- Sort -->
+            <div class="flex items-center gap-2">
+                <span class="text-sm font-medium text-gray-600">{{ 'ORDERS.SORT_BY' | translate }}:</span>
+                <select (change)="updateSort($event)"
+                    class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-sm">
+                    <option value="newest">{{ 'ORDERS.SORT.NEWEST' | translate }}</option>
+                    <option value="oldest">{{ 'ORDERS.SORT.OLDEST' | translate }}</option>
+                    <option value="highest_total">{{ 'ORDERS.SORT.HIGHEST_TOTAL' | translate }}</option>
+                    <option value="lowest_total">{{ 'ORDERS.SORT.LOWEST_TOTAL' | translate }}</option>
+                </select>
             </div>
         </div>
 
@@ -134,7 +151,7 @@
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             @if (isLoading) {
             <div class="p-12 text-center">
-                <i class="fas fa-spinner fa-spin text-3xl text-blue-500"></i>
+                <i class="fas fa-spinner fa-spin text-3xl text-emerald-500"></i>
                 <p class="mt-4 text-gray-600">{{ 'ORDERS.LOADING' | translate }}</p>
             </div>
             } @else if (orders.length === 0) {
@@ -168,10 +185,10 @@
                                 {{ 'ORDERS.STATUSES.' + order.status | translate }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 text-right font-semibold text-blue-600">${{ order.total }}</td>
+                        <td class="px-6 py-4 text-right font-semibold text-emerald-600">${{ order.total }}</td>
                         <td class="px-6 py-4 text-center">
                             <button (click)="viewDetail(order)"
-                                class="text-blue-600 hover:text-blue-800 mr-3 hover:cursor-pointer">
+                                class="text-emerald-600 hover:text-emerald-800 mr-3 hover:cursor-pointer transition">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </td>
@@ -185,7 +202,7 @@
         @if (totalPages > 1) {
         <div class="flex justify-center gap-2">
             <button *ngFor="let page of [].constructor(totalPages); let i = index" (click)="goToPage(i + 1)"
-                [class.bg-blue-600]="currentPage === i + 1" [class.text-white]="currentPage === i + 1"
+                [class.bg-emerald-600]="currentPage === i + 1" [class.text-white]="currentPage === i + 1"
                 class="px-4 py-2 border rounded-lg hover:bg-gray-100">
                 {{ i + 1 }}
             </button>
@@ -242,7 +259,8 @@
                         <tr>
                             <td colspan="3" class="px-3 py-2 text-right font-bold">{{ 'ORDERS.DETAIL.TOTAL' | translate
                                 }}</td>
-                            <td class="px-3 py-2 text-right text-lg font-bold text-blue-600">${{ selectedOrder.total }}
+                            <td class="px-3 py-2 text-right text-lg font-bold text-emerald-600">${{ selectedOrder.total
+                                }}
                             </td>
                         </tr>
                     </tfoot>
