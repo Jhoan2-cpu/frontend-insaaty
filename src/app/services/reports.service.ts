@@ -27,13 +27,13 @@ export interface LowStockProduct {
 }
 
 export interface KPIs {
-    totalSales: number;
-    totalOrders: number;
-    completedOrders: number;
-    pendingOrders: number;
-    totalProfit: number;
-    productsCount: number;
-    lowStockCount: number;
+    totalSales?: number;
+    totalOrders?: number;
+    completedOrders?: number;
+    pendingOrders?: number;
+    totalProfit?: number;
+    productsCount?: number;
+    lowStockCount?: number;
 }
 
 @Injectable({
