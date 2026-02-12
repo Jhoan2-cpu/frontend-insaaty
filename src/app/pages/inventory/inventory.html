@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gray-50 animate__animated animate__fadeIn">
+<div class="min-h-screen bg-gray-50 animate__animated animate__fadeIn animate__faster">
     <!-- Breadcrumb -->
     <div class="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-3">
         <nav class="flex text-sm text-gray-500">
@@ -31,7 +31,8 @@
 
             <!-- Product Form (Accordion) -->
             @if (showProductForm) {
-            <div class="bg-white rounded-xl shadow-lg border border-gray-300 p-8 animate__animated animate__fadeIn">
+            <div
+                class="bg-white rounded-xl shadow-lg border border-gray-300 p-8 animate__animated animate__fadeInUp animate__faster">
                 <h2 class="text-2xl font-bold text-gray-900 mb-8 flex items-center">
                     <span class="w-1.5 h-8 bg-emerald-500 rounded-full mr-3"></span>
                     {{ isEditMode ? ('PRODUCT_MODAL.TITLE_EDIT' | translate) : ('PRODUCT_MODAL.TITLE_NEW' | translate)
@@ -220,7 +221,8 @@
             }
 
             <!-- Filters & Search -->
-            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 animate__animated animate__fadeInUp animate__faster"
+                style="animation-delay: 50ms;">
                 <div class="flex flex-col lg:flex-row gap-4 justify-between">
                     <!-- Tabs -->
                     <div class="flex gap-2 flex-wrap">
@@ -245,7 +247,8 @@
             </div>
 
             <!-- Table -->
-            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden animate__animated animate__fadeInUp animate__faster"
+                style="animation-delay: 100ms;">
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead class="bg-gray-50 border-b border-gray-200">
@@ -293,7 +296,8 @@
                             </tr>
                             } @else {
                             @for (product of products; track product.id) {
-                            <tr class="hover:bg-gray-50 transition-colors animate__animated animate__fadeIn">
+                            <tr
+                                class="hover:bg-gray-50 transition-colors animate__animated animate__fadeIn animate__faster">
                                 <td class="px-6 py-4 text-sm font-medium text-gray-900">{{product.sku}}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
