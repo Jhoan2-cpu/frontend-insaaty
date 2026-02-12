@@ -1,4 +1,4 @@
-<div class="p-6 max-w-6xl mx-auto animate__animated animate__fadeIn">
+<div class="p-6 max-w-6xl mx-auto animate__animated animate__fadeIn animate__faster">
     <div class="mb-8">
         <p class="text-gray-500 mt-1">{{ 'INVENTORY.MOVEMENT_SUBTITLE' | translate }}</p>
     </div>
@@ -7,7 +7,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
             <!-- LEFT COLUMN: Form (7 cols) -->
-            <div class="lg:col-span-7 space-y-8 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+            <div class="lg:col-span-7 space-y-8 bg-white p-8 rounded-2xl shadow-sm border border-gray-100 animate__animated animate__fadeInUp animate__faster"
+                style="animation-delay: 50ms;">
 
                 <!-- Movement Type -->
                 <section>
@@ -168,7 +169,8 @@
             <div class="lg:col-span-5 space-y-6">
 
                 <!-- Main Impact Card -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full animate__animated animate__fadeInUp animate__faster"
+                    style="animation-delay: 100ms;">
                     <div class="flex items-start justify-between mb-6">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
@@ -273,7 +275,7 @@
                     </div>
 
                     <!-- Analysis -->
-                    <div class="bg-white border rounded-xl p-4 flex items-start gap-3">
+                    <div class="bg-white border border-gray-300 rounded-xl p-4 flex items-start gap-3">
                         <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
                             [class.bg-green-100]="projectedStock >= (selectedProduct.min_stock || 0)"
                             [class.text-green-600]="projectedStock >= (selectedProduct.min_stock || 0)"
