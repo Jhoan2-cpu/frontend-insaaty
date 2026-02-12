@@ -77,13 +77,13 @@
                                         (input)="onDateInput($event, 'start')"
                                         (focus)="showStartDatePicker = true; showEndDatePicker = false; generateCalendar()"
                                         placeholder="{{ 'COMMON.START' | translate }}"
-                                        class="w-full pl-3 pr-10 py-2.5 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-600 focus:bg-white focus:border-emerald-200 focus:ring-0 focus:shadow-md transition-all shadow-sm placeholder-gray-400">
+                                        class="w-full pl-3 pr-10 py-2.5 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-600 focus:bg-white focus:border-emerald-200 focus:ring-0 focus:outline-none focus:shadow-md transition-all shadow-sm placeholder-gray-400">
                                     <i class="fas fa-calendar absolute right-3 top-3 text-gray-300 group-hover:text-emerald-500 transition-colors cursor-pointer"
                                         (click)="toggleStartDatePicker()"></i>
                                 </div>
 
                                 <div *ngIf="showStartDatePicker"
-                                    class="absolute z-[60] top-full left-0 mt-2 bg-white rounded-xl shadow-2xl border border-emerald-100 p-4 w-[280px] animate__animated animate__fadeIn animate__faster ring-1 ring-black ring-opacity-5">
+                                    class="absolute z-[60] top-full left-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 w-[280px] animate__animated animate__fadeIn animate__faster">
 
                                     <!-- Month Nav -->
                                     <!-- Month Nav -->
@@ -155,13 +155,13 @@
                                         (input)="onDateInput($event, 'end')"
                                         (focus)="showEndDatePicker = true; showStartDatePicker = false; generateCalendar()"
                                         placeholder="{{ 'COMMON.END' | translate }}"
-                                        class="w-full pl-3 pr-10 py-2.5 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-600 focus:bg-white focus:border-emerald-200 focus:ring-0 focus:shadow-md transition-all shadow-sm placeholder-gray-400">
+                                        class="w-full pl-3 pr-10 py-2.5 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-600 focus:bg-white focus:border-emerald-200 focus:ring-0 focus:outline-none focus:shadow-md transition-all shadow-sm placeholder-gray-400">
                                     <i class="fas fa-calendar absolute right-3 top-3 text-gray-300 group-hover:text-emerald-500 transition-colors cursor-pointer"
                                         (click)="toggleEndDatePicker()"></i>
                                 </div>
 
                                 <div *ngIf="showEndDatePicker"
-                                    class="absolute z-[60] top-full right-0 mt-2 bg-white rounded-xl shadow-2xl border border-emerald-100 p-4 w-[280px] animate__animated animate__fadeIn animate__faster ring-1 ring-black ring-opacity-5">
+                                    class="absolute z-[60] top-full right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 w-[280px] animate__animated animate__fadeIn animate__faster">
 
                                     <!-- Month Nav -->
                                     <div class="flex justify-between items-center mb-4 pb-2 border-b border-gray-100">
