@@ -16,6 +16,7 @@ export class OrderDetail implements OnInit {
     order?: Order;
     isLoading = true;
     isSaving = false;
+    errorMessage: string | null = null;
     OrderStatus = OrderStatus;
 
     constructor(
@@ -28,24 +29,30 @@ export class OrderDetail implements OnInit {
     ngOnInit() {
         this.titleService.setTitle('ORDERS.DETAIL.TITLE');
         const id = this.route.snapshot.paramMap.get('id');
+        console.log('OrderDetail initialized with ID:', id);
         if (id) {
             this.loadOrder(Number(id));
         } else {
+            console.warn('No ID found in route, redirecting to orders');
             this.router.navigate(['/orders']);
         }
     }
 
     loadOrder(id: number) {
         this.isLoading = true;
+        this.errorMessage = null;
+        console.log('Loading order...', id);
+
         this.orderService.getOrder(id).subscribe({
             next: (order) => {
+                console.log('Order loaded:', order);
                 this.order = order;
                 this.isLoading = false;
             },
             error: (error) => {
                 console.error('Error loading order:', error);
                 this.isLoading = false;
-                // Optionally show error notification
+                this.errorMessage = error.error?.message || 'Error al cargar el pedido';
             }
         });
     }

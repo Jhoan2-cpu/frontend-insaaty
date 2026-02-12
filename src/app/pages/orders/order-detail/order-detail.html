@@ -16,6 +16,16 @@
                 <p class="text-gray-500">{{ 'ORDERS.LOADING_DETAIL' | translate }}</p>
             </div>
         </div>
+        } @else if (errorMessage) {
+        <div class="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+            <i class="fas fa-exclamation-circle text-4xl text-red-500 mb-4"></i>
+            <h3 class="text-lg font-bold text-red-800 mb-2">Error</h3>
+            <p class="text-red-600">{{ errorMessage }}</p>
+            <button (click)="loadOrder(order?.id || 0)"
+                class="mt-4 px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition">
+                Reintentar
+            </button>
+        </div>
         } @else if (order) {
         <!-- Helper functions for status checking -->
         <!-- Variables for template use -->
