@@ -19,16 +19,16 @@
                             <input type="radio" formControlName="type" [value]="TransactionType.IN"
                                 class="sr-only peer">
                             <div
-                                class="text-center py-4 px-2 border-2 border-gray-100 rounded-xl transition-all duration-200 peer-checked:border-green-500 peer-checked:bg-green-50 hover:bg-gray-50 group-hover:border-green-200">
+                                class="text-center py-4 px-2 border-2 border-gray-100 rounded-xl transition-all duration-200 peer-checked:border-emerald-500 peer-checked:bg-emerald-500 hover:bg-gray-50 group-hover:border-emerald-200 peer-checked:text-white">
                                 <div
-                                    class="w-10 h-10 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-2 text-green-600">
+                                    class="w-10 h-10 mx-auto bg-emerald-100 rounded-full flex items-center justify-center mb-2 text-emerald-600 peer-checked:bg-white peer-checked:text-emerald-600 transition-colors">
                                     <i class="fas fa-arrow-down text-lg"></i>
                                 </div>
-                                <span class="font-bold text-gray-700 peer-checked:text-green-800">{{
+                                <span class="font-bold text-gray-700 peer-checked:text-white transition-colors">{{
                                     'INVENTORY.MOVEMENT.TYPES.IN' | translate }}</span>
                             </div>
                             <div
-                                class="absolute top-2 right-2 w-2 h-2 rounded-full bg-green-500 opacity-0 peer-checked:opacity-100 transition-opacity">
+                                class="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-500 opacity-0 peer-checked:bg-white peer-checked:opacity-100 transition-opacity">
                             </div>
                         </label>
 
@@ -36,12 +36,12 @@
                             <input type="radio" formControlName="type" [value]="TransactionType.OUT"
                                 class="sr-only peer">
                             <div
-                                class="text-center py-4 px-2 border-2 border-gray-100 rounded-xl transition-all duration-200 peer-checked:border-red-500 peer-checked:bg-red-50 hover:bg-gray-50 group-hover:border-red-200">
+                                class="text-center py-4 px-2 border-2 border-gray-100 rounded-xl transition-all duration-200 peer-checked:border-red-500 peer-checked:bg-red-500 hover:bg-gray-50 group-hover:border-red-200 peer-checked:text-white">
                                 <div
-                                    class="w-10 h-10 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-2 text-red-600">
+                                    class="w-10 h-10 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-2 text-red-600 peer-checked:bg-white peer-checked:text-red-600 transition-colors">
                                     <i class="fas fa-arrow-up text-lg"></i>
                                 </div>
-                                <span class="font-bold text-gray-700 peer-checked:text-red-800">{{
+                                <span class="font-bold text-gray-700 peer-checked:text-white transition-colors">{{
                                     'INVENTORY.MOVEMENT.TYPES.OUT' | translate }}</span>
                             </div>
                         </label>
@@ -50,12 +50,12 @@
                             <input type="radio" formControlName="type" [value]="TransactionType.ADJUSTMENT"
                                 class="sr-only peer">
                             <div
-                                class="text-center py-4 px-2 border-2 border-gray-100 rounded-xl transition-all duration-200 peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:bg-gray-50 group-hover:border-blue-200">
+                                class="text-center py-4 px-2 border-2 border-gray-100 rounded-xl transition-all duration-200 peer-checked:border-blue-500 peer-checked:bg-blue-500 hover:bg-gray-50 group-hover:border-blue-200 peer-checked:text-white">
                                 <div
-                                    class="w-10 h-10 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-2 text-blue-600">
+                                    class="w-10 h-10 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-2 text-blue-600 peer-checked:bg-white peer-checked:text-blue-600 transition-colors">
                                     <i class="fas fa-sync text-lg"></i>
                                 </div>
-                                <span class="font-bold text-gray-700 peer-checked:text-blue-800">{{
+                                <span class="font-bold text-gray-700 peer-checked:text-white transition-colors">{{
                                     'INVENTORY.MOVEMENT.TYPES.ADJUSTMENT' | translate }}</span>
                             </div>
                         </label>
@@ -70,7 +70,7 @@
                     <div class="relative">
                         <!-- Trigger -->
                         <button type="button" (click)="toggleProductDropdown()"
-                            class="w-full text-left pl-10 pr-10 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 shadow-sm transition-all flex items-center justify-between group hover:border-emerald-300">
+                            class="w-full text-left pl-10 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 shadow-sm transition-all flex items-center justify-between group hover:border-emerald-300 outline-none">
                             <span class="truncate block w-full" [class.text-gray-500]="!selectedProduct">
                                 {{ selectedProduct ? (selectedProduct.sku + ' - ' + selectedProduct.name) :
                                 ('INVENTORY.SELECT_PRODUCT' | translate) }}
@@ -91,7 +91,7 @@
 
                         <!-- Dropdown Menu -->
                         <div *ngIf="showProductDropdown"
-                            class="absolute z-[60] w-full mt-2 bg-white border border-gray-100 rounded-xl shadow-xl max-h-60 overflow-y-auto animate__animated animate__fadeIn animate__faster ring-1 ring-black ring-opacity-5">
+                            class="absolute z-[60] w-full mt-2 bg-white border border-gray-100 rounded-xl shadow-xl max-h-60 overflow-y-auto animate__animated animate__fadeIn animate__faster outline-none">
                             <div *ngFor="let product of products" (click)="selectProduct(product)"
                                 class="px-4 py-3 hover:bg-emerald-50 cursor-pointer text-sm text-gray-700 hover:text-emerald-700 transition-colors flex items-center justify-between group border-b border-gray-50 last:border-none">
                                 <div>
@@ -130,7 +130,7 @@
                                 <i class="fas fa-minus"></i>
                             </button>
                             <input type="number" formControlName="quantity" min="1"
-                                class="w-20 h-12 text-center border-none focus:ring-0 text-lg font-semibold text-gray-900">
+                                class="w-20 h-12 text-center border-none focus:ring-0 text-lg font-semibold text-gray-900 outline-none">
                             <button type="button" (click)="incrementQty()"
                                 class="w-12 h-12 flex items-center justify-center bg-gray-50 hover:bg-gray-100 text-gray-600 transition-colors border-l border-gray-300">
                                 <i class="fas fa-plus"></i>
@@ -145,7 +145,7 @@
                         {{ 'INVENTORY.MOVEMENT.REASON_NOTES' | translate }}
                     </label>
                     <textarea formControlName="reason" rows="3"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm bg-gray-50 focus:bg-white transition-colors"
+                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm bg-gray-50 focus:bg-white transition-colors outline-none"
                         [placeholder]="'INVENTORY.REASON_PLACEHOLDER' | translate"></textarea>
                 </section>
 
@@ -236,13 +236,10 @@
 
                             <!-- Bar Before -->
                             <div class="flex flex-col items-center gap-2 group w-20 h-full justify-end">
-                                <div class="w-16 bg-gray-300 rounded-t-lg transition-all duration-500 relative"
+                                <div class="w-16 bg-gray-300 rounded-t-lg transition-all duration-500 relative flex items-center justify-center overflow-hidden"
                                     [style.height.%]="getBarHeight(selectedProduct.current_stock || 0)">
-                                    <div
-                                        class="absolute -top-8 w-full text-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <span class="bg-gray-800 text-white text-xs py-1 px-2 rounded">{{
-                                            selectedProduct.current_stock }}</span>
-                                    </div>
+                                    <span class="text-white text-sm font-bold drop-shadow-md z-10">{{
+                                        selectedProduct.current_stock }}</span>
                                 </div>
                                 <span class="text-sm font-medium text-gray-500">{{
                                     'INVENTORY.MOVEMENT.IMPACT.CHART.BEFORE' | translate }}</span>
@@ -255,10 +252,10 @@
 
                             <!-- Bar After -->
                             <div class="flex flex-col items-center gap-2 group w-20 h-full justify-end">
-                                <div class="w-16 rounded-t-lg transition-all duration-500 relative relative overflow-hidden"
-                                    [class.bg-blue-500]="form.get('type')?.value === TransactionType.IN"
-                                    [class.bg-purple-500]="form.get('type')?.value === TransactionType.ADJUSTMENT"
-                                    [class.bg-orange-500]="form.get('type')?.value === TransactionType.OUT"
+                                <div class="w-16 rounded-t-lg transition-all duration-500 relative flex items-center justify-center overflow-hidden"
+                                    [class.bg-emerald-500]="form.get('type')?.value === TransactionType.IN"
+                                    [class.bg-blue-500]="form.get('type')?.value === TransactionType.ADJUSTMENT"
+                                    [class.bg-red-500]="form.get('type')?.value === TransactionType.OUT"
                                     [style.height.%]="getBarHeight(projectedStock)">
 
                                     <!-- Striped pattern overlay -->
@@ -266,13 +263,10 @@
                                         style="background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent); background-size: 1rem 1rem;">
                                     </div>
 
-                                    <div
-                                        class="absolute -top-8 w-full text-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <span class="bg-gray-800 text-white text-xs py-1 px-2 rounded">{{ projectedStock
-                                            }}</span>
-                                    </div>
+                                    <span class="text-white text-sm font-bold drop-shadow-md z-10">{{ projectedStock
+                                        }}</span>
                                 </div>
-                                <span class="text-sm font-bold text-blue-600">{{ 'INVENTORY.MOVEMENT.IMPACT.CHART.AFTER'
+                                <span class="text-sm font-bold text-gray-700">{{ 'INVENTORY.MOVEMENT.IMPACT.CHART.AFTER'
                                     | translate }}</span>
                             </div>
                         </div>
