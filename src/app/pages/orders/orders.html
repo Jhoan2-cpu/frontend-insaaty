@@ -66,22 +66,77 @@
                                 <label class="block text-sm font-bold text-gray-700 mb-2 ml-1">
                                     {{ 'ORDERS.FORM.SELECT_PRODUCT' | translate }}
                                 </label>
-                                <div class="relative group">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                        <i
-                                            class="fas fa-search text-gray-400 group-hover:text-emerald-500 transition-colors"></i>
+                                <div class="relative">
+                                    <!-- Trigger -->
+                                    <div (click)="toggleProductDropdown()"
+                                        class="w-full pl-4 pr-10 py-3.5 bg-white border border-gray-200 rounded-xl text-gray-700 cursor-pointer flex items-center justify-between hover:border-emerald-500 transition-colors shadow-sm"
+                                        [class.ring-4]="isProductDropdownOpen"
+                                        [class.ring-emerald-500/10]="isProductDropdownOpen"
+                                        [class.border-emerald-500]="isProductDropdownOpen">
+
+                                        <div class="flex items-center gap-2 overflow-hidden">
+                                            <i class="fas fa-box text-gray-400"></i>
+                                            <span *ngIf="selectedProduct" class="font-medium text-gray-900 truncate">
+                                                {{ selectedProduct.name }}
+                                                <span class="text-gray-500 text-sm ml-1">({{ selectedProduct.sku
+                                                    }})</span>
+                                                <span class="text-emerald-600 font-bold text-sm ml-2">${{
+                                                    selectedProduct.price_sale }}</span>
+                                            </span>
+                                            <span *ngIf="!selectedProduct" class="text-gray-400">
+                                                {{ 'ORDERS.FORM.SELECT_PRODUCT_PLACEHOLDER' | translate }}
+                                            </span>
+                                        </div>
+
+                                        <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200"
+                                            [class.rotate-180]="isProductDropdownOpen"></i>
                                     </div>
-                                    <select formControlName="product_id"
-                                        class="w-full pl-11 pr-10 py-3.5 bg-white border border-gray-200 rounded-xl text-gray-700 focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all appearance-none cursor-pointer hover:border-emerald-300">
-                                        <option value="">{{ 'ORDERS.FORM.SELECT_PRODUCT_PLACEHOLDER' | translate }}
-                                        </option>
-                                        <option *ngFor="let product of products" [value]="product.id">
-                                            {{ product.name }} ({{ product.sku }}) - ${{ product.price_sale }}
-                                        </option>
-                                    </select>
-                                    <div
-                                        class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
-                                        <i class="fas fa-chevron-down text-xs"></i>
+
+                                    <!-- Backdrop for clicking outside -->
+                                    <div *ngIf="isProductDropdownOpen" (click)="closeProductDropdown()"
+                                        class="fixed inset-0 z-10 cursor-default"></div>
+
+                                    <!-- Dropdown Menu -->
+                                    <div *ngIf="isProductDropdownOpen"
+                                        class="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 z-20 overflow-hidden animate__animated animate__fadeIn animate__faster">
+
+                                        <!-- Search Input -->
+                                        <div class="p-3 border-b border-gray-50 bg-gray-50/50 sticky top-0">
+                                            <div class="relative">
+                                                <i
+                                                    class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                                                <input type="text" id="productSearchInput" [ngModel]="productSearchTerm"
+                                                    (ngModelChange)="productSearchTerm = $event"
+                                                    [ngModelOptions]="{standalone: true}"
+                                                    class="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder-gray-400"
+                                                    [placeholder]="'ORDERS.SEARCH_PLACEHOLDER' | translate">
+                                            </div>
+                                        </div>
+
+                                        <!-- Product List -->
+                                        <div class="max-h-60 overflow-y-auto custom-scrollbar">
+                                            <div *ngFor="let product of filteredProducts"
+                                                (click)="selectProduct(product)"
+                                                class="px-4 py-3 hover:bg-emerald-50 cursor-pointer border-b border-gray-50 last:border-0 transition-colors flex justify-between items-center group">
+                                                <div class="flex flex-col">
+                                                    <span
+                                                        class="font-medium text-gray-800 group-hover:text-emerald-700">{{
+                                                        product.name }}</span>
+                                                    <span class="text-xs text-gray-500">SKU: {{ product.sku }}</span>
+                                                </div>
+                                                <span
+                                                    class="font-bold text-emerald-600 bg-emerald-50 group-hover:bg-white px-2 py-1 rounded-md text-sm">
+                                                    ${{ product.price_sale }}
+                                                </span>
+                                            </div>
+
+                                            <div *ngIf="filteredProducts.length === 0"
+                                                class="p-6 text-center text-gray-400 text-sm">
+                                                <i class="fas fa-search mb-2 block text-lg"></i>
+                                                {{ 'ORDERS.NO_ORDERS' | translate }}
+                                                <!-- Using "No search results" logic if available, or just generic "empty" -->
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

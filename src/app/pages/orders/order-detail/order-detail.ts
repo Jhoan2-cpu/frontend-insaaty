@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,7 +23,8 @@ export class OrderDetail implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private orderService: OrderService,
-        private titleService: TitleService
+        private titleService: TitleService,
+        private cdr: ChangeDetectorRef
     ) { }
 
     ngOnInit() {
@@ -48,11 +49,13 @@ export class OrderDetail implements OnInit {
                 console.log('Order loaded:', order);
                 this.order = order;
                 this.isLoading = false;
+                this.cdr.detectChanges();
             },
             error: (error) => {
                 console.error('Error loading order:', error);
                 this.isLoading = false;
                 this.errorMessage = error.error?.message || 'Error al cargar el pedido';
+                this.cdr.detectChanges();
             }
         });
     }

@@ -56,6 +56,48 @@ export class Orders implements OnInit {
   // Sort dropdown state
   showSortDropdown = false;
 
+  // Product Dropdown Logic
+  isProductDropdownOpen = false;
+  productSearchTerm = '';
+
+  get filteredProducts() {
+    if (!this.productSearchTerm) {
+      return this.products;
+    }
+    const term = this.productSearchTerm.toLowerCase();
+    return this.products.filter(product =>
+      product.name.toLowerCase().includes(term) ||
+      product.sku.toLowerCase().includes(term)
+    );
+  }
+
+  get selectedProduct() {
+    const productId = this.orderForm.get('product_id')?.value;
+    if (!productId) return null;
+    return this.products.find(p => p.id === parseInt(productId));
+  }
+
+  toggleProductDropdown() {
+    this.isProductDropdownOpen = !this.isProductDropdownOpen;
+    if (this.isProductDropdownOpen) {
+      setTimeout(() => {
+        const searchInput = document.getElementById('productSearchInput');
+        if (searchInput) searchInput.focus();
+      }, 0);
+    }
+  }
+
+  closeProductDropdown() {
+    this.isProductDropdownOpen = false;
+    // Optional: this.productSearchTerm = ''; // Keep search term or clear it? Clearing is usually better.
+    this.productSearchTerm = '';
+  }
+
+  selectProduct(product: Product) {
+    this.orderForm.patchValue({ product_id: product.id });
+    this.closeProductDropdown();
+  }
+
   constructor(
     private orderService: OrderService,
     private productService: ProductService,
