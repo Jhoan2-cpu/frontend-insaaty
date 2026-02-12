@@ -353,7 +353,7 @@
                     "HEALTHY": "Stock Saludable",
                     "LOW": "Alerta de Stock Bajo",
                     "HEALTHY_DESC": "El nivel proyectado se mantiene por encima del punto de reorden.",
-                    "LOW_DESC": "El stock proyectado caerá por debajo del mínimo ({min})."
+                    "LOW_DESC": "El stock proyectado caerá por debajo del mínimo ({{min}})."
                 }
             }
         }
