@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { OrderService, Order, OrderStatus, CreateOrderDto, UpdateOrderDto } from '../../services/order.service';
@@ -9,7 +10,7 @@ import { TitleService } from '../../services/title.service';
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, RouterModule],
   templateUrl: './orders.html',
   styleUrls: ['./orders.css']
 })
