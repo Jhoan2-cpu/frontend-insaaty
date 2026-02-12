@@ -53,7 +53,7 @@ export class Inventory implements OnInit {
   margin = 0;
 
   // Menú de acciones
-  openMenuId: number | null = null;
+  // openMenuId: number | null = null; Removed duplicate
 
 
   // Para template
@@ -327,9 +327,32 @@ export class Inventory implements OnInit {
   }
 
   // Actions menu
+  openMenuId: number | null = null;
+  menuPosition = { x: 0, y: 0 };
+
   toggleMenu(productId: number, event: Event) {
     event.stopPropagation();
-    this.openMenuId = this.openMenuId === productId ? null : productId;
+
+    if (this.openMenuId === productId) {
+      this.openMenuId = null;
+      return;
+    }
+
+    this.openMenuId = productId;
+
+    // Calculate position
+    const button = (event.target as HTMLElement).closest('button');
+    if (button) {
+      const rect = button.getBoundingClientRect();
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const scrollX = window.scrollX || document.documentElement.scrollLeft;
+
+      // Position menu to the left of the button, and slightly below
+      this.menuPosition = {
+        x: rect.right + scrollX - 192, // 192px is w-48 (12rem)
+        y: rect.bottom + scrollY + 4
+      };
+    }
   }
 
   closeMenu() {
