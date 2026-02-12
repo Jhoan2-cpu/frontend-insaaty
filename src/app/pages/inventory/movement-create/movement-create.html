@@ -68,18 +68,46 @@
                         {{ 'INVENTORY.PRODUCT' | translate }}
                     </label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-search text-gray-400"></i>
-                        </div>
-                        <select formControlName="product_id"
-                            class="appearance-none w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 shadow-sm transition-shadow">
-                            <option value="" disabled selected>{{ 'INVENTORY.SELECT_PRODUCT' | translate }}</option>
-                            <option *ngFor="let product of products" [value]="product.id">
-                                {{ product.sku }} - {{ product.name }}
-                            </option>
-                        </select>
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                            <i class="fas fa-chevron-down text-gray-400"></i>
+                        <!-- Trigger -->
+                        <button type="button" (click)="toggleProductDropdown()"
+                            class="w-full text-left pl-10 pr-10 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-gray-900 shadow-sm transition-all flex items-center justify-between group hover:border-emerald-300">
+                            <span class="truncate block w-full" [class.text-gray-500]="!selectedProduct">
+                                {{ selectedProduct ? (selectedProduct.sku + ' - ' + selectedProduct.name) :
+                                ('INVENTORY.SELECT_PRODUCT' | translate) }}
+                            </span>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i
+                                    class="fas fa-search text-gray-400 group-hover:text-emerald-500 transition-colors"></i>
+                            </div>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200"
+                                    [class.rotate-180]="showProductDropdown"></i>
+                            </div>
+                        </button>
+
+                        <!-- Backdrop -->
+                        <div *ngIf="showProductDropdown" (click)="toggleProductDropdown()"
+                            class="fixed inset-0 z-[55] bg-transparent cursor-default"></div>
+
+                        <!-- Dropdown Menu -->
+                        <div *ngIf="showProductDropdown"
+                            class="absolute z-[60] w-full mt-2 bg-white border border-gray-100 rounded-xl shadow-xl max-h-60 overflow-y-auto animate__animated animate__fadeIn animate__faster ring-1 ring-black ring-opacity-5">
+                            <div *ngFor="let product of products" (click)="selectProduct(product)"
+                                class="px-4 py-3 hover:bg-emerald-50 cursor-pointer text-sm text-gray-700 hover:text-emerald-700 transition-colors flex items-center justify-between group border-b border-gray-50 last:border-none">
+                                <div>
+                                    <span class="font-bold text-gray-900 group-hover:text-emerald-700">{{ product.sku
+                                        }}</span>
+                                    <span class="mx-2 text-gray-300">|</span>
+                                    <span>{{ product.name }}</span>
+                                </div>
+                                <i *ngIf="selectedProduct?.id === product.id"
+                                    class="fas fa-check text-emerald-600 animate__animated animate__fadeIn"></i>
+                            </div>
+                            <!-- Empty State -->
+                            <div *ngIf="products.length === 0" class="px-4 py-6 text-sm text-gray-500 text-center">
+                                <i class="fas fa-box-open text-2xl mb-2 text-gray-300 block"></i>
+                                {{ 'INVENTORY.NO_PRODUCTS' | translate }}
+                            </div>
                         </div>
                     </div>
                     @if (selectedProduct) {
@@ -117,7 +145,7 @@
                         {{ 'INVENTORY.MOVEMENT.REASON_NOTES' | translate }}
                     </label>
                     <textarea formControlName="reason" rows="3"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm bg-gray-50 focus:bg-white transition-colors"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm bg-gray-50 focus:bg-white transition-colors"
                         [placeholder]="'INVENTORY.REASON_PLACEHOLDER' | translate"></textarea>
                 </section>
 
@@ -128,7 +156,7 @@
                         {{ 'COMMON.CANCEL' | translate }}
                     </button>
                     <button type="submit" [disabled]="form.invalid || isSaving"
-                        class="px-8 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 focus:ring-4 focus:ring-blue-100 font-semibold shadow-md shadow-blue-200 transition-all flex items-center disabled:opacity-50 disabled:shadow-none">
+                        class="px-8 py-2.5 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-100 font-semibold shadow-md shadow-emerald-200 transition-all flex items-center disabled:opacity-50 disabled:shadow-none">
                         @if (isSaving) { <i class="fas fa-spinner fa-spin mr-2"></i> }
                         <i class="fas fa-save mr-2"></i>
                         {{ 'INVENTORY.MOVEMENT_SUCCESS' | translate }}

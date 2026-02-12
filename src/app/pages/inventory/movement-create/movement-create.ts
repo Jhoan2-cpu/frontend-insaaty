@@ -21,6 +21,8 @@ export class MovementCreate implements OnInit {
     products: Product[] = [];
     TransactionType = TransactionType;
 
+    showProductDropdown = false;
+
     constructor(
         private fb: FormBuilder,
         private inventoryService: InventoryService,
@@ -36,6 +38,15 @@ export class MovementCreate implements OnInit {
             quantity: [1, [Validators.required, Validators.min(1)]],
             reason: ['', Validators.required]
         });
+    }
+
+    toggleProductDropdown() {
+        this.showProductDropdown = !this.showProductDropdown;
+    }
+
+    selectProduct(product: Product) {
+        this.form.patchValue({ product_id: product.id });
+        this.showProductDropdown = false;
     }
 
     ngOnInit() {
