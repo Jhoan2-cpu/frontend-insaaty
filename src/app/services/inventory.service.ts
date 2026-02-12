@@ -91,6 +91,8 @@ export class InventoryService {
         if (params?.userId) httpParams = httpParams.set('userId', params.userId.toString());
         if (params?.search) httpParams = httpParams.set('search', params.search);
 
+        console.log('Frontend Service Params:', httpParams.toString());
+
         return this.http.get<{ data: InventoryTransaction[], meta: any }>(`${this.apiUrl}/transactions`, { params: httpParams });
     }
 
