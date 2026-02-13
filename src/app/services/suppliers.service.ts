@@ -30,7 +30,7 @@ export interface SuppliersResponse {
     providedIn: 'root'
 })
 export class SuppliersService {
-    private apiUrl = 'http://localhost:3000/suppliers';
+    private apiUrl = '/api/suppliers';
 
     constructor(private http: HttpClient) { }
 

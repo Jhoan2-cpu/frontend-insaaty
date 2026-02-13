@@ -5,7 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
     providedIn: 'root'
 })
 export class PdfService {
-    private apiUrl = 'http://localhost:3000/reports';
+    private apiUrl = '/api/reports';
 
     constructor(private http: HttpClient) { }
 
@@ -57,8 +57,8 @@ export class PdfService {
         // If it's a relative path without leading slash, add it
         const normalizedUrl = url.startsWith('/') ? url : `/${url}`;
 
-        // Prepend backend URL
-        const fullUrl = `http://localhost:3000${normalizedUrl}`;
+        // Prepend /api prefix for proxying
+        const fullUrl = `/api${normalizedUrl}`;
         window.open(fullUrl, '_blank');
     }
 }

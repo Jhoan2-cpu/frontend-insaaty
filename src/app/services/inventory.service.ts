@@ -53,7 +53,7 @@ export interface CreateTransactionDto {
     providedIn: 'root'
 })
 export class InventoryService {
-    private apiUrl = 'http://localhost:3000/inventory';
+    private apiUrl = '/api/inventory';
 
     constructor(private http: HttpClient) { }
 
