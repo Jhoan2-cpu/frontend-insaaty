@@ -228,7 +228,7 @@
         "TRANSFER": "Transfer",
         "PENDING": "Pending",
         "COMPLETED": "Completed",
-        "CREATE_ORDER": "Create Order",
+        "REGISTER_TRANSACTION": "Register Transaction",
         "CURRENT_TENANT": "Current Tenant",
         "ADMIN_MANAGER": "Admin Manager",
         "NO_LOW_STOCK": "All products have adequate stock!",

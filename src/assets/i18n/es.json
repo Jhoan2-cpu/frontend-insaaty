@@ -228,7 +228,7 @@
         "TRANSFER": "Transferencia",
         "PENDING": "Pendiente",
         "COMPLETED": "Completado",
-        "CREATE_ORDER": "Crear Pedido",
+        "REGISTER_TRANSACTION": "Registrar Transacción",
         "CURRENT_TENANT": "Almacén Actual",
         "ADMIN_MANAGER": "Gerente Admin",
         "NO_LOW_STOCK": "¡Todos los productos tienen stock adecuado!",
