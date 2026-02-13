@@ -23,7 +23,7 @@ export class Settings implements OnInit {
   loading = false;
   uploadingAvatar = false;
   user: any = null;
-  avatarBaseUrl = 'http://localhost:3000';
+  avatarBaseUrl = ''; // Se usa ruta relativa con el proxy de Nginx (/uploads)
 
   @ViewChild('avatarInput') avatarInput!: ElementRef<HTMLInputElement>;
 
