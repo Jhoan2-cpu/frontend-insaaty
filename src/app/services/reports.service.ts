@@ -43,7 +43,7 @@ export interface KPIs {
     providedIn: 'root'
 })
 export class ReportsService {
-    private apiUrl = 'http://localhost:3000/reports';
+    private apiUrl = '/api/reports';
 
     constructor(private http: HttpClient) { }
 

@@ -24,7 +24,7 @@ interface LoginDto {
     providedIn: 'root'
 })
 export class AuthService {
-    private baseUrl = 'http://localhost:3000';
+    private baseUrl = '/api';
     private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
     public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
