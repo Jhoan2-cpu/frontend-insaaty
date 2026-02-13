@@ -35,22 +35,22 @@ export class Homepage {
 
     features = [
         {
-            icon: 'fa-chart-line',
+            icon: 'fa-file-pdf',
             titleKey: 'FEATURES.ANALYTICS_TITLE',
             descKey: 'FEATURES.ANALYTICS_DESC'
         },
         {
-            icon: 'fa-robot',
+            icon: 'fa-history',
             titleKey: 'FEATURES.WORKFLOWS_TITLE',
             descKey: 'FEATURES.WORKFLOWS_DESC'
         },
         {
-            icon: 'fa-warehouse',
+            icon: 'fa-tachometer-alt',
             titleKey: 'FEATURES.WAREHOUSE_TITLE',
             descKey: 'FEATURES.WAREHOUSE_DESC'
         },
         {
-            icon: 'fa-plug',
+            icon: 'fa-truck',
             titleKey: 'FEATURES.INTEGRATIONS_TITLE',
             descKey: 'FEATURES.INTEGRATIONS_DESC'
         }

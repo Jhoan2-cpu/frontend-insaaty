@@ -7,7 +7,7 @@
         "GET_STARTED": "Get Started"
     },
     "HERO": {
-        "BADGE": "Now with Forecasting 5.0",
+        "BADGE": "Integral Inventory Management",
         "TITLE_1": "Control inventory",
         "TITLE_2": "with precision",
         "TITLE_HIGHLIGHT": "absolute",
@@ -32,15 +32,15 @@
     "FEATURES": {
         "SECTION_LABEL": "WHY CHOOSE US",
         "SECTION_TITLE_1": "Everything you need to",
-        "SECTION_TITLE_2": "run your warehouse",
-        "ANALYTICS_TITLE": "Real-time Analytics",
-        "ANALYTICS_DESC": "Gain deep insights into your inventory performance. Track sales velocity, profit margins, and forecast demand with AI-powered precision.",
-        "WORKFLOWS_TITLE": "Automated Workflows",
-        "WORKFLOWS_DESC": "Set triggers for low stock alerts and auto-generate purchase orders.",
-        "WAREHOUSE_TITLE": "Multi-warehouse Sync",
-        "WAREHOUSE_DESC": "Synchronize stock across unlimited locations instantly.",
-        "INTEGRATIONS_TITLE": "Seamless Integrations",
-        "INTEGRATIONS_DESC": "Connect with Shopify, Amazon, WooCommerce, and more in just a few clicks."
+        "SECTION_TITLE_2": "manage your warehouse",
+        "ANALYTICS_TITLE": "Professional PDF Reports",
+        "ANALYTICS_DESC": "Generate detailed reports of sales, movements, and top products in PDF format with a single click.",
+        "WORKFLOWS_TITLE": "History and Audit Trail",
+        "WORKFLOWS_DESC": "Complete traceability of every entry, exit, or adjustment. Full control of your stock movements.",
+        "WAREHOUSE_TITLE": "Real-Time Stock",
+        "WAREHOUSE_DESC": "Visualize inventory levels, low stock alerts, and key metrics instantly.",
+        "INTEGRATIONS_TITLE": "Supplier Management",
+        "INTEGRATIONS_DESC": "Centralize your supplier information and optimize your restocking channels."
     },
     "SOLUTIONS": {
         "SECTION_LABEL": "SOLUTIONS",
@@ -235,6 +235,7 @@
         "NO_TRANSACTIONS": "No recent transactions"
     },
     "COMMON": {
+        "DEMO_VERSION": "DEMO VERSION",
         "LANGUAGE": "Language",
         "SPANISH": "EspaÃ±ol",
         "ENGLISH": "English",

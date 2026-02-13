@@ -7,7 +7,7 @@
         "GET_STARTED": "Comenzar"
     },
     "HERO": {
-        "BADGE": "Ahora con Pronóstico 5.0",
+        "BADGE": "Gestión Integral de Inventarios",
         "TITLE_1": "Controla tu inventario",
         "TITLE_2": "con precisión",
         "TITLE_HIGHLIGHT": "absoluta",
@@ -33,14 +33,14 @@
         "SECTION_LABEL": "POR QUÉ ELEGIRNOS",
         "SECTION_TITLE_1": "Todo lo que necesitas para",
         "SECTION_TITLE_2": "gestionar tu almacén",
-        "ANALYTICS_TITLE": "Analítica en Tiempo Real",
-        "ANALYTICS_DESC": "Obtén información profunda sobre el rendimiento de tu inventario. Rastrea la velocidad de ventas, márgenes de ganancia y pronostica la demanda con precisión impulsada por IA.",
-        "WORKFLOWS_TITLE": "Flujos Automatizados",
-        "WORKFLOWS_DESC": "Configura alertas de stock bajo y genera órdenes de compra automáticamente.",
-        "WAREHOUSE_TITLE": "Sincronización Multi-almacén",
-        "WAREHOUSE_DESC": "Sincroniza el stock en ubicaciones ilimitadas al instante.",
-        "INTEGRATIONS_TITLE": "Integraciones Perfectas",
-        "INTEGRATIONS_DESC": "Conéctate con Shopify, Amazon, WooCommerce y más en solo unos clics."
+        "ANALYTICS_TITLE": "Reportes PDF Profesionales",
+        "ANALYTICS_DESC": "Genera reportes detallados de ventas, movimientos y productos estrella en formato PDF con un solo clic.",
+        "WORKFLOWS_TITLE": "Historial y Auditoría",
+        "WORKFLOWS_DESC": "Trazabilidad completa de cada entrada, salida o ajuste. Control total de tus movimientos de stock.",
+        "WAREHOUSE_TITLE": "Stock en Tiempo Real",
+        "WAREHOUSE_DESC": "Visualiza niveles de inventario, alertas de stock bajo y métricas clave al instante.",
+        "INTEGRATIONS_TITLE": "Gestión de Proveedores",
+        "INTEGRATIONS_DESC": "Centraliza la información de tus proveedores y optimiza tus canales de reabastecimiento."
     },
     "SOLUTIONS": {
         "SECTION_LABEL": "SOLUCIONES",
@@ -235,6 +235,7 @@
         "NO_TRANSACTIONS": "No hay transacciones recientes"
     },
     "COMMON": {
+        "DEMO_VERSION": "VERSIÓN DEMO",
         "LANGUAGE": "Idioma",
         "SPANISH": "Español",
         "ENGLISH": "English",
