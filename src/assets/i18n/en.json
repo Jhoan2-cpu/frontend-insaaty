@@ -565,8 +565,9 @@
     },
     "SETTINGS": {
         "TITLE": "Settings",
-        "DESCRIPTION": "Manage your preferences and account settings.",
+        "DESCRIPTION": "Customize your experience and manage your professional profile data.",
         "SAVE": "Save Changes",
+        "DISCARD": "Discard",
         "TABS": {
             "PROFILE": "Profile",
             "SECURITY": "Security",
@@ -576,13 +577,21 @@
         "PROFILE": {
             "TITLE": "User Profile",
             "SUBTITLE": "Update your photo and personal details.",
-            "AVATAR": "Your Avatar",
-            "CHANGE": "Change",
+            "AVATAR": "Profile Photo",
+            "AVATAR_DESC": "Upload a high-resolution photo to personalize your account.",
+            "CHANGE": "Change photo",
             "REMOVE": "Remove",
             "FULL_NAME": "Full Name",
             "EMAIL": "Email Address",
             "PHONE": "Phone",
-            "ROLE": "Role"
+            "ROLE": "Role / Position",
+            "BIO": "Biography",
+            "BIO_PLACEHOLDER": "Tell us a bit about yourself and your role..."
+        },
+        "PREFERENCES": {
+            "TITLE": "Personal Preferences",
+            "LANGUAGE": "System Language",
+            "LANGUAGE_DESC": "Select your preferred language for the interface."
         },
         "ROLES": {
             "ADMIN": "Administrator",

@@ -558,8 +558,9 @@
     },
     "SETTINGS": {
         "TITLE": "Configuración",
-        "DESCRIPTION": "Administra tus preferencias y configuración de cuenta.",
+        "DESCRIPTION": "Personaliza tu experiencia y gestiona tus datos de perfil profesional.",
         "SAVE": "Guardar Cambios",
+        "DISCARD": "Descartar",
         "TABS": {
             "PROFILE": "Perfil",
             "SECURITY": "Seguridad",
@@ -569,13 +570,21 @@
         "PROFILE": {
             "TITLE": "Perfil de Usuario",
             "SUBTITLE": "Actualiza tu foto y detalles personales.",
-            "AVATAR": "Tu Avatar",
-            "CHANGE": "Cambiar",
+            "AVATAR": "Foto de Perfil",
+            "AVATAR_DESC": "Sube una foto de alta resolución para personalizar tu cuenta.",
+            "CHANGE": "Cambiar foto",
             "REMOVE": "Eliminar",
             "FULL_NAME": "Nombre Completo",
             "EMAIL": "Correo Electrónico",
             "PHONE": "Teléfono",
-            "ROLE": "Rol"
+            "ROLE": "Cargo / Rol",
+            "BIO": "Biografía",
+            "BIO_PLACEHOLDER": "Cuéntanos un poco sobre ti y tu rol..."
+        },
+        "PREFERENCES": {
+            "TITLE": "Preferencias Personales",
+            "LANGUAGE": "Idioma del Sistema",
+            "LANGUAGE_DESC": "Selecciona tu idioma preferido para la interfaz."
         },
         "ROLES": {
             "ADMIN": "Administrador",

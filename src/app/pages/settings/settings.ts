@@ -22,6 +22,7 @@ export class Settings implements OnInit {
 
   loading = false;
   user: any = null;
+  currentLang: string = 'es';
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +36,7 @@ export class Settings implements OnInit {
       fullName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       phone: [''],
+      bio: [''],
       role: [''] // Read-only mostly
     });
 
@@ -55,7 +57,15 @@ export class Settings implements OnInit {
   }
 
   ngOnInit() {
+    this.currentLang = this.translate.currentLang || this.translate.defaultLang || 'es';
     this.loadProfile();
+  }
+
+  changeLanguage(event: Event) {
+    const lang = (event.target as HTMLSelectElement).value;
+    this.translate.use(lang);
+    this.currentLang = lang;
+    localStorage.setItem('lang', lang);
   }
 
   passwordMatchValidator(g: FormGroup) {
