@@ -173,6 +173,8 @@
         "LOGIN_SUBTITLE": "Bienvenido de nuevo, ingresa tus datos para continuar."
     },
     "SIDEBAR": {
+        "BRAND_NAME": "INVENTORY-SAAS",
+        "BRAND_DESCRIPTION": "Gestión de Inventario Cloud",
         "DASHBOARD": "Panel de Control",
         "INVENTORY": "Inventario",
         "ORDERS": "Pedidos",

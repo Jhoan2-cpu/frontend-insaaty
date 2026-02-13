@@ -173,6 +173,8 @@
         "LOGIN_SUBTITLE": "Welcome back, enter your details to continue."
     },
     "SIDEBAR": {
+        "BRAND_NAME": "INVENTORY-SAAS",
+        "BRAND_DESCRIPTION": "Cloud Inventory Management",
         "DASHBOARD": "Dashboard",
         "INVENTORY": "Inventory",
         "ORDERS": "Orders",
