@@ -17,10 +17,13 @@
 
     <!-- Nav Links - Hidden on mobile -->
     <div class="hidden md:flex items-center gap-6 lg:gap-8">
-      <a href="#features" class="text-gray-600 hover:text-emerald-600 font-medium">{{ 'NAV.FEATURES' | translate }}</a>
-      <a href="#solutions" class="text-gray-600 hover:text-emerald-600 font-medium">{{ 'NAV.SOLUTIONS' | translate
+      <a href="javascript:void(0)" (click)="scrollTo('features')"
+        class="text-gray-600 hover:text-emerald-600 font-medium">{{ 'NAV.FEATURES' | translate }}</a>
+      <a href="javascript:void(0)" (click)="scrollTo('solutions')"
+        class="text-gray-600 hover:text-emerald-600 font-medium">{{ 'NAV.SOLUTIONS' | translate
         }}</a>
-      <a href="#pricing" class="text-gray-600 hover:text-emerald-600 font-medium">{{ 'NAV.PRICING' | translate }}</a>
+      <a href="javascript:void(0)" (click)="scrollTo('pricing')"
+        class="text-gray-600 hover:text-emerald-600 font-medium">{{ 'NAV.PRICING' | translate }}</a>
     </div>
 
     <!-- Auth Buttons + Language Selector -->
@@ -66,13 +69,13 @@
   @if (mobileMenuOpen) {
   <div class="md:hidden bg-white border-t border-gray-100 px-4 py-4 animate__animated animate__fadeIn animate__faster">
     <div class="flex flex-col gap-3">
-      <a href="#features" class="text-gray-600 hover:text-emerald-600 font-medium py-2"
-        (click)="mobileMenuOpen = false">{{
+      <a href="javascript:void(0)" class="text-gray-600 hover:text-emerald-600 font-medium py-2"
+        (click)="scrollTo('features'); mobileMenuOpen = false">{{
         'NAV.FEATURES' | translate }}</a>
-      <a href="#solutions" class="text-gray-600 hover:text-emerald-600 font-medium py-2"
-        (click)="mobileMenuOpen = false">{{ 'NAV.SOLUTIONS' | translate }}</a>
-      <a href="#pricing" class="text-gray-600 hover:text-emerald-600 font-medium py-2"
-        (click)="mobileMenuOpen = false">{{
+      <a href="javascript:void(0)" class="text-gray-600 hover:text-emerald-600 font-medium py-2"
+        (click)="scrollTo('solutions'); mobileMenuOpen = false">{{ 'NAV.SOLUTIONS' | translate }}</a>
+      <a href="javascript:void(0)" class="text-gray-600 hover:text-emerald-600 font-medium py-2"
+        (click)="scrollTo('pricing'); mobileMenuOpen = false">{{
         'NAV.PRICING' | translate }}</a>
       <a routerLink="/login" class="text-gray-600 hover:text-emerald-600 font-medium py-2 sm:hidden"
         (click)="mobileMenuOpen = false">{{ 'NAV.LOGIN' | translate }}</a>
