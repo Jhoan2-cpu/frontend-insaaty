@@ -108,7 +108,18 @@ export class Suppliers implements OnInit {
     this.cdr.detectChanges();
 
     if (this.isEditing && this.currentSupplier.id) {
-      this.suppliersService.updateSupplier(this.currentSupplier.id, this.currentSupplier).subscribe({
+      // Limpiar el objeto para enviar solo lo que el DTO permite
+      const updateData = {
+        name: this.currentSupplier.name,
+        contact_person: this.currentSupplier.contact_person,
+        email: this.currentSupplier.email,
+        phone: this.currentSupplier.phone,
+        address: this.currentSupplier.address,
+        website: this.currentSupplier.website,
+        notes: this.currentSupplier.notes
+      };
+
+      this.suppliersService.updateSupplier(this.currentSupplier.id, updateData).subscribe({
         next: () => {
           this.isSubmitting = false;
           this.closeForm();
