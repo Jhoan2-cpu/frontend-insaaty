@@ -242,6 +242,7 @@
         "UPDATE": "Update",
         "PAGE": "Page",
         "OF": "of",
+        "SHOWING": "Showing",
         "NONE": "None",
         "FILTERS": "Audit Filters",
         "CLEAR": "Clear",
@@ -362,6 +363,7 @@
     },
     "SUPPLIERS": {
         "TITLE": "Suppliers",
+        "DESCRIPTION": "Manage and organize your suppliers and their contact details",
         "LABEL": "Supplier",
         "MANAGEMENT": "Supplier Management",
         "NEW_SUPPLIER": "New Supplier",
@@ -376,6 +378,7 @@
         "NOTES": "Notes",
         "PRODUCTS_COUNT": "Products",
         "NO_SUPPLIERS": "No suppliers registered",
+        "SEARCH_PLACEHOLDER": "Search by name, email or contact...",
         "ACTIONS": {
             "EDIT_TITLE": "Edit",
             "DELETE_TITLE": "Delete"

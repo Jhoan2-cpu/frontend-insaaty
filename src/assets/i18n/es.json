@@ -242,6 +242,7 @@
         "UPDATE": "Actualizar",
         "PAGE": "Página",
         "OF": "de",
+        "SHOWING": "Mostrando",
         "NONE": "Ninguno",
         "FILTERS": "Filtros de Auditoría",
         "CLEAR": "Limpiar",
@@ -362,6 +363,7 @@
     },
     "SUPPLIERS": {
         "TITLE": "Proveedores",
+        "DESCRIPTION": "Gestiona y organiza tus proveedores y sus datos de contacto",
         "LABEL": "Proveedor",
         "MANAGEMENT": "Gestión de Proveedores",
         "NEW_SUPPLIER": "Nuevo Proveedor",
@@ -376,6 +378,7 @@
         "NOTES": "Notas",
         "PRODUCTS_COUNT": "Productos",
         "NO_SUPPLIERS": "No hay proveedores registrados",
+        "SEARCH_PLACEHOLDER": "Buscar por nombre, email o contacto...",
         "ACTIONS": {
             "EDIT_TITLE": "Editar",
             "DELETE_TITLE": "Eliminar"

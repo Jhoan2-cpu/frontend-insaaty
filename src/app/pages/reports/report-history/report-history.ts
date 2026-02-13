@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { ReportsService } from '../../../services/reports.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-report-history',
@@ -19,7 +20,10 @@ export class ReportHistory implements OnInit {
   filterType: string = 'ALL';
   isFilterDropdownOpen = false;
 
-  constructor(private reportsService: ReportsService) { }
+  constructor(
+    private reportsService: ReportsService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.loadReports();
@@ -37,18 +41,21 @@ export class ReportHistory implements OnInit {
 
   loadReports() {
     this.isLoading = true;
-    this.reportsService.getReportHistory().subscribe({
-      next: (data: any[]) => {
-        // Sort by ID descending by default
-        this.reports = data.sort((a, b) => b.id - a.id);
-        this.applyFilters();
+    this.reportsService.getReportHistory()
+      .pipe(finalize(() => {
         this.isLoading = false;
-      },
-      error: (err: any) => {
-        console.error('Error loading reports', err);
-        this.isLoading = false;
-      }
-    });
+        this.cdr.detectChanges();
+      }))
+      .subscribe({
+        next: (data: any[]) => {
+          // Sort by ID descending by default
+          this.reports = data.sort((a, b) => b.id - a.id);
+          this.applyFilters();
+        },
+        error: (err: any) => {
+          console.error('Error loading reports', err);
+        }
+      });
   }
 
   applyFilters() {
