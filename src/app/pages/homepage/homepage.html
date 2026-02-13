@@ -449,29 +449,24 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-16 sm:py-24 bg-gray-900 relative overflow-hidden">
-  <div class="absolute inset-0 opacity-10">
-    <div class="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-emerald-500 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-purple-500 rounded-full blur-3xl"></div>
-  </div>
-
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
-    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 sm:mb-6">
-      {{ 'CTA.TITLE' | translate }}
-    </h2>
-    <p class="text-gray-400 text-sm sm:text-base lg:text-lg mb-8 sm:mb-10 max-w-2xl mx-auto">
-      {{ 'CTA.DESCRIPTION' | translate }}
-    </p>
-    <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
-      <a routerLink="/register"
-        class="bg-white hover:bg-gray-100 text-gray-900 px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg font-semibold transition-all hover-lift">
-        {{ 'CTA.BUTTON_START' | translate }}
-      </a>
-      <button (click)="scrollTo('pricing')"
-        class="border border-gray-600 hover:border-white text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg font-semibold transition-all flex items-center justify-center gap-2">
-        {{ 'CTA.BUTTON_DEMO' | translate }}
-        <i class="fas fa-arrow-right"></i>
-      </button>
+<section class="py-16 sm:py-24 bg-white relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+    <div class="cta-card text-center animate__animated animate__fadeInUp">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+        {{ 'CTA.TITLE' | translate }}
+      </h2>
+      <p class="text-emerald-100/80 text-base sm:text-lg mb-10 max-w-2xl mx-auto">
+        {{ 'CTA.DESCRIPTION' | translate }}
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+        <a routerLink="/register" class="cta-button-primary">
+          {{ 'CTA.BUTTON_START' | translate }}
+        </a>
+        <button (click)="scrollTo('pricing')" class="cta-button-secondary">
+          {{ 'CTA.BUTTON_DEMO' | translate }}
+          <i class="fas fa-arrow-right text-xs"></i>
+        </button>
+      </div>
     </div>
   </div>
 </section>
