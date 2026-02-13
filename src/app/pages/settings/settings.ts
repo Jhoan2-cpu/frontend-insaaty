@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -21,7 +21,11 @@ export class Settings implements OnInit {
   companyForm: FormGroup;
 
   loading = false;
+  uploadingAvatar = false;
   user: any = null;
+  avatarBaseUrl = 'http://localhost:3000';
+
+  @ViewChild('avatarInput') avatarInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private fb: FormBuilder,
@@ -99,6 +103,70 @@ export class Settings implements OnInit {
       this.toast.success(this.translate.instant('SETTINGS.CHANGES_DISCARDED'));
     }
   }
+
+  // --- Avatar ---
+  triggerAvatarUpload() {
+    this.avatarInput?.nativeElement?.click();
+  }
+
+  onAvatarSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+
+    // Validate client-side
+    if (!file.type.match(/^image\/(jpeg|png|gif|webp)$/)) {
+      this.toast.error(this.translate.instant('SETTINGS.PROFILE.AVATAR_INVALID_TYPE'));
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      this.toast.error(this.translate.instant('SETTINGS.PROFILE.AVATAR_TOO_LARGE'));
+      return;
+    }
+
+    this.uploadingAvatar = true;
+    this.cdr.detectChanges();
+
+    this.authService.uploadAvatar(file)
+      .pipe(finalize(() => {
+        this.uploadingAvatar = false;
+        input.value = ''; // Reset so same file can be re-selected
+        this.cdr.detectChanges();
+      }))
+      .subscribe({
+        next: (res) => {
+          this.user = { ...this.user, avatar_url: res.avatar_url };
+          this.toast.success(this.translate.instant('SETTINGS.PROFILE.AVATAR_UPDATED'));
+        },
+        error: () => {
+          this.toast.error(this.translate.instant('SETTINGS.PROFILE.AVATAR_ERROR'));
+        }
+      });
+  }
+
+  removeAvatar() {
+    if (!this.user?.avatar_url) return;
+
+    this.uploadingAvatar = true;
+    this.cdr.detectChanges();
+
+    this.authService.removeAvatar()
+      .pipe(finalize(() => {
+        this.uploadingAvatar = false;
+        this.cdr.detectChanges();
+      }))
+      .subscribe({
+        next: () => {
+          this.user = { ...this.user, avatar_url: null };
+          this.toast.success(this.translate.instant('SETTINGS.PROFILE.AVATAR_REMOVED'));
+        },
+        error: () => {
+          this.toast.error(this.translate.instant('SETTINGS.PROFILE.AVATAR_ERROR'));
+        }
+      });
+  }
+
 
   updateProfile() {
     if (this.profileForm.invalid) return;

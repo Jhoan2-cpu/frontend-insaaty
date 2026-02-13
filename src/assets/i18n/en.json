@@ -580,6 +580,11 @@
             "SUBTITLE": "Update your photo and personal details.",
             "AVATAR": "Profile Photo",
             "AVATAR_DESC": "Upload a high-resolution photo to personalize your account.",
+            "AVATAR_UPDATED": "Profile photo updated",
+            "AVATAR_REMOVED": "Profile photo removed",
+            "AVATAR_ERROR": "Error processing profile photo",
+            "AVATAR_INVALID_TYPE": "Only image files are allowed (JPEG, PNG, GIF, WebP)",
+            "AVATAR_TOO_LARGE": "Image must not exceed 5MB",
             "CHANGE": "Change photo",
             "REMOVE": "Remove",
             "FULL_NAME": "Full Name",
@@ -589,14 +594,14 @@
             "BIO": "Biography",
             "BIO_PLACEHOLDER": "Tell us a bit about yourself and your role..."
         },
+        "ROLES": {
+            "ADMIN": "Administrator",
+            "USER": "User"
+        },
         "PREFERENCES": {
             "TITLE": "Personal Preferences",
             "LANGUAGE": "System Language",
             "LANGUAGE_DESC": "Select your preferred language for the interface."
-        },
-        "ROLES": {
-            "ADMIN": "Administrator",
-            "USER": "User"
         },
         "SECURITY": {
             "TITLE": "Security",

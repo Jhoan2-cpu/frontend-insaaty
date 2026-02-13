@@ -129,4 +129,16 @@ export class AuthService {
     updateTenant(data: any): Observable<any> {
         return this.http.patch(`${this.baseUrl}/tenants/settings`, data);
     }
+
+    uploadAvatar(file: File): Observable<any> {
+        const formData = new FormData();
+        formData.append('avatar', file);
+        this.profileCache$ = null;
+        return this.http.post(`${this.baseUrl}/users/profile/avatar`, formData);
+    }
+
+    removeAvatar(): Observable<any> {
+        this.profileCache$ = null;
+        return this.http.delete(`${this.baseUrl}/users/profile/avatar`);
+    }
 }
