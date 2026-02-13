@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { ReportsService } from '../../../services/reports.service';
+import { PdfService } from '../../../services/pdf.service';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -23,6 +24,7 @@ export class ReportHistoryComponent implements OnInit {
 
   constructor(
     private reportsService: ReportsService,
+    private pdfService: PdfService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -72,8 +74,6 @@ export class ReportHistoryComponent implements OnInit {
   }
 
   viewReport(url: string) {
-    // Determine the base URL dynamically or use environment variable
-    const baseUrl = 'http://localhost:3000'; // Or generic window.location if served from same origin in prod
-    window.open(`${baseUrl}${url}`, '_blank');
+    this.pdfService.viewPdf(url);
   }
 }

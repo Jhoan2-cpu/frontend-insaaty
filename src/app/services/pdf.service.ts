@@ -16,7 +16,7 @@ export class PdfService {
 
         this.http.get<{ url: string }>(`${this.apiUrl}/generate/sales`, { params })
             .subscribe({
-                next: (res) => this.downloadFile(res.url),
+                next: (res) => this.viewPdf(res.url),
                 error: (err) => console.error('Error downloading report', err)
             });
     }
@@ -28,7 +28,7 @@ export class PdfService {
 
         this.http.get<{ url: string }>(`${this.apiUrl}/generate/top-products`, { params })
             .subscribe({
-                next: (res) => this.downloadFile(res.url),
+                next: (res) => this.viewPdf(res.url),
                 error: (err) => console.error('Error downloading report', err)
             });
     }
@@ -40,15 +40,25 @@ export class PdfService {
 
         this.http.get<{ url: string }>(`${this.apiUrl}/generate/movements`, { params })
             .subscribe({
-                next: (res) => this.downloadFile(res.url),
+                next: (res) => this.viewPdf(res.url),
                 error: (err) => console.error('Error downloading report', err)
             });
     }
 
-    private downloadFile(url: string) {
-        // The url returned is relative (/uploads/reports/...)
-        // Prepend backend url
-        const fullUrl = `http://localhost:3000${url}`;
+    viewPdf(url: string) {
+        if (!url) return;
+
+        // If the URL is already absolute (contains http), open it directly
+        if (url.startsWith('http')) {
+            window.open(url, '_blank');
+            return;
+        }
+
+        // If it's a relative path without leading slash, add it
+        const normalizedUrl = url.startsWith('/') ? url : `/${url}`;
+
+        // Prepend backend URL
+        const fullUrl = `http://localhost:3000${normalizedUrl}`;
         window.open(fullUrl, '_blank');
     }
 }
