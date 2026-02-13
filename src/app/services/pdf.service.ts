@@ -57,7 +57,14 @@ export class PdfService {
         // If it's a relative path without leading slash, add it
         const normalizedUrl = url.startsWith('/') ? url : `/${url}`;
 
-        // Prepend /api prefix for proxying
+        // DO NOT prepend /api if the path starts with /uploads
+        // Nginx is already configured to proxy /uploads directly to backend:3000/uploads
+        if (normalizedUrl.startsWith('/uploads')) {
+            window.open(normalizedUrl, '_blank');
+            return;
+        }
+
+        // Prepend /api prefix for proxying other requests (if any)
         const fullUrl = `/api${normalizedUrl}`;
         window.open(fullUrl, '_blank');
     }
