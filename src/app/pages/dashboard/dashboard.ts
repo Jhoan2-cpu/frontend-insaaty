@@ -138,11 +138,15 @@ export class Dashboard implements OnInit, AfterViewInit {
   }
 
   refreshChartData() {
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setDate(endDate.getDate() - parseInt(this.chartPeriod));
+    const now = new Date();
+    // End date is today at 00:00 UTC for the request
+    const endDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
-    // Format dates as YYYY-MM-DD for backend
+    // Start date is X days ago
+    const startDate = new Date(endDate);
+    startDate.setUTCDate(endDate.getUTCDate() - (parseInt(this.chartPeriod) - 1));
+
+    // Format dates as YYYY-MM-DD (UTC)
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
     console.log(`Refreshing chart: ${this.chartPeriod} days`, {
@@ -197,33 +201,38 @@ export class Dashboard implements OnInit, AfterViewInit {
 
     // Gradient fill
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.2)'); // Blue with opacity
-    gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+    gradient.addColorStop(0, 'rgba(16, 185, 129, 0.2)'); // Emerald-500 with opacity
+    gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
 
     // Generate all dates for the selected period
     const labels: string[] = [];
     const data: number[] = [];
     const periodDays = parseInt(this.chartPeriod);
-    const today = new Date();
+
+    // Use UTC today to avoid timezone shifts
+    const now = new Date();
+    const utcToday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
     // Create map for O(1) lookup
     const salesMap = new Map<string, number>();
     this.salesData.forEach(d => {
+      // Backend returns dates in ISO format, we extract the YYYY-MM-DD part
       const dateStr = new Date(d.date).toISOString().split('T')[0];
-      salesMap.set(dateStr, d.totalSales);
+      // Use totalVolume (count of both sales and movements)
+      salesMap.set(dateStr, d.totalVolume || 0);
     });
 
-    // Loop backwards from today to (today - period)
-    // We want the chart to go from left (oldest) to right (newest)
+    // Loop backwards from today to (today - period) using UTC methods
     for (let i = periodDays - 1; i >= 0; i--) {
-      const d = new Date();
-      d.setDate(today.getDate() - i);
+      const d = new Date(utcToday);
+      d.setUTCDate(utcToday.getUTCDate() - i);
+
       const dateStr = d.toISOString().split('T')[0];
 
-      // Label format (e.g., "Feb 10")
-      labels.push(d.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short' }));
+      // Label remains local for the user's view, but based on the UTC day
+      labels.push(d.toLocaleDateString(this.translate.currentLang || 'es', { day: 'numeric', month: 'short', timeZone: 'UTC' }));
 
-      // Data interpolation
+      // Data lookup
       data.push(salesMap.get(dateStr) || 0);
     }
 
@@ -234,13 +243,13 @@ export class Dashboard implements OnInit, AfterViewInit {
         datasets: [{
           label: 'Sales Volume',
           data: data,
-          borderColor: '#3b82f6', // Blue-500
+          borderColor: '#10b981', // Emerald-500
           backgroundColor: gradient,
           borderWidth: 3,
           tension: 0.4, // Smooth curves
           fill: true,
           pointBackgroundColor: '#ffffff',
-          pointBorderColor: '#3b82f6',
+          pointBorderColor: '#10b981',
           pointBorderWidth: 2,
           pointRadius: 4,
           pointHoverRadius: 6
@@ -275,7 +284,8 @@ export class Dashboard implements OnInit, AfterViewInit {
               font: {
                 size: 11
               },
-              maxTicksLimit: periodDays === 90 ? 15 : 10 // Limit ticks for cleaner look
+              maxTicksLimit: periodDays === 90 ? 12 : 8,
+              padding: 10
             },
             border: {
               display: false

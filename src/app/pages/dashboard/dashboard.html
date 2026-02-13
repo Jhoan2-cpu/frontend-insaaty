@@ -18,12 +18,14 @@
                         @if (loading) {
                         <div class="h-8 w-16 bg-gray-100 rounded animate-pulse mt-1"></div>
                         } @else {
-                        <h3 class="text-2xl font-bold text-gray-900 mt-1 group-hover:text-blue-600 transition-colors">{{
+                        <h3
+                            class="text-2xl font-bold text-gray-900 mt-1 group-hover:text-emerald-600 transition-colors">
+                            {{
                             kpis.productsCount ?? 0 }}</h3>
                         }
                     </div>
                     <div
-                        class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 group-hover:bg-blue-100 transition-colors">
+                        class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600 group-hover:bg-emerald-100 transition-colors">
                         <i class="fas fa-cube"></i>
                     </div>
                 </div>
@@ -90,13 +92,14 @@
                         @if (loading) {
                         <div class="h-8 w-16 bg-gray-100 rounded animate-pulse mt-1"></div>
                         } @else {
-                        <h3 class="text-2xl font-bold text-gray-900 mt-1 group-hover:text-purple-600 transition-colors">
+                        <h3
+                            class="text-2xl font-bold text-gray-900 mt-1 group-hover:text-emerald-600 transition-colors">
                             {{
                             kpis.totalOrders ?? 0 }}</h3>
                         }
                     </div>
                     <div
-                        class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600 group-hover:bg-purple-100 transition-colors">
+                        class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600 group-hover:bg-emerald-100 transition-colors">
                         <i class="fas fa-exchange-alt"></i>
                     </div>
                 </div>
@@ -116,20 +119,6 @@
                         <p class="text-sm text-gray-500">{{ 'DASHBOARD.VOLUME_SUBTITLE' | translate:{days: chartPeriod}
                             }}</p>
                     </div>
-                    <div class="flex bg-gray-100 rounded-lg p-1 self-start border border-gray-200">
-                        <button (click)="setChartPeriod('30')" [class.bg-white]="chartPeriod === '30'"
-                            [class.text-gray-900]="chartPeriod === '30'" [class.shadow-sm]="chartPeriod === '30'"
-                            [class.text-gray-500]="chartPeriod !== '30'"
-                            class="px-3 py-1 text-xs font-medium rounded transition-all hover:text-gray-900">
-                            {{ 'DASHBOARD.DAYS_30' | translate }}
-                        </button>
-                        <button (click)="setChartPeriod('90')" [class.bg-white]="chartPeriod === '90'"
-                            [class.text-gray-900]="chartPeriod === '90'" [class.shadow-sm]="chartPeriod === '90'"
-                            [class.text-gray-500]="chartPeriod !== '90'"
-                            class="px-3 py-1 text-xs font-medium rounded transition-all hover:text-gray-900">
-                            {{ 'DASHBOARD.DAYS_90' | translate }}
-                        </button>
-                    </div>
                 </div>
 
                 <div class="h-64 w-full relative">
@@ -144,7 +133,7 @@
                     <h3 class="text-lg font-bold text-gray-900">{{ 'DASHBOARD.LOW_STOCK_ALERT' | translate }}
                     </h3>
                     <button [routerLink]="['/inventory']"
-                        class="text-blue-600 text-sm font-medium hover:text-blue-700 transition-colors">{{
+                        class="text-emerald-600 text-sm font-medium hover:text-emerald-700 transition-colors">{{
                         'DASHBOARD.VIEW_ALL' | translate }}</button>
                 </div>
 
@@ -195,7 +184,7 @@
                 </div>
 
                 <button [routerLink]="['/inventory/transactions']"
-                    class="w-full mt-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
+                    class="w-full mt-4 py-2 border border-emerald-600 text-emerald-600 rounded-lg text-sm font-medium hover:bg-emerald-50 transition-colors">
                     <i class="fas fa-exchange-alt mr-2"></i> {{ 'DASHBOARD.REGISTER_TRANSACTION' | translate }}
                 </button>
             </div>
@@ -222,23 +211,23 @@
                     @if (showFilterMenu) {
                     <div
                         class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-100 py-1 animate__animated animate__fadeIn animate__faster">
-                        <button (click)="setFilter('ALL')" [class.bg-blue-50]="currentFilter === 'ALL'"
-                            [class.text-blue-600]="currentFilter === 'ALL'"
+                        <button (click)="setFilter('ALL')" [class.bg-emerald-50]="currentFilter === 'ALL'"
+                            [class.text-emerald-600]="currentFilter === 'ALL'"
                             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                             {{ 'ORDERS.ALL' | translate }}
                         </button>
-                        <button (click)="setFilter('IN')" [class.bg-blue-50]="currentFilter === 'IN'"
-                            [class.text-blue-600]="currentFilter === 'IN'"
+                        <button (click)="setFilter('IN')" [class.bg-emerald-50]="currentFilter === 'IN'"
+                            [class.text-emerald-600]="currentFilter === 'IN'"
                             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                             {{ 'INVENTORY.MOVEMENT.TYPES.IN' | translate }}
                         </button>
-                        <button (click)="setFilter('OUT')" [class.bg-blue-50]="currentFilter === 'OUT'"
-                            [class.text-blue-600]="currentFilter === 'OUT'"
+                        <button (click)="setFilter('OUT')" [class.bg-emerald-50]="currentFilter === 'OUT'"
+                            [class.text-emerald-600]="currentFilter === 'OUT'"
                             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                             {{ 'INVENTORY.MOVEMENT.TYPES.OUT' | translate }}
                         </button>
-                        <button (click)="setFilter('ADJUSTMENT')" [class.bg-blue-50]="currentFilter === 'ADJUSTMENT'"
-                            [class.text-blue-600]="currentFilter === 'ADJUSTMENT'"
+                        <button (click)="setFilter('ADJUSTMENT')" [class.bg-emerald-50]="currentFilter === 'ADJUSTMENT'"
+                            [class.text-emerald-600]="currentFilter === 'ADJUSTMENT'"
                             class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                             {{ 'INVENTORY.MOVEMENT.TYPES.ADJUSTMENT' | translate }}
                         </button>

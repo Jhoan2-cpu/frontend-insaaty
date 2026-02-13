@@ -6,6 +6,8 @@ export interface SalesReportData {
     date: string;
     totalSales: number;
     orderCount: number;
+    transactionCount: number;
+    totalVolume: number;
     profit: number;
 }
 
@@ -34,6 +36,7 @@ export interface KPIs {
     totalProfit?: number;
     productsCount?: number;
     lowStockCount?: number;
+    totalCustomers?: number;
 }
 
 @Injectable({
