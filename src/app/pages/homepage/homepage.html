@@ -1,12 +1,12 @@
 <!-- Header / Navigation -->
-<header class="fixed top-0 left-0 right-0 z-50 glass">
+<header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm">
   <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
     <!-- Logo -->
     <a routerLink="/" class="flex items-center gap-2">
       <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
         <i class="fas fa-cube text-white text-lg"></i>
       </div>
-      <span class="text-lg sm:text-xl font-bold text-gray-900">InventorySaaS</span>
+      <span class="text-lg sm:text-xl font-bold text-gray-900">INVENTORY-SAAS</span>
     </a>
 
     <!-- Nav Links - Hidden on mobile -->
@@ -112,7 +112,7 @@
           {{ 'HERO.CTA_TRIAL' | translate }}
           <i class="fas fa-arrow-right"></i>
         </a>
-        <button
+        <button (click)="scrollTo('pricing')"
           class="border-2 border-gray-300 hover:border-blue-600 text-gray-700 hover:text-blue-600 px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg font-semibold transition-all flex items-center justify-center gap-2">
           <i class="fas fa-play-circle"></i>
           {{ 'HERO.CTA_DEMO' | translate }}
@@ -471,7 +471,7 @@
           <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <i class="fas fa-cube text-white text-lg"></i>
           </div>
-          <span class="text-lg sm:text-xl font-bold text-gray-900">InventorySaaS</span>
+          <span class="text-lg sm:text-xl font-bold text-gray-900">INVENTORY-SAAS</span>
         </a>
         <p class="text-gray-500 text-xs sm:text-sm mb-4 max-w-xs">
           {{ 'FOOTER.TAGLINE' | translate }}
