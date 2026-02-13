@@ -26,6 +26,7 @@ export class Layout implements OnInit {
   isSidebarOpen = true;
   isInventoryOpen = false;
   isReportsOpen = false;
+  showLogoutModal = false;
   currentLang = 'es';
   pendingOrdersCount = 0;
 
@@ -107,7 +108,16 @@ export class Layout implements OnInit {
     this.currentLang = lang;
   }
 
+  confirmLogout() {
+    this.showLogoutModal = true;
+  }
+
+  cancelLogout() {
+    this.showLogoutModal = false;
+  }
+
   logout() {
+    this.showLogoutModal = false;
     this.authService.logout();
   }
 }

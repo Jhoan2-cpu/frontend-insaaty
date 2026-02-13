@@ -183,6 +183,11 @@
         "MAIN_MENU": "MENÚ PRINCIPAL",
         "ADMINISTRATION": "ADMINISTRACIÓN",
         "LOGOUT": "Cerrar sesión",
+        "COMPANY": "Empresa",
+        "LOGOUT_TITLE": "¿Cerrar sesión?",
+        "LOGOUT_MESSAGE": "¿Estás seguro de que quieres cerrar sesión? Tendrás que iniciar sesión de nuevo para acceder.",
+        "LOGOUT_CANCEL": "Cancelar",
+        "LOGOUT_CONFIRM": "Cerrar sesión",
         "SUPPLIERS": "Proveedores"
     },
     "DASHBOARD": {

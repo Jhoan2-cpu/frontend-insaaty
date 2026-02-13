@@ -183,6 +183,11 @@
         "MAIN_MENU": "MAIN MENU",
         "ADMINISTRATION": "ADMINISTRATION",
         "LOGOUT": "Log out",
+        "COMPANY": "Company",
+        "LOGOUT_TITLE": "Log out?",
+        "LOGOUT_MESSAGE": "Are you sure you want to log out? You'll need to sign in again to access your account.",
+        "LOGOUT_CANCEL": "Cancel",
+        "LOGOUT_CONFIRM": "Log out",
         "SUPPLIERS": "Suppliers"
     },
     "DASHBOARD": {
