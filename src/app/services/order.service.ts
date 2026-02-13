@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export enum OrderStatus {
     PENDING = 'PENDING',
@@ -105,8 +106,18 @@ export class OrderService {
         return this.http.patch<Order>(`${this.apiUrl}/${id}`, dto);
     }
 
+    private pendingCountSubject = new BehaviorSubject<number>(0);
+    pendingCount$ = this.pendingCountSubject.asObservable();
+
     getPendingCount(): Observable<number> {
         return this.http.get<number>(`${this.apiUrl}/stats/pending-count`);
+    }
+
+    refreshPendingCount(): void {
+        this.http.get<number>(`${this.apiUrl}/stats/pending-count`).subscribe({
+            next: (count) => this.pendingCountSubject.next(count),
+            error: () => { }
+        });
     }
 
     remove(id: number): Observable<void> {

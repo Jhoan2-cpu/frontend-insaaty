@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, ActivatedRoute, RouterModule } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
+import { Subscription, interval } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { OrderService } from '../../services/order.service';
@@ -22,7 +23,7 @@ import { BreadcrumbsComponent } from '../breadcrumbs/breadcrumbs.component';
   templateUrl: './layout.html',
   styleUrl: './layout.css'
 })
-export class Layout implements OnInit {
+export class Layout implements OnInit, OnDestroy {
   isSidebarOpen = true;
   isInventoryOpen = false;
   isReportsOpen = false;
@@ -31,6 +32,7 @@ export class Layout implements OnInit {
   pendingOrdersCount = 0;
 
   user: any = null;
+  private pollSub?: Subscription;
 
   constructor(
     private translate: TranslateService,
@@ -53,8 +55,16 @@ export class Layout implements OnInit {
       error: (err) => console.error('Error loading profile', err)
     });
 
-    // Cargar contador de pedidos pendientes
-    this.loadPendingCount();
+    // Cargar contador de pedidos pendientes (reactivo)
+    this.orderService.pendingCount$.subscribe(count => {
+      this.pendingOrdersCount = count;
+    });
+    this.orderService.refreshPendingCount();
+
+    // Polling cada 30 segundos
+    this.pollSub = interval(30000).subscribe(() => {
+      this.orderService.refreshPendingCount();
+    });
 
     // Check if inventory is active (basic check)
     // A better way would be using Router events, but for now this is simple
@@ -82,13 +92,12 @@ export class Layout implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.pollSub?.unsubscribe();
+  }
+
   loadPendingCount() {
-    this.orderService.getPendingCount().subscribe({
-      next: (count) => {
-        this.pendingOrdersCount = count;
-      },
-      error: (error) => console.error('Error loading pending orders count:', error)
-    });
+    this.orderService.refreshPendingCount();
   }
 
   toggleSidebar() {
