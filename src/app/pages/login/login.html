@@ -3,11 +3,18 @@
     <div
         class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-100 via-blue-50 to-white p-8 lg:p-12 flex-col justify-between animate__animated animate__fadeIn">
         <!-- Logo -->
-        <div class="flex items-center gap-2">
-            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-                <i class="fas fa-cube text-white text-lg"></i>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-cube text-white text-lg"></i>
+                </div>
+                <span class="text-lg font-bold text-gray-900">INVENTORY-SAAS</span>
             </div>
-            <span class="text-lg font-bold text-gray-900">Inventory SaaS</span>
+            <a routerLink="/"
+                class="flex items-center gap-2 text-gray-500 hover:text-blue-600 transition-colors text-sm font-medium">
+                <i class="fas fa-arrow-left"></i>
+                {{ 'COMMON.BACK_TO_HOME' | translate }}
+            </a>
         </div>
 
         <!-- Main Content -->
@@ -91,11 +98,17 @@
     <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-8 lg:p-12 bg-white">
         <div class="w-full max-w-md animate__animated animate__fadeInRight animate__fast">
             <!-- Mobile Logo -->
-            <div class="lg:hidden flex items-center gap-2 mb-8">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-                    <i class="fas fa-cube text-white text-lg"></i>
+            <div class="lg:hidden flex items-center justify-between mb-8">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-cube text-white text-lg"></i>
+                    </div>
+                    <span class="text-lg font-bold text-gray-900">INVENTORY-SAAS</span>
                 </div>
-                <span class="text-lg font-bold text-gray-900">Inventory SaaS</span>
+                <a routerLink="/"
+                    class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full text-gray-500 hover:text-blue-600 transition-colors">
+                    <i class="fas fa-times"></i>
+                </a>
             </div>
 
             <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{{ 'LOGIN.TITLE' | translate }}</h2>
@@ -144,12 +157,7 @@
                     }
                 </div>
 
-                <!-- Forgot Password -->
-                <div class="flex justify-end mb-6">
-                    <a routerLink="/forgot-password" class="text-sm text-blue-600 hover:text-blue-700 font-medium">
-                        {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
-                    </a>
-                </div>
+                <div class="mb-6"></div>
 
                 <!-- Submit Button -->
                 <button type="submit" [disabled]="isLoading"

@@ -164,13 +164,13 @@
         "TERMS_REQUIRED": "Debes aceptar los términos"
     },
     "AUTH": {
-        "LEFT_TITLE": "Optimiza tu cadena de suministro hoy.",
-        "LEFT_SUBTITLE": "Únete a más de 10,000 empresas gestionando su inventario con facilidad. Obtén información en tiempo real y reabastecimiento automatizado.",
-        "GROWTH": "CRECIMIENTO",
-        "THIS_WEEK": "esta semana",
-        "TESTIMONIAL_TEXT": "Esta plataforma transformó completamente cómo manejamos la logística. Es simplemente brillante.",
-        "TESTIMONIAL_AUTHOR": "Sarah Jenkins, CTO en Acme Logistics",
-        "LOGIN_SUBTITLE": "Bienvenido de nuevo, ingresa tus datos para continuar."
+        "LEFT_TITLE": "Control Total de tu Inventario Cloud",
+        "LEFT_SUBTITLE": "Gestiona tus niveles de stock, genera reportes PDF profesionales y mantén una trazabilidad completa de cada movimiento.",
+        "GROWTH": "Trazabilidad",
+        "THIS_WEEK": "auditada",
+        "TESTIMONIAL_TEXT": "La facilidad para generar reportes PDF y ver el historial de transacciones ha cambiado nuestra forma de trabajar.",
+        "TESTIMONIAL_AUTHOR": "Gerente de Operaciones",
+        "LOGIN_SUBTITLE": "Bienvenido de nuevo. Accede a tu panel de control."
     },
     "SIDEBAR": {
         "BRAND_NAME": "INVENTORY-SAAS",
@@ -235,6 +235,7 @@
         "NO_TRANSACTIONS": "No hay transacciones recientes"
     },
     "COMMON": {
+        "BACK_TO_HOME": "Volver al Inicio",
         "DEMO_VERSION": "VERSIÓN DEMO",
         "LANGUAGE": "Idioma",
         "SPANISH": "Español",
