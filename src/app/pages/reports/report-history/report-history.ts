@@ -12,7 +12,8 @@ import { finalize } from 'rxjs/operators';
   templateUrl: './report-history.html',
   styleUrl: './report-history.css'
 })
-export class ReportHistory implements OnInit {
+// Component to display and manage report history
+export class ReportHistoryComponent implements OnInit {
   reports: any[] = [];
   filteredReports: any[] = [];
   isLoading = false;

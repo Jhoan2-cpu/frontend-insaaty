@@ -75,7 +75,7 @@ export const routes: Routes = [
                     },
                     {
                         path: 'history',
-                        loadComponent: () => import('./pages/reports/report-history/report-history').then(m => m.ReportHistory),
+                        loadComponent: () => import('./pages/reports/report-history/report-history').then(m => m.ReportHistoryComponent),
                         data: { title: 'REPORTS.HISTORY.TITLE', breadcrumb: 'REPORTS.HISTORY.TITLE' }
                     }
                 ]
