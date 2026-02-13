@@ -6,15 +6,19 @@
             <div class="flex items-center gap-3">
                 <p class="text-gray-500 text-sm">{{ 'SETTINGS.DESCRIPTION' | translate }}</p>
                 <span
-                    class="bg-emerald-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider">PREMIUM</span>
+                    class="bg-emerald-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-md uppercase tracking-wider">
+                    {{ user?.tenant?.plan_type || 'FREE' }}
+                </span>
             </div>
             <div class="flex items-center gap-3" *ngIf="activeTab === 'profile'">
-                <button type="button" (click)="loadProfile()"
+                <button type="button" (click)="discardChanges()"
                     class="px-5 py-2 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors text-sm">
                     {{ 'SETTINGS.DISCARD' | translate }}
                 </button>
-                <button type="button" (click)="updateProfile()" [disabled]="profileForm.invalid || loading"
-                    class="px-5 py-2 bg-emerald-500 text-white font-semibold rounded-xl hover:bg-emerald-600 shadow-md shadow-emerald-200 transition-all text-sm disabled:opacity-50 disabled:shadow-none">
+                <button type="button" (click)="updateProfile()"
+                    [disabled]="profileForm.invalid || profileForm.pristine || loading"
+                    class="px-5 py-2 bg-emerald-500 text-white font-semibold rounded-xl hover:bg-emerald-600 shadow-md shadow-emerald-200 transition-all text-sm disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed">
+                    <i class="fas fa-circle-notch fa-spin mr-1" *ngIf="loading"></i>
                     {{ 'SETTINGS.SAVE' | translate }}
                 </button>
             </div>
@@ -54,12 +58,12 @@
             <!-- Main Content Area -->
             <div class="flex-1 min-w-0 space-y-6">
 
-                @if (loading) {
+                @if (loading && !user) {
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
                     <div
                         class="w-10 h-10 border-4 border-gray-200 border-t-emerald-500 rounded-full animate-spin mx-auto">
                     </div>
-                    <p class="text-gray-500 text-sm mt-3">{{ 'COMMON.LOADING' | translate }}...</p>
+                    <p class="text-gray-500 text-sm mt-3">{{ 'COMMON.LOADING' | translate }}</p>
                 </div>
                 } @else {
 
@@ -70,7 +74,6 @@
                     <!-- Profile Photo Card -->
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
                         <div class="flex items-start gap-6">
-                            <!-- Avatar with camera overlay -->
                             <div class="relative flex-shrink-0">
                                 <div
                                     class="w-20 h-20 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center text-amber-700 text-3xl font-bold border-4 border-white shadow-md ring-1 ring-gray-100">
@@ -108,8 +111,29 @@
                                     <label class="block text-sm font-bold text-gray-700">
                                         {{ 'SETTINGS.PROFILE.FULL_NAME' | translate }}
                                     </label>
-                                    <input type="text" formControlName="fullName"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all bg-gray-50/50 focus:bg-white text-gray-900 outline-none">
+                                    <div class="relative">
+                                        <span
+                                            class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                            <i class="fas fa-user text-sm"></i>
+                                        </span>
+                                        <input type="text" formControlName="fullName"
+                                            class="w-full pl-11 pr-4 py-2.5 rounded-xl border transition-all outline-none"
+                                            [ngClass]="{
+                                                'border-red-300 focus:ring-2 focus:ring-red-500/20 focus:border-red-500': profileForm.get('fullName')?.invalid && profileForm.get('fullName')?.touched,
+                                                'border-emerald-300 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500': profileForm.get('fullName')?.valid && profileForm.get('fullName')?.touched,
+                                                'border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500': !profileForm.get('fullName')?.touched
+                                            }">
+                                    </div>
+                                    @if (profileForm.get('fullName')?.invalid && profileForm.get('fullName')?.touched) {
+                                    <p class="text-red-500 text-xs flex items-center gap-1">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        @if (profileForm.get('fullName')?.errors?.['required']) {
+                                        {{ 'SETTINGS.VALIDATION.REQUIRED' | translate }}
+                                        } @else if (profileForm.get('fullName')?.errors?.['minlength']) {
+                                        {{ 'SETTINGS.VALIDATION.MIN_LENGTH' | translate: { min: 3 } }}
+                                        }
+                                    </p>
+                                    }
                                 </div>
 
                                 <!-- Email -->
@@ -117,28 +141,46 @@
                                     <label class="block text-sm font-bold text-gray-700">
                                         {{ 'SETTINGS.PROFILE.EMAIL' | translate }}
                                     </label>
-                                    <input type="email" formControlName="email"
-                                        class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all bg-gray-50/50 focus:bg-white text-gray-900 outline-none">
+                                    <div class="relative">
+                                        <span
+                                            class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                            <i class="fas fa-envelope text-sm"></i>
+                                        </span>
+                                        <input type="email" formControlName="email"
+                                            class="w-full pl-11 pr-4 py-2.5 rounded-xl border transition-all outline-none"
+                                            [ngClass]="{
+                                                'border-red-300 focus:ring-2 focus:ring-red-500/20 focus:border-red-500': profileForm.get('email')?.invalid && profileForm.get('email')?.touched,
+                                                'border-emerald-300 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500': profileForm.get('email')?.valid && profileForm.get('email')?.touched,
+                                                'border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500': !profileForm.get('email')?.touched
+                                            }">
+                                    </div>
+                                    @if (profileForm.get('email')?.invalid && profileForm.get('email')?.touched) {
+                                    <p class="text-red-500 text-xs flex items-center gap-1">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        @if (profileForm.get('email')?.errors?.['required']) {
+                                        {{ 'SETTINGS.VALIDATION.REQUIRED' | translate }}
+                                        } @else if (profileForm.get('email')?.errors?.['email']) {
+                                        {{ 'SETTINGS.VALIDATION.INVALID_EMAIL' | translate }}
+                                        }
+                                    </p>
+                                    }
                                 </div>
 
-                                <!-- Role -->
+                                <!-- Role (Read-only from server) -->
                                 <div class="space-y-2">
                                     <label class="block text-sm font-bold text-gray-700">
                                         {{ 'SETTINGS.PROFILE.ROLE' | translate }}
                                     </label>
-                                    <input type="text"
-                                        [value]="user?.role_id === 3 ? ('SETTINGS.ROLES.ADMIN' | translate) : ('SETTINGS.ROLES.USER' | translate)"
-                                        disabled
-                                        class="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-100 text-gray-500 cursor-not-allowed">
-                                </div>
-
-                                <!-- Phone -->
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-bold text-gray-700">
-                                        {{ 'SETTINGS.PROFILE.PHONE' | translate }}
-                                    </label>
-                                    <input type="tel" formControlName="phone" placeholder="+1 555..."
-                                        class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all bg-gray-50/50 focus:bg-white text-gray-900 outline-none">
+                                    <div class="relative">
+                                        <span
+                                            class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                            <i class="fas fa-id-badge text-sm"></i>
+                                        </span>
+                                        <input type="text"
+                                            [value]="user?.role?.name || (user?.role_id === 3 ? ('SETTINGS.ROLES.ADMIN' | translate) : ('SETTINGS.ROLES.USER' | translate))"
+                                            disabled
+                                            class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-500 cursor-not-allowed">
+                                    </div>
                                 </div>
 
                                 <!-- Bio -->
@@ -146,40 +188,17 @@
                                     <label class="block text-sm font-bold text-gray-700">
                                         {{ 'SETTINGS.PROFILE.BIO' | translate }}
                                     </label>
-                                    <textarea formControlName="bio" rows="3"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all bg-gray-50/50 focus:bg-white text-gray-900 outline-none resize-none"
-                                        [placeholder]="'SETTINGS.PROFILE.BIO_PLACEHOLDER' | translate"></textarea>
+                                    <div class="relative">
+                                        <span class="absolute top-3 left-4 text-gray-400 pointer-events-none">
+                                            <i class="fas fa-align-left text-sm"></i>
+                                        </span>
+                                        <textarea formControlName="bio" rows="3"
+                                            class="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none resize-none bg-gray-50/50 focus:bg-white"
+                                            [placeholder]="'SETTINGS.PROFILE.BIO_PLACEHOLDER' | translate"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </form>
-                    </div>
-
-                    <!-- Personal Preferences Card -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
-                        <h3 class="text-lg font-bold text-gray-900 mb-6">{{ 'SETTINGS.PREFERENCES.TITLE' | translate }}
-                        </h3>
-
-                        <div class="flex items-center justify-between py-4 border-b border-gray-100">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center">
-                                    <i class="fas fa-globe text-emerald-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-sm font-bold text-gray-900">{{ 'SETTINGS.PREFERENCES.LANGUAGE' |
-                                        translate }}</h4>
-                                    <p class="text-xs text-gray-500">{{ 'SETTINGS.PREFERENCES.LANGUAGE_DESC' | translate
-                                        }}</p>
-                                </div>
-                            </div>
-                            <select (change)="changeLanguage($event)"
-                                class="px-4 py-2 rounded-xl border border-gray-200 bg-white text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 cursor-pointer appearance-none pr-8"
-                                [style.backgroundImage]="'url(data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22gray%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.23%207.21a.75.75%200%20011.06.02L10%2011.168l3.71-3.938a.75.75%200%20111.08%201.04l-4.25%204.5a.75.75%200%2001-1.08%200l-4.25-4.5a.75.75%200%2001.02-1.06z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E)'"
-                                [style.backgroundPosition]="'right 0.5rem center'"
-                                [style.backgroundRepeat]="'no-repeat'" [style.backgroundSize]="'1.25em 1.25em'">
-                                <option value="es" [selected]="currentLang === 'es'">Español (ES)</option>
-                                <option value="en" [selected]="currentLang === 'en'">English (EN)</option>
-                            </select>
-                        </div>
                     </div>
 
                 </div>
@@ -197,24 +216,55 @@
 
                         <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="space-y-4 max-w-lg">
                             <div class="space-y-2">
-                                <label class="block text-sm font-bold text-gray-700">{{ 'SETTINGS.SECURITY.NEW_PASSWORD'
-                                    | translate }}</label>
-                                <input type="password" formControlName="password"
-                                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none">
+                                <label class="block text-sm font-bold text-gray-700">{{
+                                    'SETTINGS.SECURITY.NEW_PASSWORD' | translate }}</label>
+                                <div class="relative">
+                                    <span
+                                        class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                        <i class="fas fa-lock text-sm"></i>
+                                    </span>
+                                    <input type="password" formControlName="password"
+                                        class="w-full pl-11 pr-4 py-2.5 rounded-xl border transition-all outline-none"
+                                        [ngClass]="{
+                                            'border-red-300 focus:ring-2 focus:ring-red-500/20 focus:border-red-500': passwordForm.get('password')?.invalid && passwordForm.get('password')?.touched,
+                                            'border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500': !passwordForm.get('password')?.touched || passwordForm.get('password')?.valid
+                                        }">
+                                </div>
+                                @if (passwordForm.get('password')?.invalid && passwordForm.get('password')?.touched) {
+                                <p class="text-red-500 text-xs flex items-center gap-1">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    {{ 'SETTINGS.VALIDATION.MIN_LENGTH' | translate: { min: 6 } }}
+                                </p>
+                                }
                             </div>
                             <div class="space-y-2">
                                 <label class="block text-sm font-bold text-gray-700">{{
                                     'SETTINGS.SECURITY.CONFIRM_PASSWORD' | translate }}</label>
-                                <input type="password" formControlName="confirmPassword"
-                                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none">
-                                @if (passwordForm.hasError('mismatch')) {
-                                <p class="text-red-500 text-xs mt-1">{{ 'SETTINGS.SECURITY.MISMATCH' | translate }}</p>
+                                <div class="relative">
+                                    <span
+                                        class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                        <i class="fas fa-lock text-sm"></i>
+                                    </span>
+                                    <input type="password" formControlName="confirmPassword"
+                                        class="w-full pl-11 pr-4 py-2.5 rounded-xl border transition-all outline-none"
+                                        [ngClass]="{
+                                            'border-red-300 focus:ring-2 focus:ring-red-500/20 focus:border-red-500': passwordForm.hasError('mismatch') && passwordForm.get('confirmPassword')?.touched,
+                                            'border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500': !passwordForm.get('confirmPassword')?.touched || !passwordForm.hasError('mismatch')
+                                        }">
+                                </div>
+                                @if (passwordForm.hasError('mismatch') && passwordForm.get('confirmPassword')?.touched)
+                                {
+                                <p class="text-red-500 text-xs flex items-center gap-1">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    {{ 'SETTINGS.SECURITY.MISMATCH' | translate }}
+                                </p>
                                 }
                             </div>
 
                             <div class="pt-4">
                                 <button type="submit" [disabled]="passwordForm.invalid || loading"
-                                    class="px-6 py-2.5 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 font-semibold transition-all shadow-md shadow-emerald-200 disabled:opacity-50 disabled:shadow-none">
+                                    class="px-6 py-2.5 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 font-semibold transition-all shadow-md shadow-emerald-200 disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed">
+                                    <i class="fas fa-circle-notch fa-spin mr-1" *ngIf="loading"></i>
                                     {{ 'SETTINGS.SECURITY.UPDATE_PASSWORD' | translate }}
                                 </button>
                             </div>
@@ -245,7 +295,6 @@
                 @if (activeTab === 'company') {
                 <div class="animate__animated animate__fadeIn space-y-6">
 
-                    <!-- Company Profile -->
                     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
                         <div class="flex items-center justify-between mb-6">
                             <div>
@@ -271,32 +320,52 @@
                                         <div class="space-y-2">
                                             <label class="block text-sm font-bold text-gray-700">{{
                                                 'SETTINGS.COMPANY.NAME' | translate }}</label>
-                                            <input type="text" formControlName="name"
-                                                class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none">
+                                            <div class="relative">
+                                                <span
+                                                    class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                                    <i class="fas fa-building text-sm"></i>
+                                                </span>
+                                                <input type="text" formControlName="name"
+                                                    class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none">
+                                            </div>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="block text-sm font-bold text-gray-700">{{
                                                 'SETTINGS.COMPANY.NIF' | translate }}</label>
-                                            <input type="text" formControlName="nif"
-                                                class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none">
+                                            <div class="relative">
+                                                <span
+                                                    class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                                    <i class="fas fa-file-invoice text-sm"></i>
+                                                </span>
+                                                <input type="text" formControlName="nif"
+                                                    class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="space-y-2">
                                         <label class="block text-sm font-bold text-gray-700">{{
                                             'SETTINGS.COMPANY.ADDRESS' | translate }}</label>
-                                        <input type="text" formControlName="address"
-                                            class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none">
+                                        <div class="relative">
+                                            <span
+                                                class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                                <i class="fas fa-map-marker-alt text-sm"></i>
+                                            </span>
+                                            <input type="text" formControlName="address"
+                                                class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-2">
-                                    <label class="block text-sm font-bold text-gray-700">{{ 'SETTINGS.COMPANY.WEBSITE' |
-                                        translate }}</label>
+                                    <label class="block text-sm font-bold text-gray-700">{{ 'SETTINGS.COMPANY.WEBSITE'
+                                        | translate }}</label>
                                     <div class="relative">
-                                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400"><i
-                                                class="fas fa-globe"></i></span>
+                                        <span
+                                            class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                            <i class="fas fa-globe text-sm"></i>
+                                        </span>
                                         <input type="text" formControlName="website"
                                             class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all outline-none">
                                     </div>
@@ -305,7 +374,7 @@
 
                             <div class="mt-6 flex justify-end">
                                 <button type="submit" [disabled]="companyForm.invalid || loading"
-                                    class="px-6 py-2.5 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 font-semibold transition-all shadow-md shadow-emerald-200 disabled:opacity-50 disabled:shadow-none">
+                                    class="px-6 py-2.5 bg-emerald-500 text-white rounded-xl hover:bg-emerald-600 font-semibold transition-all shadow-md shadow-emerald-200 disabled:opacity-50 disabled:shadow-none disabled:cursor-not-allowed">
                                     {{ 'SETTINGS.SAVE' | translate }}
                                 </button>
                             </div>
@@ -320,20 +389,32 @@
                             <div class="space-y-2">
                                 <label class="block text-sm font-bold text-gray-700">{{ 'SETTINGS.COMPANY.CURRENCY' |
                                     translate }}</label>
-                                <select formControlName="currency" [formGroup]="companyForm"
-                                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white outline-none">
-                                    <option value="EUR">Euro (€)</option>
-                                    <option value="USD">USD ($)</option>
-                                </select>
+                                <div class="relative">
+                                    <span
+                                        class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                        <i class="fas fa-coins text-sm"></i>
+                                    </span>
+                                    <select formControlName="currency" [formGroup]="companyForm"
+                                        class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white outline-none">
+                                        <option value="EUR">Euro (€)</option>
+                                        <option value="USD">USD ($)</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="space-y-2">
                                 <label class="block text-sm font-bold text-gray-700">{{ 'SETTINGS.COMPANY.TIMEZONE' |
                                     translate }}</label>
-                                <select formControlName="timezone" [formGroup]="companyForm"
-                                    class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white outline-none">
-                                    <option value="Europe/Madrid">Europe/Madrid</option>
-                                    <option value="Europe/London">Europe/London</option>
-                                </select>
+                                <div class="relative">
+                                    <span
+                                        class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-400 pointer-events-none">
+                                        <i class="fas fa-clock text-sm"></i>
+                                    </span>
+                                    <select formControlName="timezone" [formGroup]="companyForm"
+                                        class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 bg-white outline-none">
+                                        <option value="Europe/Madrid">Europe/Madrid</option>
+                                        <option value="Europe/London">Europe/London</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

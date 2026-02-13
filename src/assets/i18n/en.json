@@ -568,6 +568,7 @@
         "DESCRIPTION": "Customize your experience and manage your professional profile data.",
         "SAVE": "Save Changes",
         "DISCARD": "Discard",
+        "CHANGES_DISCARDED": "Changes discarded",
         "TABS": {
             "PROFILE": "Profile",
             "SECURITY": "Security",
@@ -604,6 +605,7 @@
             "CONFIRM_PASSWORD": "Confirm Password",
             "MISMATCH": "Passwords do not match",
             "UPDATE_PASSWORD": "Update Password",
+            "PASSWORD_UPDATED": "Password updated successfully",
             "TWO_FACTOR": "Two-Factor Authentication",
             "TWO_FACTOR_DESC": "Increases your account security."
         },
@@ -620,6 +622,11 @@
             "CURRENCY": "Currency",
             "TIMEZONE": "Timezone"
         },
-        "PROFILE_UPDATED": "Profile updated successfully"
+        "PROFILE_UPDATED": "Profile updated successfully",
+        "VALIDATION": {
+            "REQUIRED": "This field is required",
+            "MIN_LENGTH": "Minimum {{min}} characters",
+            "INVALID_EMAIL": "Enter a valid email address"
+        }
     }
 }

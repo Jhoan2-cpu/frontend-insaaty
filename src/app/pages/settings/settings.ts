@@ -22,7 +22,6 @@ export class Settings implements OnInit {
 
   loading = false;
   user: any = null;
-  currentLang: string = 'es';
 
   constructor(
     private fb: FormBuilder,
@@ -35,9 +34,7 @@ export class Settings implements OnInit {
     this.profileForm = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      phone: [''],
-      bio: [''],
-      role: [''] // Read-only mostly
+      bio: ['']
     });
 
     this.passwordForm = this.fb.group({
@@ -57,15 +54,7 @@ export class Settings implements OnInit {
   }
 
   ngOnInit() {
-    this.currentLang = this.translate.currentLang || this.translate.defaultLang || 'es';
     this.loadProfile();
-  }
-
-  changeLanguage(event: Event) {
-    const lang = (event.target as HTMLSelectElement).value;
-    this.translate.use(lang);
-    this.currentLang = lang;
-    localStorage.setItem('lang', lang);
   }
 
   passwordMatchValidator(g: FormGroup) {
@@ -75,32 +64,40 @@ export class Settings implements OnInit {
 
   loadProfile() {
     this.loading = true;
-    this.cdr.detectChanges(); // Force update
+    this.cdr.detectChanges();
 
-    this.authService.getProfile()
+    this.authService.getProfile(true)
       .pipe(finalize(() => {
         this.loading = false;
-        this.cdr.detectChanges(); // Force update on completion
+        this.cdr.detectChanges();
       }))
       .subscribe({
         next: (user) => {
           this.user = user;
-
-          // Patch forms
-          this.profileForm.patchValue({
-            fullName: user.full_name,
-            email: user.email
-          });
-
-          if (user.role_id === 3) {
-            // Admin logic (future)
-          }
+          this.patchProfileForm(user);
         },
         error: (err) => {
           console.error('Error loading profile:', err);
           this.toast.error('Error loading profile');
         }
       });
+  }
+
+  private patchProfileForm(user: any) {
+    this.profileForm.patchValue({
+      fullName: user.full_name,
+      email: user.email,
+      bio: user.bio || ''
+    });
+    this.profileForm.markAsPristine();
+    this.profileForm.markAsUntouched();
+  }
+
+  discardChanges() {
+    if (this.user) {
+      this.patchProfileForm(this.user);
+      this.toast.success(this.translate.instant('SETTINGS.CHANGES_DISCARDED'));
+    }
   }
 
   updateProfile() {
@@ -116,8 +113,9 @@ export class Settings implements OnInit {
       }))
       .subscribe({
         next: (res) => {
-          this.toast.success(this.translate.instant('SETTINGS.PROFILE_Updated'));
-          // Update user state if needed
+          this.user = { ...this.user, ...res };
+          this.profileForm.markAsPristine();
+          this.toast.success(this.translate.instant('SETTINGS.PROFILE_UPDATED'));
         },
         error: (err) => {
           this.toast.error('Error updating profile');
@@ -128,38 +126,43 @@ export class Settings implements OnInit {
   updatePassword() {
     if (this.passwordForm.invalid) return;
 
-    // Backend expects 'password' field in updateProfile (UpdateUserDto)
-    // validation logic is handled there.
     const payload = { password: this.passwordForm.value.password };
 
     this.loading = true;
-    this.authService.updateProfile(payload).subscribe({
-      next: (res) => {
-        this.toast.success('Password updated successfully');
-        this.passwordForm.reset();
+    this.cdr.detectChanges();
+
+    this.authService.updateProfile(payload)
+      .pipe(finalize(() => {
         this.loading = false;
-      },
-      error: (err) => {
-        this.toast.error('Error updating password');
-        this.loading = false;
-      }
-    });
+        this.cdr.detectChanges();
+      }))
+      .subscribe({
+        next: (res) => {
+          this.toast.success(this.translate.instant('SETTINGS.SECURITY.PASSWORD_UPDATED'));
+          this.passwordForm.reset();
+        },
+        error: (err) => {
+          this.toast.error('Error updating password');
+        }
+      });
   }
 
   updateCompany() {
     if (this.companyForm.invalid) return;
 
     this.loading = true;
-    this.authService.updateTenant(this.companyForm.value).subscribe({
-      next: (res) => {
-        this.toast.success('Company settings updated');
+    this.authService.updateTenant(this.companyForm.value)
+      .pipe(finalize(() => {
         this.loading = false;
-      },
-      error: (err) => {
-        this.toast.error('Error updating company');
-        this.loading = false;
-      }
-    });
+        this.cdr.detectChanges();
+      }))
+      .subscribe({
+        next: (res) => {
+          this.toast.success('Company settings updated');
+        },
+        error: (err) => {
+          this.toast.error('Error updating company');
+        }
+      });
   }
 }
-

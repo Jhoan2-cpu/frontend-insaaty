@@ -561,6 +561,7 @@
         "DESCRIPTION": "Personaliza tu experiencia y gestiona tus datos de perfil profesional.",
         "SAVE": "Guardar Cambios",
         "DISCARD": "Descartar",
+        "CHANGES_DISCARDED": "Cambios descartados",
         "TABS": {
             "PROFILE": "Perfil",
             "SECURITY": "Seguridad",
@@ -597,6 +598,7 @@
             "CONFIRM_PASSWORD": "Confirmar Contraseña",
             "MISMATCH": "Las contraseñas no coinciden",
             "UPDATE_PASSWORD": "Actualizar Contraseña",
+            "PASSWORD_UPDATED": "Contraseña actualizada correctamente",
             "TWO_FACTOR": "Autenticación de Dos Factores",
             "TWO_FACTOR_DESC": "Aumenta la seguridad de tu cuenta."
         },
@@ -613,6 +615,11 @@
             "CURRENCY": "Moneda",
             "TIMEZONE": "Zona Horaria"
         },
-        "PROFILE_UPDATED": "Perfil actualizado correctamente"
+        "PROFILE_UPDATED": "Perfil actualizado correctamente",
+        "VALIDATION": {
+            "REQUIRED": "Este campo es obligatorio",
+            "MIN_LENGTH": "Mínimo {{min}} caracteres",
+            "INVALID_EMAIL": "Ingresa un correo electrónico válido"
+        }
     }
 }
