@@ -1,13 +1,20 @@
 <div class="min-h-screen flex">
     <!-- Left Panel - Info (Same as Login) -->
     <div
-        class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-100 via-blue-50 to-white p-8 lg:p-12 flex-col justify-between animate__animated animate__fadeIn">
+        class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-emerald-100 via-emerald-50 to-white p-8 lg:p-12 flex-col justify-between animate__animated animate__fadeIn">
         <!-- Logo -->
-        <div class="flex items-center gap-2">
-            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-                <i class="fas fa-cube text-white text-lg"></i>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-cube text-white text-lg"></i>
+                </div>
+                <span class="text-lg font-bold text-gray-900">INVENTORY-SAAS</span>
             </div>
-            <span class="text-lg font-bold text-gray-900">Inventory SaaS</span>
+            <a routerLink="/"
+                class="flex items-center gap-2 text-gray-500 hover:text-emerald-600 transition-colors text-sm font-medium">
+                <i class="fas fa-arrow-left"></i>
+                {{ 'COMMON.BACK_TO_HOME' | translate }}
+            </a>
         </div>
 
         <!-- Main Content -->
@@ -35,13 +42,13 @@
                     </div>
                     <!-- Mock Chart -->
                     <div class="bg-gray-800 rounded-lg p-4 h-32 flex items-end gap-1">
-                        <div class="flex-1 bg-blue-600/50 rounded-t h-[40%]"></div>
-                        <div class="flex-1 bg-blue-600/50 rounded-t h-[60%]"></div>
-                        <div class="flex-1 bg-blue-600/50 rounded-t h-[45%]"></div>
-                        <div class="flex-1 bg-blue-600/50 rounded-t h-[80%]"></div>
-                        <div class="flex-1 bg-blue-600/50 rounded-t h-[65%]"></div>
-                        <div class="flex-1 bg-blue-600/50 rounded-t h-[90%]"></div>
-                        <div class="flex-1 bg-blue-600 rounded-t h-[100%]"></div>
+                        <div class="flex-1 bg-emerald-600/50 rounded-t h-[40%]"></div>
+                        <div class="flex-1 bg-emerald-600/50 rounded-t h-[60%]"></div>
+                        <div class="flex-1 bg-emerald-600/50 rounded-t h-[45%]"></div>
+                        <div class="flex-1 bg-emerald-600/50 rounded-t h-[80%]"></div>
+                        <div class="flex-1 bg-emerald-600/50 rounded-t h-[65%]"></div>
+                        <div class="flex-1 bg-emerald-600/50 rounded-t h-[90%]"></div>
+                        <div class="flex-1 bg-emerald-600 rounded-t h-[100%]"></div>
                     </div>
                 </div>
                 <!-- Growth Badge -->
@@ -76,11 +83,17 @@
     <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-8 lg:p-12 bg-white overflow-y-auto">
         <div class="w-full max-w-md animate__animated animate__fadeInRight animate__fast py-8">
             <!-- Mobile Logo -->
-            <div class="lg:hidden flex items-center gap-2 mb-8">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
-                    <i class="fas fa-cube text-white text-lg"></i>
+            <div class="lg:hidden flex items-center justify-between mb-8">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-cube text-white text-lg"></i>
+                    </div>
+                    <span class="text-lg font-bold text-gray-900">INVENTORY-SAAS</span>
                 </div>
-                <span class="text-lg font-bold text-gray-900">Inventory SaaS</span>
+                <a routerLink="/"
+                    class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full text-gray-500 hover:text-emerald-600 transition-colors">
+                    <i class="fas fa-times"></i>
+                </a>
             </div>
 
             <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{{ 'REGISTER.TITLE' | translate }}</h2>
@@ -96,7 +109,7 @@
                     <div class="relative">
                         <input type="text" [(ngModel)]="businessName" name="businessName"
                             (blur)="businessTouched = true" [placeholder]="'REGISTER.BUSINESS_PLACEHOLDER' | translate"
-                            class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                            class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
                             [class.border-red-500]="businessError">
                         <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
                             <i class="fas fa-building"></i>
@@ -116,7 +129,7 @@
                     <div class="relative">
                         <input type="email" [(ngModel)]="email" name="email" (blur)="emailTouched = true"
                             [placeholder]="'REGISTER.EMAIL_PLACEHOLDER' | translate"
-                            class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                            class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
                             [class.border-red-500]="emailError">
                         <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
                             <i class="fas fa-envelope"></i>
@@ -136,7 +149,7 @@
                     <div class="relative">
                         <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password"
                             (blur)="passwordTouched = true" [placeholder]="'REGISTER.PASSWORD_PLACEHOLDER' | translate"
-                            class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                            class="w-full px-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
                             [class.border-red-500]="passwordError">
                         <button type="button" (click)="togglePassword()"
                             class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
@@ -154,13 +167,13 @@
                 <div class="mb-6">
                     <label class="flex items-start gap-3 cursor-pointer group">
                         <input type="checkbox" [(ngModel)]="termsAccepted" name="terms" (change)="termsTouched = true"
-                            class="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer">
+                            class="mt-1 w-4 h-4 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500 cursor-pointer">
                         <span class="text-sm text-gray-600 leading-snug">
                             {{ 'REGISTER.TERMS_AGREE' | translate }}
-                            <a href="#" class="text-blue-600 hover:text-blue-700 font-medium">{{
+                            <a href="#" class="text-emerald-600 hover:text-emerald-700 font-medium">{{
                                 'REGISTER.TERMS_OF_SERVICE' | translate }}</a>
                             {{ 'REGISTER.AND' | translate }}
-                            <a href="#" class="text-blue-600 hover:text-blue-700 font-medium">{{
+                            <a href="#" class="text-emerald-600 hover:text-emerald-700 font-medium">{{
                                 'REGISTER.PRIVACY_POLICY' | translate }}</a>.
                         </span>
                     </label>
@@ -172,7 +185,7 @@
 
                 <!-- Submit Button -->
                 <button type="submit" [disabled]="isLoading"
-                    class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-4 px-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
+                    class="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white py-4 px-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
                     @if (isLoading) {
                     <i class="fas fa-spinner fa-spin"></i>
                     } @else {
@@ -184,7 +197,7 @@
             <!-- Login Link -->
             <p class="text-center text-gray-600 mt-8">
                 {{ 'REGISTER.HAVE_ACCOUNT' | translate }}
-                <a routerLink="/login" class="text-blue-600 hover:text-blue-700 font-semibold ml-1">
+                <a routerLink="/login" class="text-emerald-600 hover:text-emerald-700 font-semibold ml-1">
                     {{ 'REGISTER.LOG_IN' | translate }}
                 </a>
             </p>

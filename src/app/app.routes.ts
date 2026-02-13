@@ -22,9 +22,11 @@ export const routes: Routes = [
             {
                 path: 'dashboard',
                 loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.Dashboard),
+                data: { title: 'SIDEBAR.DASHBOARD' }
             },
             {
                 path: 'inventory',
+                data: { breadcrumb: 'SIDEBAR.INVENTORY' }, // Breadcrumb for parent
                 children: [
                     {
                         path: '',
@@ -34,32 +36,59 @@ export const routes: Routes = [
                     {
                         path: 'products',
                         loadComponent: () => import('./pages/inventory/inventory').then(m => m.Inventory),
+                        data: { title: 'INVENTORY.TITLE', breadcrumb: 'INVENTORY.TITLE' }
                     },
                     {
                         path: 'transactions',
                         loadComponent: () => import('./pages/inventory/transactions/transactions').then(m => m.Transactions),
+                        data: { title: 'INVENTORY.TRANSACTIONS', breadcrumb: 'INVENTORY.TRANSACTIONS' }
                     },
                     {
                         path: 'movements/new',
                         loadComponent: () => import('./pages/inventory/movement-create/movement-create').then(m => m.MovementCreate),
+                        data: { title: 'INVENTORY.MOVEMENT_TITLE', breadcrumb: 'INVENTORY.MOVEMENT_TITLE' }
                     }
                 ]
             },
             {
                 path: 'orders',
-                loadComponent: () => import('./pages/orders/orders').then(m => m.Orders),
+                data: { title: 'SIDEBAR.ORDERS', breadcrumb: 'SIDEBAR.ORDERS' },
+                children: [
+                    {
+                        path: '',
+                        loadComponent: () => import('./pages/orders/orders').then(m => m.Orders),
+                    },
+                    {
+                        path: ':id',
+                        loadComponent: () => import('./pages/orders/order-detail/order-detail').then(m => m.OrderDetail),
+                        data: { title: 'ORDERS.DETAIL.TITLE', breadcrumb: 'ORDERS.DETAIL.TITLE' }
+                    }
+                ]
             },
             {
                 path: 'reports',
-                loadComponent: () => import('./pages/reports/reports').then(m => m.Reports),
+                data: { title: 'REPORTS.TITLE', breadcrumb: 'REPORTS.TITLE' },
+                children: [
+                    {
+                        path: '',
+                        loadComponent: () => import('./pages/reports/reports').then(m => m.Reports),
+                    },
+                    {
+                        path: 'history',
+                        loadComponent: () => import('./pages/reports/report-history/report-history').then(m => m.ReportHistoryComponent),
+                        data: { title: 'REPORTS.HISTORY.TITLE', breadcrumb: 'REPORTS.HISTORY.TITLE' }
+                    }
+                ]
             },
             {
                 path: 'suppliers',
                 loadComponent: () => import('./pages/suppliers/suppliers').then(m => m.Suppliers),
+                data: { title: 'SIDEBAR.SUPPLIERS', breadcrumb: 'SIDEBAR.SUPPLIERS' }
             },
             {
                 path: 'settings',
                 loadComponent: () => import('./pages/settings/settings').then(m => m.Settings),
+                data: { title: 'SETTINGS.TITLE' }
             },
         ]
     },

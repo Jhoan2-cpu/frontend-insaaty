@@ -1,5 +1,5 @@
 <!-- Dashboard Content (without sidebar) -->
-<div class="p-4 sm:p-6 lg:p-8">
+<div class="p-4 sm:p-6 lg:p-8 animate__animated animate__fadeIn animate__faster min-h-screen bg-gray-50">
     <div class="max-w-7xl mx-auto space-y-6">
 
         <!-- Welcome Message -->
@@ -11,79 +11,96 @@
         <!-- Stats Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <!-- Card 1: Total Products -->
-            <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 animate__animated animate__fadeInUp animate__faster group"
+                style="animation-delay: 50ms;">
                 <div class="flex justify-between items-start mb-4">
                     <div>
                         <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.TOTAL_PRODUCTS' | translate }}</p>
                         @if (loading) {
-                        <div class="h-8 w-16 bg-gray-200 rounded animate-pulse mt-1"></div>
+                        <div class="h-8 w-16 bg-gray-100 rounded animate-pulse mt-1"></div>
                         } @else {
-                        <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ kpis.productsCount }}</h3>
+                        <h3
+                            class="text-2xl font-bold text-gray-900 mt-1 group-hover:text-emerald-600 transition-colors">
+                            {{
+                            kpis.productsCount ?? 0 }}</h3>
                         }
                     </div>
-                    <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600">
+                    <div
+                        class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600 group-hover:bg-emerald-100 transition-colors">
                         <i class="fas fa-cube"></i>
                     </div>
                 </div>
             </div>
 
             <!-- Card 2: Low Stock -->
-            <div
-                class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-                <div class="absolute right-0 top-0 w-16 h-16 bg-red-50 rounded-bl-full -mr-8 -mt-8"></div>
+            <div class="bg-white p-5 rounded-xl border border-red-100 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden animate__animated animate__fadeInUp animate__faster group"
+                style="animation-delay: 100ms;">
+                <div class="absolute right-0 top-0 w-16 h-16 bg-red-50 rounded-bl-full -mr-8 -mt-8 pointer-events-none">
+                </div>
                 <div class="flex justify-between items-start mb-4 relative">
                     <div>
                         <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.LOW_STOCK_ITEMS' | translate }}</p>
                         @if (loading) {
-                        <div class="h-8 w-16 bg-gray-200 rounded animate-pulse mt-1"></div>
+                        <div class="h-8 w-16 bg-gray-100 rounded animate-pulse mt-1"></div>
                         } @else {
-                        <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ kpis.lowStockCount }}</h3>
+                        <h3 class="text-2xl font-bold text-gray-900 mt-1 group-hover:text-red-600 transition-colors">{{
+                            kpis.lowStockCount ?? 0 }}</h3>
                         }
                     </div>
-                    <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center text-red-500">
+                    <div
+                        class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center text-red-500 group-hover:bg-red-100 transition-colors">
                         <i class="fas fa-exclamation-triangle"></i>
                     </div>
                 </div>
-                @if (kpis.lowStockCount > 0) {
+                @if ((kpis.lowStockCount ?? 0) > 0) {
                 <div class="flex items-center gap-2">
-                    <span class="bg-red-100 text-red-600 text-xs font-bold px-2 py-1 rounded">
+                    <span
+                        class="bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded shadow-lg shadow-red-600/20 border border-red-500">
                         {{ 'DASHBOARD.ACTION_NEEDED' | translate }}
                     </span>
                 </div>
                 }
             </div>
 
-            <!-- Card 3: Total Sales/Profit -->
-            <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <!-- Card 3: Inventory Value -->
+            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 animate__animated animate__fadeInUp animate__faster group"
+                style="animation-delay: 150ms;">
                 <div class="flex justify-between items-start mb-4">
                     <div>
                         <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.INVENTORY_VALUE' | translate }}</p>
                         @if (loading) {
-                        <div class="h-8 w-24 bg-gray-200 rounded animate-pulse mt-1"></div>
+                        <div class="h-8 w-24 bg-gray-100 rounded animate-pulse mt-1"></div>
                         } @else {
-                        <!-- Using totalSales as a proxy for revenue/value for now based on available KPIs -->
-                        <h3 class="text-2xl font-bold text-gray-900 mt-1">${{ kpis.totalSales | number:'1.2-2' }}</h3>
+                        <h3
+                            class="text-2xl font-bold text-gray-900 mt-1 group-hover:text-emerald-600 transition-colors">
+                            ${{ (kpis.totalSales ?? 0) | number:'1.2-2' }}</h3>
                         }
                     </div>
-                    <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center text-green-600">
+                    <div
+                        class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600 group-hover:bg-emerald-100 transition-colors">
                         <i class="fas fa-dollar-sign"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 4: Orders (Today's Transactions equivalent) -->
-            <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+            <!-- Card 4: Orders -->
+            <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 animate__animated animate__fadeInUp animate__faster group"
+                style="animation-delay: 200ms;">
                 <div class="flex justify-between items-start mb-4">
                     <div>
                         <p class="text-gray-500 text-sm font-medium">{{ 'DASHBOARD.TODAYS_TRANSACTIONS' | translate }}
                         </p>
                         @if (loading) {
-                        <div class="h-8 w-16 bg-gray-200 rounded animate-pulse mt-1"></div>
+                        <div class="h-8 w-16 bg-gray-100 rounded animate-pulse mt-1"></div>
                         } @else {
-                        <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ kpis.totalOrders }}</h3>
+                        <h3
+                            class="text-2xl font-bold text-gray-900 mt-1 group-hover:text-emerald-600 transition-colors">
+                            {{
+                            kpis.totalOrders ?? 0 }}</h3>
                         }
                     </div>
-                    <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center text-purple-600">
+                    <div
+                        class="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center text-emerald-600 group-hover:bg-emerald-100 transition-colors">
                         <i class="fas fa-exchange-alt"></i>
                     </div>
                 </div>
@@ -94,18 +111,14 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
             <!-- Chart Section -->
-            <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm p-6 animate__animated animate__fadeInUp animate__faster"
+                style="animation-delay: 250ms;">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
                     <div>
                         <h3 class="text-lg font-bold text-gray-900">{{ 'DASHBOARD.TRANSACTION_VOLUME' |
                             translate }}</h3>
-                        <p class="text-sm text-gray-500">{{ 'DASHBOARD.VOLUME_SUBTITLE' | translate }}</p>
-                    </div>
-                    <div class="flex bg-gray-100 rounded-lg p-1 self-start">
-                        <button class="px-3 py-1 bg-white text-gray-900 text-xs font-medium rounded shadow-sm">{{
-                            'DASHBOARD.DAYS_30' | translate }}</button>
-                        <button class="px-3 py-1 text-gray-500 text-xs font-medium hover:text-gray-700">{{
-                            'DASHBOARD.DAYS_90' | translate }}</button>
+                        <p class="text-sm text-gray-500">{{ 'DASHBOARD.VOLUME_SUBTITLE' | translate:{days: chartPeriod}
+                            }}</p>
                     </div>
                 </div>
 
@@ -120,11 +133,13 @@
             </div>
 
             <!-- Low Stock Alert -->
-            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 flex flex-col">
+            <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 flex flex-col animate__animated animate__fadeInUp animate__faster"
+                style="animation-delay: 300ms;">
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-lg font-bold text-gray-900">{{ 'DASHBOARD.LOW_STOCK_ALERT' | translate }}
                     </h3>
-                    <button class="text-blue-600 text-sm font-medium hover:text-blue-700">{{
+                    <button [routerLink]="['/inventory']"
+                        class="text-emerald-600 text-sm font-medium hover:text-emerald-700 transition-colors">{{
                         'DASHBOARD.VIEW_ALL' | translate }}</button>
                 </div>
 
@@ -151,19 +166,20 @@
                                 <td class="py-3">
                                     <div class="flex items-center gap-3">
                                         <div
-                                            class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 group-hover:bg-white group-hover:shadow-sm transition-all">
+                                            class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-400 group-hover:bg-white group-hover:shadow-sm transition-all">
                                             <i class="fas fa-cube"></i>
                                         </div>
                                         <div>
-                                            <span class="block text-sm font-medium text-gray-700">{{ item.name }}</span>
-                                            <span class="text-xs text-gray-400">{{ item.sku }}</span>
+                                            <span class="block text-sm font-medium text-gray-700">{{ item.name
+                                                }}</span>
+                                            <span class="text-xs text-gray-500">{{ item.sku }}</span>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="py-3 text-center font-bold text-gray-900">{{ item.current_stock }}</td>
                                 <td class="py-3 text-right">
                                     <span
-                                        class="text-[10px] font-bold px-2 py-1 rounded-full uppercase bg-red-100 text-red-600">
+                                        class="text-[10px] font-bold px-2 py-1 rounded-full uppercase bg-red-100 text-red-600 border border-red-200">
                                         {{ 'DASHBOARD.LOW' | translate }}
                                     </span>
                                 </td>
@@ -173,32 +189,62 @@
                     </table>
                 </div>
 
-                <button
-                    class="w-full mt-4 py-2 border border-blue-600 text-blue-600 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">
-                    <i class="fas fa-plus mr-2"></i> {{ 'DASHBOARD.CREATE_ORDER' | translate }}
+                <button [routerLink]="['/inventory/transactions']"
+                    class="w-full mt-4 py-2 border border-emerald-600 text-emerald-600 rounded-lg text-sm font-medium hover:bg-emerald-50 transition-colors">
+                    <i class="fas fa-exchange-alt mr-2"></i> {{ 'DASHBOARD.REGISTER_TRANSACTION' | translate }}
                 </button>
             </div>
         </div>
 
         <!-- Recent Transactions -->
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-            <div class="p-6 border-b border-gray-200 flex items-center justify-between">
+        <div class="bg-white rounded-xl border border-gray-200 shadow-sm animate__animated animate__fadeInUp animate__faster"
+            style="animation-delay: 350ms;">
+            <div class="p-6 border-b border-gray-200 flex items-center justify-between rounded-t-xl">
                 <div class="flex items-center gap-3">
                     <h3 class="text-lg font-bold text-gray-900">{{ 'DASHBOARD.RECENT_TRANSACTIONS' | translate
                         }}</h3>
-                    <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full">{{
+                    <span class="bg-gray-100 text-gray-600 text-xs px-2 py-0.5 rounded-full border border-gray-200">{{
                         'DASHBOARD.LATEST_5' | translate }}</span>
                 </div>
-                <button
-                    class="text-gray-500 hover:text-gray-700 text-sm font-medium flex items-center gap-2 border border-gray-300 px-3 py-1.5 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-all">
-                    <i class="fas fa-filter"></i>
-                    {{ 'DASHBOARD.FILTER' | translate }}
-                </button>
+                <div class="relative">
+                    <button (click)="toggleFilterMenu()"
+                        class="text-gray-500 hover:text-gray-700 text-sm font-medium flex items-center gap-2 border border-gray-300 px-3 py-1.5 rounded-lg hover:bg-gray-50 transition-all">
+                        <i class="fas fa-filter"></i>
+                        {{ 'DASHBOARD.FILTER' | translate }}
+                    </button>
+
+                    <!-- Filter Dropdown -->
+                    @if (showFilterMenu) {
+                    <div
+                        class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 border border-gray-100 py-1 animate__animated animate__fadeIn animate__faster">
+                        <button (click)="setFilter('ALL')" [class.bg-emerald-50]="currentFilter === 'ALL'"
+                            [class.text-emerald-600]="currentFilter === 'ALL'"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            {{ 'ORDERS.ALL' | translate }}
+                        </button>
+                        <button (click)="setFilter('IN')" [class.bg-emerald-50]="currentFilter === 'IN'"
+                            [class.text-emerald-600]="currentFilter === 'IN'"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            {{ 'INVENTORY.MOVEMENT.TYPES.IN' | translate }}
+                        </button>
+                        <button (click)="setFilter('OUT')" [class.bg-emerald-50]="currentFilter === 'OUT'"
+                            [class.text-emerald-600]="currentFilter === 'OUT'"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            {{ 'INVENTORY.MOVEMENT.TYPES.OUT' | translate }}
+                        </button>
+                        <button (click)="setFilter('ADJUSTMENT')" [class.bg-emerald-50]="currentFilter === 'ADJUSTMENT'"
+                            [class.text-emerald-600]="currentFilter === 'ADJUSTMENT'"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                            {{ 'INVENTORY.MOVEMENT.TYPES.ADJUSTMENT' | translate }}
+                        </button>
+                    </div>
+                    }
+                </div>
             </div>
 
             <div class="overflow-x-auto">
-                <table class="w-full text-left bg-white">
-                    <thead class="bg-gray-50/50">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50">
                         <tr class="text-xs text-gray-500 uppercase tracking-wider">
                             <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.TRANSACTION_ID' | translate }}
                             </th>
@@ -206,20 +252,19 @@
                             <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.DATE' | translate }}</th>
                             <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.ITEMS' | translate }}</th>
                             <th class="px-6 py-4 font-semibold">{{ 'DASHBOARD.STATUS' | translate }}</th>
-                            <th class="px-6 py-4 font-semibold text-right">{{ 'DASHBOARD.ACTION' | translate }}
-                            </th>
+                            <!-- Action column removed -->
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @if (recentTransactions.length === 0 && !loading) {
                         <tr>
-                            <td colspan="6" class="py-8 text-center text-gray-400">
+                            <td colspan="5" class="py-8 text-center text-gray-400">
                                 {{ 'DASHBOARD.NO_TRANSACTIONS' | translate }}
                             </td>
                         </tr>
                         }
                         @for (trx of recentTransactions; track trx.id) {
-                        <tr class="hover:bg-gray-50/80 transition-colors">
+                        <tr class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 font-medium text-gray-900">{{ trx.id }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
@@ -227,7 +272,7 @@
                                         <i class="fas" [class]="getIconClass(trx.type)"></i>
                                     </div>
                                     <span class="text-sm text-gray-600 font-medium">
-                                        {{ ('DASHBOARD.' + trx.type) | translate }}
+                                        {{ trx.typeKey | translate }}
                                     </span>
                                 </div>
                             </td>
@@ -243,10 +288,7 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <button
-                                    class="text-gray-400 hover:text-blue-600 transition-colors w-8 h-8 rounded-full hover:bg-blue-50 flex items-center justify-center ml-auto">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </button>
+                                <!-- Action button removed -->
                             </td>
                         </tr>
                         }

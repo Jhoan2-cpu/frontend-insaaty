@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export enum OrderStatus {
     PENDING = 'PENDING',
@@ -28,6 +29,7 @@ export interface Order {
     order_number: string;
     tenant_id: number;
     user_id: number;
+    customer_name?: string;
     status: OrderStatus;
     total: number;
     notes?: string;
@@ -58,6 +60,7 @@ export interface CreateOrderItemDto {
 
 export interface CreateOrderDto {
     items: CreateOrderItemDto[];
+    customer_name?: string;
     notes?: string;
 }
 
@@ -78,11 +81,15 @@ export class OrderService {
         page?: number;
         limit?: number;
         status?: OrderStatus;
+        sort?: string;
+        search?: string;
     }): Observable<OrdersResponse> {
         let httpParams = new HttpParams();
         if (params?.page) httpParams = httpParams.set('page', params.page.toString());
         if (params?.limit) httpParams = httpParams.set('limit', params.limit.toString());
         if (params?.status) httpParams = httpParams.set('status', params.status);
+        if (params?.sort) httpParams = httpParams.set('sort', params.sort);
+        if (params?.search) httpParams = httpParams.set('search', params.search);
 
         return this.http.get<OrdersResponse>(this.apiUrl, { params: httpParams });
     }
@@ -99,7 +106,21 @@ export class OrderService {
         return this.http.patch<Order>(`${this.apiUrl}/${id}`, dto);
     }
 
+    private pendingCountSubject = new BehaviorSubject<number>(0);
+    pendingCount$ = this.pendingCountSubject.asObservable();
+
     getPendingCount(): Observable<number> {
         return this.http.get<number>(`${this.apiUrl}/stats/pending-count`);
+    }
+
+    refreshPendingCount(): void {
+        this.http.get<number>(`${this.apiUrl}/stats/pending-count`).subscribe({
+            next: (count) => this.pendingCountSubject.next(count),
+            error: () => { }
+        });
+    }
+
+    remove(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
 }

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { InventoryService, TransactionType } from '../../../services/inventory.service';
 import { ProductService, Product } from '../../../services/product.service';
+import { TitleService } from '../../../services/title.service';
 import { ToastService } from '../../../services/toast.service';
 
 @Component({
@@ -20,13 +21,20 @@ export class MovementCreate implements OnInit {
     products: Product[] = [];
     TransactionType = TransactionType;
 
+    showProductDropdown = false;
+    private intervalId: any;
+    private returnUrl: string = '/inventory/transactions';
+
     constructor(
         private fb: FormBuilder,
         private inventoryService: InventoryService,
         private productService: ProductService,
         private toast: ToastService,
         private translate: TranslateService,
-        private router: Router
+        private router: Router,
+        private titleService: TitleService,
+        private cdr: ChangeDetectorRef,
+        private route: ActivatedRoute
     ) {
         this.form = this.fb.group({
             type: [TransactionType.IN, Validators.required],
@@ -34,6 +42,53 @@ export class MovementCreate implements OnInit {
             quantity: [1, [Validators.required, Validators.min(1)]],
             reason: ['', Validators.required]
         });
+
+        // Capture returnUrl
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/inventory/transactions';
+    }
+
+    startIncrement() {
+        this.increment();
+        this.intervalId = setInterval(() => {
+            this.increment();
+        }, 100);
+    }
+
+    startDecrement() {
+        this.decrement();
+        this.intervalId = setInterval(() => {
+            this.decrement();
+        }, 100);
+    }
+
+    stopInterval() {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+            this.intervalId = null;
+        }
+    }
+
+    increment() {
+        const current = Number(this.form.get('quantity')?.value) || 0;
+        this.form.patchValue({ quantity: current + 1 });
+        this.cdr.markForCheck();
+    }
+
+    decrement() {
+        const current = Number(this.form.get('quantity')?.value) || 0;
+        if (current > 1) {
+            this.form.patchValue({ quantity: current - 1 });
+            this.cdr.markForCheck();
+        }
+    }
+
+    toggleProductDropdown() {
+        this.showProductDropdown = !this.showProductDropdown;
+    }
+
+    selectProduct(product: Product) {
+        this.form.patchValue({ product_id: product.id });
+        this.showProductDropdown = false;
     }
 
     ngOnInit() {
@@ -74,7 +129,7 @@ export class MovementCreate implements OnInit {
         }).subscribe({
             next: () => {
                 this.toast.success(this.translate.instant('INVENTORY.MOVEMENT_SUCCESS'));
-                this.router.navigate(['/inventory/transactions']);
+                this.router.navigate([this.returnUrl]);
                 this.isSaving = false;
             },
             error: (err) => {
@@ -99,7 +154,7 @@ export class MovementCreate implements OnInit {
         if (!product) return 0;
 
         const current = Number(product.current_stock) || 0;
-        const qty = this.form.get('quantity')?.value || 0;
+        const qty = Number(this.form.get('quantity')?.value) || 0;
         const type = this.form.get('type')?.value;
 
         switch (type) {
@@ -126,19 +181,9 @@ export class MovementCreate implements OnInit {
         return (value / max) * 80 + 10;
     }
 
-    incrementQty() {
-        const current = this.form.get('quantity')?.value || 0;
-        this.form.patchValue({ quantity: current + 1 });
-    }
 
-    decrementQty() {
-        const current = this.form.get('quantity')?.value || 0;
-        if (current > 1) {
-            this.form.patchValue({ quantity: current - 1 });
-        }
-    }
 
     cancel() {
-        this.router.navigate(['/inventory']);
+        this.router.navigate([this.returnUrl]);
     }
 }

@@ -1,17 +1,20 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RouterModule } from '@angular/router'; // Import RouterModule
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Chart, registerables } from 'chart.js';
 import { ReportsService, KPIs, LowStockProduct, SalesReportData } from '../../services/reports.service';
 import { InventoryService, InventoryTransaction } from '../../services/inventory.service';
-import { forkJoin } from 'rxjs';
+import { TitleService } from '../../services/title.service';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, RouterModule], // Add RouterModule here
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -20,6 +23,7 @@ export class Dashboard implements OnInit, AfterViewInit {
 
   chart: any;
   loading = true;
+  chartPeriod: '30' | '90' = '30'; // Track active period
 
   // Real data
   kpis: KPIs = {
@@ -40,6 +44,8 @@ export class Dashboard implements OnInit, AfterViewInit {
     private translate: TranslateService,
     private reportsService: ReportsService,
     private inventoryService: InventoryService,
+    private titleService: TitleService,
+    private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) { }
 
@@ -59,10 +65,33 @@ export class Dashboard implements OnInit, AfterViewInit {
     this.loading = true;
 
     forkJoin({
-      kpis: this.reportsService.getKPIs(),
-      lowStock: this.reportsService.getLowStockProducts(),
-      transactions: this.inventoryService.getTransactions({ page: 1, limit: 10 }),
-      sales: this.reportsService.getSalesReport()
+      kpis: this.reportsService.getKPIs().pipe(
+        catchError(err => {
+          console.error('Failed to load KPIs', err);
+          return of({
+            totalSales: 0, totalOrders: 0, completedOrders: 0,
+            pendingOrders: 0, totalProfit: 0, productsCount: 0, lowStockCount: 0
+          } as KPIs);
+        })
+      ),
+      lowStock: this.reportsService.getLowStockProducts().pipe(
+        catchError(err => {
+          console.error('Failed to load Low Stock', err);
+          return of([] as LowStockProduct[]);
+        })
+      ),
+      transactions: this.inventoryService.getTransactions({ page: 1, limit: 10 }).pipe(
+        catchError(err => {
+          console.error('Failed to load Transactions', err);
+          return of({ data: [], meta: {} });
+        })
+      ),
+      sales: this.reportsService.getSalesReport().pipe(
+        catchError(err => {
+          console.error('Failed to load Sales', err);
+          return of([] as SalesReportData[]);
+        })
+      )
     }).subscribe({
       next: (res) => {
         this.kpis = res.kpis;
@@ -70,26 +99,94 @@ export class Dashboard implements OnInit, AfterViewInit {
         this.salesData = res.sales;
 
         // Map transactions to display format
-        this.recentTransactions = res.transactions.data.map(t => ({
-          id: `#TRX-${t.id}`,
-          type: t.type,
-          date: new Date(t.created_at).toLocaleDateString() + ' ' + new Date(t.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          items: `${t.quantity} Units`,
-          status: 'COMPLETED', // Inventory transactions are instant/completed
-          productName: t.product?.name
-        }));
+        if (res.transactions && res.transactions.data) {
+          this.allTransactions = res.transactions.data.map(t => ({
+            id: t.id, // Just the ID number
+            type: t.type,
+            // Map to INVENTORY.MOVEMENT.TYPES keys
+            typeKey: `INVENTORY.MOVEMENT.TYPES.${t.type}`,
+            date: new Date(t.created_at).toLocaleDateString() + ' ' + new Date(t.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            items: `${t.quantity} Units`,
+            status: 'COMPLETED', // Inventory transactions are instant/completed
+            productName: t.product?.name
+          }));
+          this.filterTransactions();
+        }
 
         this.loading = false;
+        this.cdr.detectChanges();
 
         if (isPlatformBrowser(this.platformId)) {
           setTimeout(() => this.initChart(), 0);
         }
       },
       error: (err) => {
-        console.error('Error loading dashboard data', err);
+        console.error('Critical error loading dashboard data', err);
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
+  }
+
+  // Filter Logic
+  allTransactions: any[] = [];
+  showFilterMenu = false;
+  currentFilter: 'ALL' | 'IN' | 'OUT' | 'ADJUSTMENT' = 'ALL';
+
+  toggleFilterMenu() {
+    this.showFilterMenu = !this.showFilterMenu;
+  }
+
+  refreshChartData() {
+    const now = new Date();
+    // End date is today at 00:00 UTC for the request
+    const endDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+
+    // Start date is X days ago
+    const startDate = new Date(endDate);
+    startDate.setUTCDate(endDate.getUTCDate() - (parseInt(this.chartPeriod) - 1));
+
+    // Format dates as YYYY-MM-DD (UTC)
+    const formatDate = (date: Date) => date.toISOString().split('T')[0];
+
+    console.log(`Refreshing chart: ${this.chartPeriod} days`, {
+      start: formatDate(startDate),
+      end: formatDate(endDate)
+    });
+
+    this.reportsService.getSalesReport({
+      startDate: formatDate(startDate),
+      endDate: formatDate(endDate)
+    }).subscribe({
+      next: (data) => {
+        console.log(`Received ${data.length} data points`);
+        this.salesData = data;
+        this.initChart();
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error('Error fetching sales data', err)
+    });
+  }
+
+  setChartPeriod(period: '30' | '90') {
+    this.chartPeriod = period;
+    this.refreshChartData();
+  }
+
+  filterTransactions() {
+    if (this.currentFilter === 'ALL') {
+      this.recentTransactions = [...this.allTransactions].slice(0, 5);
+    } else {
+      this.recentTransactions = this.allTransactions
+        .filter(t => t.type === this.currentFilter)
+        .slice(0, 5);
+    }
+  }
+
+  setFilter(filter: 'ALL' | 'IN' | 'OUT' | 'ADJUSTMENT') {
+    this.currentFilter = filter;
+    this.filterTransactions();
+    this.showFilterMenu = false;
   }
 
   initChart() {
@@ -104,17 +201,40 @@ export class Dashboard implements OnInit, AfterViewInit {
 
     // Gradient fill
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.2)'); // Blue with opacity
-    gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+    gradient.addColorStop(0, 'rgba(16, 185, 129, 0.2)'); // Emerald-500 with opacity
+    gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
 
-    // Prepare data
-    const labels = this.salesData.length > 0
-      ? this.salesData.map(d => new Date(d.date).toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short' }))
-      : ['No Data'];
+    // Generate all dates for the selected period
+    const labels: string[] = [];
+    const data: number[] = [];
+    const periodDays = parseInt(this.chartPeriod);
 
-    const data = this.salesData.length > 0
-      ? this.salesData.map(d => d.totalSales)
-      : [0];
+    // Use UTC today to avoid timezone shifts
+    const now = new Date();
+    const utcToday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+
+    // Create map for O(1) lookup
+    const salesMap = new Map<string, number>();
+    this.salesData.forEach(d => {
+      // Backend returns dates in ISO format, we extract the YYYY-MM-DD part
+      const dateStr = new Date(d.date).toISOString().split('T')[0];
+      // Use totalVolume (count of both sales and movements)
+      salesMap.set(dateStr, d.totalVolume || 0);
+    });
+
+    // Loop backwards from today to (today - period) using UTC methods
+    for (let i = periodDays - 1; i >= 0; i--) {
+      const d = new Date(utcToday);
+      d.setUTCDate(utcToday.getUTCDate() - i);
+
+      const dateStr = d.toISOString().split('T')[0];
+
+      // Label remains local for the user's view, but based on the UTC day
+      labels.push(d.toLocaleDateString(this.translate.currentLang || 'es', { day: 'numeric', month: 'short', timeZone: 'UTC' }));
+
+      // Data lookup
+      data.push(salesMap.get(dateStr) || 0);
+    }
 
     this.chart = new Chart(ctx, {
       type: 'line',
@@ -123,13 +243,13 @@ export class Dashboard implements OnInit, AfterViewInit {
         datasets: [{
           label: 'Sales Volume',
           data: data,
-          borderColor: '#3b82f6', // Blue-500
+          borderColor: '#10b981', // Emerald-500
           backgroundColor: gradient,
           borderWidth: 3,
           tension: 0.4, // Smooth curves
           fill: true,
           pointBackgroundColor: '#ffffff',
-          pointBorderColor: '#3b82f6',
+          pointBorderColor: '#10b981',
           pointBorderWidth: 2,
           pointRadius: 4,
           pointHoverRadius: 6
@@ -163,7 +283,9 @@ export class Dashboard implements OnInit, AfterViewInit {
               color: '#9ca3af',
               font: {
                 size: 11
-              }
+              },
+              maxTicksLimit: periodDays === 90 ? 12 : 8,
+              padding: 10
             },
             border: {
               display: false

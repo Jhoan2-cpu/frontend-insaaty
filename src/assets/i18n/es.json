@@ -7,7 +7,7 @@
         "GET_STARTED": "Comenzar"
     },
     "HERO": {
-        "BADGE": "Ahora con Pronóstico 5.0",
+        "BADGE": "Gestión Integral de Inventarios",
         "TITLE_1": "Controla tu inventario",
         "TITLE_2": "con precisión",
         "TITLE_HIGHLIGHT": "absoluta",
@@ -33,14 +33,14 @@
         "SECTION_LABEL": "POR QUÉ ELEGIRNOS",
         "SECTION_TITLE_1": "Todo lo que necesitas para",
         "SECTION_TITLE_2": "gestionar tu almacén",
-        "ANALYTICS_TITLE": "Analítica en Tiempo Real",
-        "ANALYTICS_DESC": "Obtén información profunda sobre el rendimiento de tu inventario. Rastrea la velocidad de ventas, márgenes de ganancia y pronostica la demanda con precisión impulsada por IA.",
-        "WORKFLOWS_TITLE": "Flujos Automatizados",
-        "WORKFLOWS_DESC": "Configura alertas de stock bajo y genera órdenes de compra automáticamente.",
-        "WAREHOUSE_TITLE": "Sincronización Multi-almacén",
-        "WAREHOUSE_DESC": "Sincroniza el stock en ubicaciones ilimitadas al instante.",
-        "INTEGRATIONS_TITLE": "Integraciones Perfectas",
-        "INTEGRATIONS_DESC": "Conéctate con Shopify, Amazon, WooCommerce y más en solo unos clics."
+        "ANALYTICS_TITLE": "Reportes PDF Profesionales",
+        "ANALYTICS_DESC": "Genera reportes detallados de ventas, movimientos y productos estrella en formato PDF con un solo clic.",
+        "WORKFLOWS_TITLE": "Historial y Auditoría",
+        "WORKFLOWS_DESC": "Trazabilidad completa de cada entrada, salida o ajuste. Control total de tus movimientos de stock.",
+        "WAREHOUSE_TITLE": "Stock en Tiempo Real",
+        "WAREHOUSE_DESC": "Visualiza niveles de inventario, alertas de stock bajo y métricas clave al instante.",
+        "INTEGRATIONS_TITLE": "Gestión de Proveedores",
+        "INTEGRATIONS_DESC": "Centraliza la información de tus proveedores y optimiza tus canales de reabastecimiento."
     },
     "SOLUTIONS": {
         "SECTION_LABEL": "SOLUCIONES",
@@ -164,23 +164,32 @@
         "TERMS_REQUIRED": "Debes aceptar los términos"
     },
     "AUTH": {
-        "LEFT_TITLE": "Optimiza tu cadena de suministro hoy.",
-        "LEFT_SUBTITLE": "Únete a más de 10,000 empresas gestionando su inventario con facilidad. Obtén información en tiempo real y reabastecimiento automatizado.",
-        "GROWTH": "CRECIMIENTO",
-        "THIS_WEEK": "esta semana",
-        "TESTIMONIAL_TEXT": "Esta plataforma transformó completamente cómo manejamos la logística. Es simplemente brillante.",
-        "TESTIMONIAL_AUTHOR": "Sarah Jenkins, CTO en Acme Logistics",
-        "LOGIN_SUBTITLE": "Bienvenido de nuevo, ingresa tus datos para continuar."
+        "LEFT_TITLE": "Control Total de tu Inventario Cloud",
+        "LEFT_SUBTITLE": "Gestiona tus niveles de stock, genera reportes PDF profesionales y mantén una trazabilidad completa de cada movimiento.",
+        "GROWTH": "Trazabilidad",
+        "THIS_WEEK": "auditada",
+        "TESTIMONIAL_TEXT": "La facilidad para generar reportes PDF y ver el historial de transacciones ha cambiado nuestra forma de trabajar.",
+        "TESTIMONIAL_AUTHOR": "Gerente de Operaciones",
+        "LOGIN_SUBTITLE": "Bienvenido de nuevo. Accede a tu panel de control."
     },
     "SIDEBAR": {
+        "BRAND_NAME": "INVENTORY-SAAS",
+        "BRAND_DESCRIPTION": "Gestión de Inventario Cloud",
         "DASHBOARD": "Panel de Control",
         "INVENTORY": "Inventario",
         "ORDERS": "Pedidos",
         "REPORTS": "Reportes",
+        "REPORTS_GENERAL": "General",
+        "REPORTS_HISTORY": "Historial",
         "SETTINGS": "Configuración",
         "MAIN_MENU": "MENÚ PRINCIPAL",
         "ADMINISTRATION": "ADMINISTRACIÓN",
         "LOGOUT": "Cerrar sesión",
+        "COMPANY": "Empresa",
+        "LOGOUT_TITLE": "¿Cerrar sesión?",
+        "LOGOUT_MESSAGE": "¿Estás seguro de que quieres cerrar sesión? Tendrás que iniciar sesión de nuevo para acceder.",
+        "LOGOUT_CANCEL": "Cancelar",
+        "LOGOUT_CONFIRM": "Cerrar sesión",
         "SUPPLIERS": "Proveedores"
     },
     "DASHBOARD": {
@@ -196,7 +205,7 @@
         "TODAYS_TRANSACTIONS": "Transacciones Hoy",
         "VS_YESTERDAY": "vs ayer",
         "TRANSACTION_VOLUME": "Volumen de Transacciones",
-        "VOLUME_SUBTITLE": "Movimiento de stock entrante y saliente en los últimos 30 días.",
+        "VOLUME_SUBTITLE": "Movimiento de stock entrante y saliente en los últimos {{days}} días.",
         "DAYS_30": "30 Días",
         "DAYS_90": "90 Días",
         "LOW_STOCK_ALERT": "Alerta Stock Bajo",
@@ -232,6 +241,8 @@
         "OVERVIEW": "Resumen del Dashboard"
     },
     "COMMON": {
+        "BACK_TO_HOME": "Volver al Inicio",
+        "DEMO_VERSION": "VERSIÓN DEMO",
         "LANGUAGE": "Idioma",
         "SPANISH": "Español",
         "ENGLISH": "English",
@@ -251,9 +262,17 @@
         "APP_EDITION": "Edición Empresarial"
     },
     "INVENTORY": {
+        "TYPE": "Tipo",
         "BREADCRUMB": "Inventario",
         "TITLE": "Gestión de Productos",
-        "HISTORY": "Historial",
+        "USER": "Usuario",
+        "TRANSACTIONS": "Transacciones",
+        "TRANSACTION_HISTORY": "Historial de Auditoría",
+        "TRANSACTION_DESCRIPTION": "Visualiza y analiza todos los movimientos de stock en tiempo real.",
+        "AUDIT_TIP": {
+            "TITLE": "Consejo de Auditoría",
+            "DESCRIPTION": "Usa el filtro 'Ajuste' para rastrear discrepancias y correcciones manuales. Las auditorías regulares mantienen el 99% de precisión."
+        },
         "MOVEMENT_TITLE": "Registrar Movimiento",
         "MOVEMENT_TYPE": "Tipo de Movimiento",
         "MOVEMENT_SUBTITLE": "Registrar un nuevo movimiento de stock o ajuste.",
@@ -290,7 +309,7 @@
             "EDIT": "Editar",
             "DELETE": "Eliminar"
         },
-        "TRANSACTIONS": {
+        "TRANSACTIONS_VIEW": {
             "SUBTITLE": "Ver todos los movimientos de stock y ajustes.",
             "HEADERS": {
                 "DATE": "Fecha",
@@ -307,6 +326,7 @@
         },
         "MOVEMENT": {
             "TYPES": {
+                "ALL": "TODOS",
                 "IN": "ENTRADA",
                 "OUT": "SALIDA",
                 "ADJUSTMENT": "AJUSTE"
@@ -333,13 +353,14 @@
                     "HEALTHY": "Stock Saludable",
                     "LOW": "Alerta de Stock Bajo",
                     "HEALTHY_DESC": "El nivel proyectado se mantiene por encima del punto de reorden.",
-                    "LOW_DESC": "El stock proyectado caerá por debajo del mínimo ({min})."
+                    "LOW_DESC": "El stock proyectado caerá por debajo del mínimo ({{min}})."
                 }
             }
         }
     },
     "SUPPLIERS": {
         "TITLE": "Proveedores",
+        "DESCRIPTION": "Gestiona y organiza tus proveedores y sus datos de contacto",
         "LABEL": "Proveedor",
         "MANAGEMENT": "Gestión de Proveedores",
         "NEW_SUPPLIER": "Nuevo Proveedor",
@@ -354,6 +375,7 @@
         "NOTES": "Notas",
         "PRODUCTS_COUNT": "Productos",
         "NO_SUPPLIERS": "No hay proveedores registrados",
+        "SEARCH_PLACEHOLDER": "Buscar por nombre, email o contacto...",
         "ACTIONS": {
             "EDIT_TITLE": "Editar",
             "DELETE_TITLE": "Eliminar"
@@ -375,14 +397,26 @@
         "ORDER_NUMBER": "Número de Pedido",
         "STATUS": "Estado",
         "TOTAL": "Total",
+        "TOTAL_TO_PAY": "Total a Pagar",
         "CREATED_AT": "Fecha",
         "NOTES": "Notas",
+        "NOTES_PLACEHOLDER": "Escribe aquí cualquier observación relevante...",
         "CANCEL": "Cancelar",
+        "CANCEL_AND_RETURN": "Cancelar y volver",
         "SAVE": "Guardar Pedido",
+        "SAVE_ORDER": "Guardar Pedido",
         "SAVING": "Guardando...",
+        "SORT_BY": "Ordenar por",
+        "SORT": {
+            "NEWEST": "Más recientes",
+            "OLDEST": "Más antiguos",
+            "HIGHEST_TOTAL": "Mayor total",
+            "LOWEST_TOTAL": "Menor total"
+        },
         "ALL": "Todos",
         "LOADING": "Cargando pedidos...",
         "NO_ORDERS": "No hay pedidos",
+        "SEARCH_PLACEHOLDER": "Buscar por número o cliente...",
         "STATUSES": {
             "PENDING": "Pendiente",
             "PROCESSING": "Procesando",
@@ -396,17 +430,20 @@
             "PRODUCT": "Producto",
             "UNIT_PRICE": "Precio Unitario",
             "SUBTOTAL": "Subtotal",
-            "REMOVE": "Eliminar"
-        },
-        "ACTIONS": {
-            "TITLE": "Acciones",
-            "VIEW_DETAIL": "Ver Detalle",
-            "CHANGE_STATUS": "Cambiar Estado",
-            "PROCESS": "Procesar",
-            "CANCEL": "Cancelar",
-            "COMPLETE": "Completar"
+            "REMOVE": "Eliminar",
+            "SELECT_PRODUCT_PLACEHOLDER": "Buscar o seleccionar producto...",
+            "NO_ITEMS": "No hay productos agregados",
+            "SUBTITLE": "Ingresa los detalles a continuación para crear un nuevo pedido.",
+            "ADD": "Agregar",
+            "CUSTOMER_NAME": "Nombre del Cliente",
+            "CUSTOMER_NAME_PLACEHOLDER": "Ingresa el nombre del cliente (opcional)"
         },
         "DETAIL": {
+            "TITLE": "Detalle del Pedido",
+            "ITEMS": "Items",
+            "CUSTOMER": "Cliente",
+            "NO_CUSTOMER": "Sin cliente asignado",
+            "TOTAL": "Total",
             "STATUS": "Estado:",
             "PRODUCTS": "Productos:",
             "NOTES": "Notas:",
@@ -415,12 +452,24 @@
                 "QUANTITY": "Cantidad",
                 "PRICE": "Precio",
                 "SUBTOTAL": "Subtotal"
-            },
-            "TOTAL": "Total:"
-        }
+            }
+        },
+        "ACTIONS": {
+            "TITLE": "Acciones",
+            "VIEW_DETAIL": "Ver Detalle",
+            "CHANGE_STATUS": "Cambiar Estado",
+            "PROCESS": "Procesar",
+            "CANCEL": "Cancelar",
+            "COMPLETE": "Completar",
+            "DELETE": "Eliminar"
+        },
+        "SEND_EMAIL": "Enviar Email",
+        "BACK_TO_LIST": "Volver al listado",
+        "LOADING_DETAIL": "Cargando detalle del pedido..."
     },
     "REPORTS": {
         "TITLE": "Reportes",
+        "EXPORT_PDF": "Exportar PDF",
         "SALES_TAB": "Ventas",
         "PRODUCTS_TAB": "Productos",
         "MOVEMENTS_TAB": "Movimientos",
@@ -454,9 +503,28 @@
         "NO_TOP_PRODUCTS": "No hay productos vendidos en este período",
         "NO_LOW_STOCK": "¡Todos los productos tienen stock adecuado!",
         "LOADING_KPIS": "Cargando indicadores...",
-        "COMING_SOON": "Próximamente..."
+        "COMING_SOON": "Próximamente...",
+        "TYPES": {
+            "SALES": "Ventas",
+            "INVENTORY": "Inventario",
+            "MOVEMENTS": "Movimientos"
+        },
+        "HISTORY": {
+            "TITLE": "Historial de Reportes",
+            "SUBTITLE": "Consulta y descarga tus reportes generados anteriormente.",
+            "TYPE": "Tipo de Reporte",
+            "DATE": "Fecha de Generación",
+            "GENERATED_BY": "Generado Por",
+            "ACTIONS": "Acciones",
+            "NO_REPORTS": "No se encontraron reportes en el historial.",
+            "VIEW": "Ver PDF",
+            "SEARCH_PLACEHOLDER": "Buscar por ID...",
+            "FILTER_TYPE": "Filtrar por Tipo",
+            "ALL_TYPES": "Todos los Tipos"
+        }
     },
     "PRODUCT_MODAL": {
+        "PRODUCT": "Producto",
         "TITLE_NEW": "Nuevo Producto",
         "TITLE_EDIT": "Editar Producto",
         "SKU": "SKU",
@@ -487,8 +555,10 @@
     },
     "SETTINGS": {
         "TITLE": "Configuración",
-        "DESCRIPTION": "Administra tus preferencias y configuración de cuenta.",
+        "DESCRIPTION": "Personaliza tu experiencia y gestiona tus datos de perfil profesional.",
         "SAVE": "Guardar Cambios",
+        "DISCARD": "Descartar",
+        "CHANGES_DISCARDED": "Cambios descartados",
         "TABS": {
             "PROFILE": "Perfil",
             "SECURITY": "Seguridad",
@@ -498,13 +568,26 @@
         "PROFILE": {
             "TITLE": "Perfil de Usuario",
             "SUBTITLE": "Actualiza tu foto y detalles personales.",
-            "AVATAR": "Tu Avatar",
-            "CHANGE": "Cambiar",
+            "AVATAR": "Foto de Perfil",
+            "AVATAR_DESC": "Sube una foto de alta resolución para personalizar tu cuenta.",
+            "AVATAR_UPDATED": "Foto de perfil actualizada",
+            "AVATAR_REMOVED": "Foto de perfil eliminada",
+            "AVATAR_ERROR": "Error al procesar la foto de perfil",
+            "AVATAR_INVALID_TYPE": "Solo se permiten imágenes (JPEG, PNG, GIF, WebP)",
+            "AVATAR_TOO_LARGE": "La imagen no debe superar los 5MB",
+            "CHANGE": "Cambiar foto",
             "REMOVE": "Eliminar",
             "FULL_NAME": "Nombre Completo",
             "EMAIL": "Correo Electrónico",
             "PHONE": "Teléfono",
-            "ROLE": "Rol"
+            "ROLE": "Cargo / Rol",
+            "BIO": "Biografía",
+            "BIO_PLACEHOLDER": "Cuéntanos un poco sobre ti y tu rol..."
+        },
+        "PREFERENCES": {
+            "TITLE": "Preferencias Personales",
+            "LANGUAGE": "Idioma del Sistema",
+            "LANGUAGE_DESC": "Selecciona tu idioma preferido para la interfaz."
         },
         "ROLES": {
             "ADMIN": "Administrador",
@@ -517,6 +600,7 @@
             "CONFIRM_PASSWORD": "Confirmar Contraseña",
             "MISMATCH": "Las contraseñas no coinciden",
             "UPDATE_PASSWORD": "Actualizar Contraseña",
+            "PASSWORD_UPDATED": "Contraseña actualizada correctamente",
             "TWO_FACTOR": "Autenticación de Dos Factores",
             "TWO_FACTOR_DESC": "Aumenta la seguridad de tu cuenta."
         },
@@ -533,6 +617,11 @@
             "CURRENCY": "Moneda",
             "TIMEZONE": "Zona Horaria"
         },
-        "PROFILE_UPDATED": "Perfil actualizado correctamente"
+        "PROFILE_UPDATED": "Perfil actualizado correctamente",
+        "VALIDATION": {
+            "REQUIRED": "Este campo es obligatorio",
+            "MIN_LENGTH": "Mínimo {{min}} caracteres",
+            "INVALID_EMAIL": "Ingresa un correo electrónico válido"
+        }
     }
 }

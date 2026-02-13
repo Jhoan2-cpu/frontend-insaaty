@@ -1,7 +1,7 @@
 <div class="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto fade-in">
     <!-- Header -->
     <div class="header">
-        <h1>{{ 'REPORTS.TITLE' | translate }}</h1>
+
 
         <!-- Filtros de Fecha -->
         <div class="date-filters">
@@ -24,13 +24,20 @@
 
         <!-- Date Picker para Custom -->
         <div *ngIf="dateFilter === 'custom'" class="custom-date-picker">
-            <input type="date" [(ngModel)]="customStartDate" />
-            <span>-</span>
-            <input type="date" [(ngModel)]="customEndDate" />
+            <app-date-picker [(date)]="customStartDate" placeholder="Fecha inicio"></app-date-picker>
+            <span class="text-emerald-600 font-medium">-</span>
+            <app-date-picker [(date)]="customEndDate" placeholder="Fecha fin"></app-date-picker>
             <button (click)="applyCustomDateFilter()">
                 {{ 'REPORTS.APPLY' | translate }}
             </button>
         </div>
+
+        <!-- Botón Exportar PDF -->
+        <button (click)="exportToPdf()" [disabled]="isLoadingKPIs || isLoadingSales || isLoadingProducts"
+            class="ml-auto flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            <i class="fas fa-file-pdf"></i>
+            {{ 'REPORTS.EXPORT_PDF' | translate }}
+        </button>
     </div>
 
     <!-- Loading KPIs -->
@@ -44,7 +51,8 @@
         <div class="kpi-card green">
             <div class="kpi-icon"><i class="fas fa-money-bill-wave"></i></div>
             <div class="kpi-content">
-                <div class="kpi-value">\${{ kpis.totalSales.toLocaleString('en-US', {minimumFractionDigits: 2}) }}</div>
+                <div class="kpi-value">\${{ kpis.totalSales?.toLocaleString('en-US', {minimumFractionDigits: 2}) ??
+                    '0.00' }}</div>
                 <div class="kpi-label">{{ 'REPORTS.TOTAL_SALES' | translate }}</div>
             </div>
         </div>
@@ -60,7 +68,8 @@
         <div class="kpi-card yellow">
             <div class="kpi-icon"><i class="fas fa-chart-line"></i></div>
             <div class="kpi-content">
-                <div class="kpi-value">\${{ kpis.totalProfit.toLocaleString('en-US', {minimumFractionDigits: 2}) }}
+                <div class="kpi-value">\${{ kpis.totalProfit?.toLocaleString('en-US', {minimumFractionDigits: 2}) ??
+                    '0.00' }}
                 </div>
                 <div class="kpi-label">{{ 'REPORTS.TOTAL_PROFIT' | translate }}</div>
             </div>
@@ -191,9 +200,79 @@
         </div>
     </div>
 
-    <!-- Tab Content: Movements (placeholder) -->
+    <!-- Tab Content: Movements -->
     <div *ngIf="activeTab === 'movements'" class="tab-content">
-        <h2>{{ 'REPORTS.MOVEMENTS_TAB' | translate }}</h2>
-        <p class="coming-soon">{{ 'REPORTS.COMING_SOON' | translate }}</p>
+        <div class="products-section">
+            <h2>{{ 'REPORTS.MOVEMENTS_HISTORY' | translate }}</h2>
+
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>{{ 'REPORTS.DATE' | translate }}</th>
+                            <th>{{ 'REPORTS.PRODUCT' | translate }}</th>
+                            <th>{{ 'INVENTORY.TYPE' | translate }}</th>
+                            <th>{{ 'INVENTORY.QUANTITY' | translate }}</th>
+                            <th>{{ 'INVENTORY.USER' | translate }}</th>
+                            <th>{{ 'INVENTORY.REASON' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of movementsData">
+                            <td>
+                                <div class="flex flex-col">
+                                    <span class="font-medium">{{ item.created_at | date:'mediumDate' }}</span>
+                                    <span class="text-xs text-gray-400">{{ item.created_at | date:'shortTime' }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="flex flex-col">
+                                    <span class="font-medium">{{ item.product?.name }}</span>
+                                    <span class="text-xs text-emerald-600 font-mono">{{ item.product?.sku }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wide border"
+                                    [class.bg-emerald-50]="item.type === 'IN'"
+                                    [class.text-emerald-700]="item.type === 'IN'"
+                                    [class.border-emerald-200]="item.type === 'IN'"
+                                    [class.bg-rose-50]="item.type === 'OUT'" [class.text-rose-700]="item.type === 'OUT'"
+                                    [class.border-rose-200]="item.type === 'OUT'"
+                                    [class.bg-blue-50]="item.type === 'ADJUSTMENT'"
+                                    [class.text-blue-700]="item.type === 'ADJUSTMENT'"
+                                    [class.border-blue-200]="item.type === 'ADJUSTMENT'">
+                                    {{ item.type }}
+                                </span>
+                            </td>
+                            <td class="font-bold text-right" [class.text-emerald-600]="item.type === 'IN'"
+                                [class.text-rose-600]="item.type === 'OUT'"
+                                [class.text-blue-600]="item.type === 'ADJUSTMENT'">
+                                {{ item.type === 'OUT' ? '-' : '+' }}{{ item.quantity }}
+                            </td>
+                            <td>
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
+                                        {{ item.user?.full_name?.charAt(0) || 'U' }}
+                                    </div>
+                                    <span class="text-sm truncate max-w-[100px]">{{ item.user?.full_name }}</span>
+                                </div>
+                            </td>
+                            <td class="text-sm text-gray-500 max-w-[200px] truncate" title="{{ item.reason }}">
+                                {{ item.reason || '-' }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="isLoadingMovements" class="loading-state py-12 flex justify-center">
+                <div class="spinner border-emerald-500"></div>
+            </div>
+
+            <div *ngIf="movementsData.length === 0 && !isLoadingMovements" class="empty-state">
+                <p>{{ 'REPORTS.NO_MOVEMENTS_DATA' | translate }}</p>
+            </div>
+        </div>
     </div>
 </div>

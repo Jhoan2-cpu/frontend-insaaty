@@ -3,12 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReportsService, SalesReportData, TopProduct, LowStockProduct, KPIs } from '../../services/reports.service';
+import { InventoryService, InventoryTransaction } from '../../services/inventory.service';
+import { TitleService } from '../../services/title.service';
+import { PdfService } from '../../services/pdf.service';
 import { Chart } from 'chart.js/auto';
+import { finalize } from 'rxjs/operators';
+import { DatePicker } from '../../components/date-picker/date-picker';
 
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule, DatePicker],
   templateUrl: './reports.html',
   styleUrls: ['./reports.css']
 })
@@ -25,6 +30,7 @@ export class Reports implements OnInit, AfterViewInit {
   salesData: SalesReportData[] = [];
   topProducts: TopProduct[] = [];
   lowStockProducts: LowStockProduct[] = [];
+  movementsData: InventoryTransaction[] = [];
 
   // Chart instance
   salesChart: Chart | null = null;
@@ -34,10 +40,14 @@ export class Reports implements OnInit, AfterViewInit {
   isLoadingSales = false;
   isLoadingProducts = false;
   isLoadingLowStock = false;
+  isLoadingMovements = false;
 
   constructor(
     private reportsService: ReportsService,
-    private cdr: ChangeDetectorRef
+    private inventoryService: InventoryService,
+    private pdfService: PdfService,
+    private cdr: ChangeDetectorRef,
+    private titleService: TitleService
   ) { }
 
   ngOnInit() {
@@ -54,6 +64,7 @@ export class Reports implements OnInit, AfterViewInit {
     this.loadSalesReport(dateParams);
     this.loadTopProducts(dateParams);
     this.loadLowStockProducts();
+    this.loadMovements(dateParams);
   }
 
   loadKPIs(params?: { startDate?: string; endDate?: string }) {
@@ -61,86 +72,128 @@ export class Reports implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
     console.log('📊 Loading KPIs with params:', params);
 
-    this.reportsService.getKPIs(params).subscribe({
-      next: (data) => {
-        this.kpis = data;
+    this.reportsService.getKPIs(params)
+      .pipe(finalize(() => {
         this.isLoadingKPIs = false;
-        console.log('✅ KPIs loaded - isLoading:', this.isLoadingKPIs);
         this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('❌ Error loading KPIs:', err);
-        this.isLoadingKPIs = false;
-
-        // Establecer KPIs vacíos en caso de error
-        this.kpis = {
-          totalSales: 0,
-          totalOrders: 0,
-          completedOrders: 0,
-          pendingOrders: 0,
-          totalProfit: 0,
-          productsCount: 0,
-          lowStockCount: 0
-        };
-        this.cdr.detectChanges();
-      }
-    });
+      }))
+      .subscribe({
+        next: (data) => {
+          this.kpis = data;
+          console.log('✅ KPIs loaded');
+        },
+        error: (err) => {
+          console.error('❌ Error loading KPIs:', err);
+          // Establecer KPIs vacíos en caso de error
+          this.kpis = {
+            totalSales: 0,
+            totalOrders: 0,
+            completedOrders: 0,
+            pendingOrders: 0,
+            totalProfit: 0,
+            productsCount: 0,
+            lowStockCount: 0
+          };
+        }
+      });
   }
 
   loadSalesReport(params?: { startDate?: string; endDate?: string }) {
     this.isLoadingSales = true;
-    this.reportsService.getSalesReport(params).subscribe({
-      next: (data) => {
-        this.salesData = data;
-        this.isLoadingSales = false;
-        console.log('✓ Sales report loaded:', data);
-        this.cdr.detectChanges();
 
-        // Crear o actualizar gráfico
-        if (this.activeTab === 'sales') {
-          setTimeout(() => this.createSalesChart(), 100);
-        }
-      },
-      error: (err) => {
-        console.error('Error loading sales report:', err);
+    this.reportsService.getSalesReport(params)
+      .pipe(finalize(() => {
         this.isLoadingSales = false;
         this.cdr.detectChanges();
-      }
-    });
+      }))
+      .subscribe({
+        next: (data) => {
+          this.salesData = data;
+          console.log('✓ Sales report loaded:', data);
+          // Crear o actualizar gráfico
+          if (this.activeTab === 'sales') {
+            setTimeout(() => this.createSalesChart(), 100);
+          }
+        },
+        error: (err) => {
+          console.error('Error loading sales report:', err);
+        }
+      });
   }
 
   loadTopProducts(params?: { limit?: number; startDate?: string; endDate?: string }) {
     this.isLoadingProducts = true;
-    this.reportsService.getTopProducts({ ...params, limit: 10 }).subscribe({
-      next: (data) => {
-        this.topProducts = data;
-        this.isLoadingProducts = false;
-        console.log('✓ Top products loaded:', data);
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Error loading top products:', err);
+
+    this.reportsService.getTopProducts({ ...params, limit: 10 })
+      .pipe(finalize(() => {
         this.isLoadingProducts = false;
         this.cdr.detectChanges();
-      }
-    });
+      }))
+      .subscribe({
+        next: (data) => {
+          this.topProducts = data;
+          console.log('✓ Top products loaded:', data);
+        },
+        error: (err) => {
+          console.error('Error loading top products:', err);
+        }
+      });
   }
 
   loadLowStockProducts() {
     this.isLoadingLowStock = true;
-    this.reportsService.getLowStockProducts().subscribe({
-      next: (data) => {
-        this.lowStockProducts = data;
-        this.isLoadingLowStock = false;
-        console.log('✓ Low stock products loaded:', data);
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error('Error loading low stock products:', err);
+
+    this.reportsService.getLowStockProducts()
+      .pipe(finalize(() => {
         this.isLoadingLowStock = false;
         this.cdr.detectChanges();
-      }
-    });
+      }))
+      .subscribe({
+        next: (data) => {
+          this.lowStockProducts = data;
+          console.log('✓ Low stock products loaded:', data);
+        },
+        error: (err) => {
+          console.error('Error loading low stock products:', err);
+        }
+      });
+  }
+
+  loadMovements(params?: { startDate?: string; endDate?: string }) {
+    this.isLoadingMovements = true;
+
+    // InventoryService expects DD/MM/YYYY format
+    // params come as ISO strings from getDateParams
+    let formattedStartDate = '';
+    let formattedEndDate = '';
+
+    if (params?.startDate) {
+      formattedStartDate = this.formatDate(new Date(params.startDate));
+    }
+    if (params?.endDate) {
+      formattedEndDate = this.formatDate(new Date(params.endDate));
+    }
+
+    this.inventoryService.getTransactions({
+      page: 1,
+      limit: 50, // Limit to 50 for the report view
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+      type: 'all'
+    })
+      .pipe(finalize(() => {
+        this.isLoadingMovements = false;
+        this.cdr.detectChanges();
+      }))
+      .subscribe({
+        next: (res) => {
+          this.movementsData = res.data;
+          console.log('✓ Movements loaded:', res.data);
+        },
+        error: (err) => {
+          console.error('Error loading movements:', err);
+        }
+      });
   }
 
   createSalesChart() {
@@ -217,40 +270,64 @@ export class Reports implements OnInit, AfterViewInit {
   }
 
   getDateParams(): { startDate?: string; endDate?: string } {
-    const today = new Date();
+    const now = new Date();
     let startDate: Date | undefined;
-    let endDate = today;
+    let endDate = new Date(now);
+
+    // Ensure endDate covers the full day
+    endDate.setHours(23, 59, 59, 999);
 
     switch (this.dateFilter) {
       case 'today':
-        startDate = today;
+        startDate = new Date(now);
+        startDate.setHours(0, 0, 0, 0);
         break;
       case 'week':
-        startDate = new Date(today);
-        startDate.setDate(today.getDate() - 7);
+        startDate = new Date(now);
+        startDate.setDate(now.getDate() - 7);
+        startDate.setHours(0, 0, 0, 0);
         break;
       case 'month':
-        startDate = new Date(today);
-        startDate.setMonth(today.getMonth() - 1);
+        startDate = new Date(now);
+        startDate.setMonth(now.getMonth() - 1);
+        startDate.setHours(0, 0, 0, 0);
         break;
       case 'year':
-        startDate = new Date(today);
-        startDate.setFullYear(today.getFullYear() - 1);
+        startDate = new Date(now);
+        startDate.setFullYear(now.getFullYear() - 1);
+        startDate.setHours(0, 0, 0, 0);
         break;
       case 'custom':
         if (this.customStartDate && this.customEndDate) {
+          // Custom dates from picker are YYYY-MM-DD
+          const sDate = new Date(this.customStartDate);
+          sDate.setHours(0, 0, 0, 0); // Start of start date
+
+          const eDate = new Date(this.customEndDate);
+          eDate.setHours(23, 59, 59, 999); // End of end date
+
           return {
-            startDate: new Date(this.customStartDate).toISOString(),
-            endDate: new Date(this.customEndDate).toISOString()
+            startDate: sDate.toISOString(),
+            endDate: eDate.toISOString()
           };
         }
         return {};
     }
 
-    return startDate ? {
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString()
-    } : {};
+    if (startDate) {
+      return {
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString()
+      };
+    }
+    return {};
+  }
+
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${day}/${month}/${year}`;
   }
 
   changeTab(tab: 'sales' | 'products' | 'movements') {
@@ -259,6 +336,22 @@ export class Reports implements OnInit, AfterViewInit {
     // Crear gráfico si cambiamos a tab de ventas
     if (tab === 'sales' && this.salesData.length) {
       setTimeout(() => this.createSalesChart(), 100);
+    }
+  }
+
+  exportToPdf() {
+    const params = this.getDateParams();
+
+    switch (this.activeTab) {
+      case 'sales':
+        this.pdfService.generateSalesReport(params.startDate, params.endDate);
+        break;
+      case 'products':
+        this.pdfService.generateTopProductsReport(params.startDate, params.endDate);
+        break;
+      case 'movements':
+        this.pdfService.generateMovementsReport(params.startDate, params.endDate);
+        break;
     }
   }
 }

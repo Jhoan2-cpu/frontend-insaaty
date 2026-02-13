@@ -154,3 +154,66 @@
         display: none;
     }
 }
+/* CTA Card Styles */
+.cta-card {
+    background: linear-gradient(135deg, #111827 0%, #064e3b 100%);
+    border-radius: 2rem;
+    padding: 4rem 2rem;
+    max-width: 64rem;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cta-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.cta-button-primary {
+    background: #10b981;
+    color: white;
+    padding: 0.875rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    display: inline-block;
+}
+
+.cta-button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+    background: #059669;
+}
+
+.cta-button-secondary {
+    color: white;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+}
+
+.cta-button-secondary:hover {
+    opacity: 1;
+    transform: translateX(4px);
+}
+
+@media (max-width: 640px) {
+    .cta-card {
+        padding: 3rem 1.5rem;
+        border-radius: 1.5rem;
+    }
+}
+

@@ -6,6 +6,8 @@ export interface SalesReportData {
     date: string;
     totalSales: number;
     orderCount: number;
+    transactionCount: number;
+    totalVolume: number;
     profit: number;
 }
 
@@ -27,13 +29,14 @@ export interface LowStockProduct {
 }
 
 export interface KPIs {
-    totalSales: number;
-    totalOrders: number;
-    completedOrders: number;
-    pendingOrders: number;
-    totalProfit: number;
-    productsCount: number;
-    lowStockCount: number;
+    totalSales?: number;
+    totalOrders?: number;
+    completedOrders?: number;
+    pendingOrders?: number;
+    totalProfit?: number;
+    productsCount?: number;
+    lowStockCount?: number;
+    totalCustomers?: number;
 }
 
 @Injectable({
@@ -85,5 +88,9 @@ export class ReportsService {
 
         console.log('🔄 Fetching KPIs with params:', params);
         return this.http.get<KPIs>(`${this.apiUrl}/kpis`, { params: httpParams });
+    }
+
+    getReportHistory(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.apiUrl}/history`);
     }
 }

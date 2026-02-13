@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { SuppliersService, Supplier, SuppliersResponse } from '../../services/suppliers.service';
+import { TitleService } from '../../services/title.service';
 
 @Component({
   selector: 'app-suppliers',
@@ -32,7 +33,8 @@ export class Suppliers implements OnInit {
   constructor(
     private suppliersService: SuppliersService,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService: TitleService
   ) { }
 
   ngOnInit() {
@@ -106,7 +108,18 @@ export class Suppliers implements OnInit {
     this.cdr.detectChanges();
 
     if (this.isEditing && this.currentSupplier.id) {
-      this.suppliersService.updateSupplier(this.currentSupplier.id, this.currentSupplier).subscribe({
+      // Limpiar el objeto para enviar solo lo que el DTO permite
+      const updateData = {
+        name: this.currentSupplier.name,
+        contact_person: this.currentSupplier.contact_person,
+        email: this.currentSupplier.email,
+        phone: this.currentSupplier.phone,
+        address: this.currentSupplier.address,
+        website: this.currentSupplier.website,
+        notes: this.currentSupplier.notes
+      };
+
+      this.suppliersService.updateSupplier(this.currentSupplier.id, updateData).subscribe({
         next: () => {
           this.isSubmitting = false;
           this.closeForm();

@@ -76,12 +76,20 @@ export class InventoryService {
     getTransactions(params?: {
         page?: number;
         limit?: number;
-        type?: TransactionType;
+        type?: string;
+        startDate?: string;
+        endDate?: string;
+        userId?: number;
+        search?: string;
     }): Observable<{ data: InventoryTransaction[], meta: any }> {
         let httpParams = new HttpParams();
         if (params?.page) httpParams = httpParams.set('page', params.page.toString());
         if (params?.limit) httpParams = httpParams.set('limit', params.limit.toString());
-        if (params?.type) httpParams = httpParams.set('type', params.type);
+        if (params?.type && params.type !== 'ALL' && params.type !== 'all') httpParams = httpParams.set('type', params.type);
+        if (params?.startDate) httpParams = httpParams.set('startDate', params.startDate);
+        if (params?.endDate) httpParams = httpParams.set('endDate', params.endDate);
+        if (params?.userId) httpParams = httpParams.set('userId', params.userId.toString());
+        if (params?.search) httpParams = httpParams.set('search', params.search);
 
         return this.http.get<{ data: InventoryTransaction[], meta: any }>(`${this.apiUrl}/transactions`, { params: httpParams });
     }

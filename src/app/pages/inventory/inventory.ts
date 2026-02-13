@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProductService, Product, CreateProductDto } from '../../services/product.service';
 import { SuppliersService, Supplier } from '../../services/suppliers.service';
+import { TitleService } from '../../services/title.service';
 
 @Component({
   selector: 'app-inventory',
@@ -52,7 +53,7 @@ export class Inventory implements OnInit {
   margin = 0;
 
   // Menú de acciones
-  openMenuId: number | null = null;
+  // openMenuId: number | null = null; Removed duplicate
 
 
   // Para template
@@ -63,7 +64,8 @@ export class Inventory implements OnInit {
     private suppliersService: SuppliersService,
     private translate: TranslateService,
     private cdr: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private titleService: TitleService
   ) { }
 
   ngOnInit() {
@@ -76,6 +78,7 @@ export class Inventory implements OnInit {
     this.suppliersService.getSuppliers({ page: 1, limit: 100 }).subscribe({
       next: (res) => {
         this.suppliers = res.data;
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error loading suppliers', err)
     });
@@ -223,6 +226,25 @@ export class Inventory implements OnInit {
     }
   }
 
+  // Custom Supplier Dropdown
+  showSupplierDropdown = false;
+
+  toggleSupplierDropdown() {
+    this.showSupplierDropdown = !this.showSupplierDropdown;
+  }
+
+  selectSupplier(supplier: Supplier | null) {
+    this.productForm.patchValue({ supplier_id: supplier ? supplier.id : null });
+    this.showSupplierDropdown = false;
+  }
+
+  getSelectedSupplierName(): string {
+    const supplierId = this.productForm.get('supplier_id')?.value;
+    if (!supplierId) return '-- ' + this.translate.instant('COMMON.NONE') + ' --';
+    const supplier = this.suppliers.find(s => s.id === supplierId);
+    return supplier ? supplier.name : '-- ' + this.translate.instant('COMMON.NONE') + ' --';
+  }
+
   editProduct(productId: number) {
     this.productService.getProduct(productId).subscribe({
       next: (product) => {
@@ -305,9 +327,32 @@ export class Inventory implements OnInit {
   }
 
   // Actions menu
+  openMenuId: number | null = null;
+  menuPosition = { x: 0, y: 0 };
+
   toggleMenu(productId: number, event: Event) {
     event.stopPropagation();
-    this.openMenuId = this.openMenuId === productId ? null : productId;
+
+    if (this.openMenuId === productId) {
+      this.openMenuId = null;
+      return;
+    }
+
+    this.openMenuId = productId;
+
+    // Calculate position
+    const button = (event.target as HTMLElement).closest('button');
+    if (button) {
+      const rect = button.getBoundingClientRect();
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const scrollX = window.scrollX || document.documentElement.scrollLeft;
+
+      // Position menu to the left of the button, and slightly below
+      this.menuPosition = {
+        x: rect.right + scrollX - 192, // 192px is w-48 (12rem)
+        y: rect.bottom + scrollY + 4
+      };
+    }
   }
 
   closeMenu() {

@@ -7,7 +7,7 @@
         "GET_STARTED": "Get Started"
     },
     "HERO": {
-        "BADGE": "Now with Forecasting 5.0",
+        "BADGE": "Integral Inventory Management",
         "TITLE_1": "Control inventory",
         "TITLE_2": "with precision",
         "TITLE_HIGHLIGHT": "absolute",
@@ -32,15 +32,15 @@
     "FEATURES": {
         "SECTION_LABEL": "WHY CHOOSE US",
         "SECTION_TITLE_1": "Everything you need to",
-        "SECTION_TITLE_2": "run your warehouse",
-        "ANALYTICS_TITLE": "Real-time Analytics",
-        "ANALYTICS_DESC": "Gain deep insights into your inventory performance. Track sales velocity, profit margins, and forecast demand with AI-powered precision.",
-        "WORKFLOWS_TITLE": "Automated Workflows",
-        "WORKFLOWS_DESC": "Set triggers for low stock alerts and auto-generate purchase orders.",
-        "WAREHOUSE_TITLE": "Multi-warehouse Sync",
-        "WAREHOUSE_DESC": "Synchronize stock across unlimited locations instantly.",
-        "INTEGRATIONS_TITLE": "Seamless Integrations",
-        "INTEGRATIONS_DESC": "Connect with Shopify, Amazon, WooCommerce, and more in just a few clicks."
+        "SECTION_TITLE_2": "manage your warehouse",
+        "ANALYTICS_TITLE": "Professional PDF Reports",
+        "ANALYTICS_DESC": "Generate detailed reports of sales, movements, and top products in PDF format with a single click.",
+        "WORKFLOWS_TITLE": "History and Audit Trail",
+        "WORKFLOWS_DESC": "Complete traceability of every entry, exit, or adjustment. Full control of your stock movements.",
+        "WAREHOUSE_TITLE": "Real-Time Stock",
+        "WAREHOUSE_DESC": "Visualize inventory levels, low stock alerts, and key metrics instantly.",
+        "INTEGRATIONS_TITLE": "Supplier Management",
+        "INTEGRATIONS_DESC": "Centralize your supplier information and optimize your restocking channels."
     },
     "SOLUTIONS": {
         "SECTION_LABEL": "SOLUTIONS",
@@ -164,23 +164,32 @@
         "TERMS_REQUIRED": "You must accept the terms"
     },
     "AUTH": {
-        "LEFT_TITLE": "Streamline your supply chain today.",
-        "LEFT_SUBTITLE": "Join 10,000+ businesses managing their inventory with ease. Get real-time insights and automated restocking.",
-        "GROWTH": "GROWTH",
-        "THIS_WEEK": "this week",
-        "TESTIMONIAL_TEXT": "This platform completely transformed how we handle logistics. It\u0027s simply brilliant.",
-        "TESTIMONIAL_AUTHOR": "Sarah Jenkins, CTO at Acme Logistics",
-        "LOGIN_SUBTITLE": "Welcome back, enter your details to continue."
+        "LEFT_TITLE": "Full Control of your Cloud Inventory",
+        "LEFT_SUBTITLE": "Manage your stock levels, generate professional PDF reports, and maintain complete traceability of every movement.",
+        "GROWTH": "Traceability",
+        "THIS_WEEK": "audited",
+        "TESTIMONIAL_TEXT": "The ease of generating PDF reports and viewing transaction history has changed the way we work.",
+        "TESTIMONIAL_AUTHOR": "Operations Manager",
+        "LOGIN_SUBTITLE": "Welcome back. Access your control panel."
     },
     "SIDEBAR": {
+        "BRAND_NAME": "INVENTORY-SAAS",
+        "BRAND_DESCRIPTION": "Cloud Inventory Management",
         "DASHBOARD": "Dashboard",
         "INVENTORY": "Inventory",
         "ORDERS": "Orders",
         "REPORTS": "Reports",
+        "REPORTS_GENERAL": "General",
+        "REPORTS_HISTORY": "History",
         "SETTINGS": "Settings",
         "MAIN_MENU": "MAIN MENU",
         "ADMINISTRATION": "ADMINISTRATION",
         "LOGOUT": "Log out",
+        "COMPANY": "Company",
+        "LOGOUT_TITLE": "Log out?",
+        "LOGOUT_MESSAGE": "Are you sure you want to log out? You'll need to sign in again to access your account.",
+        "LOGOUT_CANCEL": "Cancel",
+        "LOGOUT_CONFIRM": "Log out",
         "SUPPLIERS": "Suppliers"
     },
     "DASHBOARD": {
@@ -233,6 +242,8 @@
         "OVERVIEW": "Dashboard Overview"
     },
     "COMMON": {
+        "BACK_TO_HOME": "Back to Home",
+        "DEMO_VERSION": "DEMO VERSION",
         "LANGUAGE": "Language",
         "SPANISH": "EspaÃ±ol",
         "ENGLISH": "English",
@@ -252,9 +263,17 @@
         "APP_EDITION": "Enterprise Edition"
     },
     "INVENTORY": {
+        "TYPE": "Type",
         "BREADCRUMB": "Inventory",
         "TITLE": "Product Management",
-        "HISTORY": "History",
+        "USER": "User",
+        "TRANSACTIONS": "Transactions",
+        "TRANSACTION_HISTORY": "Audit History",
+        "TRANSACTION_DESCRIPTION": "View and analyze all stock movements in real-time.",
+        "AUDIT_TIP": {
+            "TITLE": "Audit Tip",
+            "DESCRIPTION": "Use the 'Adjustment' type filter to track inventory discrepancies and manual corrections. Regular audits help maintain 99% stock accuracy."
+        },
         "MOVEMENT_TITLE": "Register Movement",
         "MOVEMENT_TYPE": "Movement Type",
         "MOVEMENT_SUBTITLE": "Record a new stock movement or adjustment.",
@@ -291,7 +310,7 @@
             "EDIT": "Edit",
             "DELETE": "Delete"
         },
-        "TRANSACTIONS": {
+        "TRANSACTIONS_VIEW": {
             "SUBTITLE": "View all stock movements and adjustments.",
             "HEADERS": {
                 "DATE": "Date",
@@ -308,6 +327,7 @@
         },
         "MOVEMENT": {
             "TYPES": {
+                "ALL": "ALL",
                 "IN": "IN",
                 "OUT": "OUT",
                 "ADJUSTMENT": "ADJUSTMENT"
@@ -341,6 +361,7 @@
     },
     "SUPPLIERS": {
         "TITLE": "Suppliers",
+        "DESCRIPTION": "Manage and organize your suppliers and their contact details",
         "LABEL": "Supplier",
         "MANAGEMENT": "Supplier Management",
         "NEW_SUPPLIER": "New Supplier",
@@ -355,6 +376,7 @@
         "NOTES": "Notes",
         "PRODUCTS_COUNT": "Products",
         "NO_SUPPLIERS": "No suppliers registered",
+        "SEARCH_PLACEHOLDER": "Search by name, email or contact...",
         "ACTIONS": {
             "EDIT_TITLE": "Edit",
             "DELETE_TITLE": "Delete"
@@ -376,14 +398,26 @@
         "ORDER_NUMBER": "Order Number",
         "STATUS": "Status",
         "TOTAL": "Total",
+        "TOTAL_TO_PAY": "Total to Pay",
         "CREATED_AT": "Date",
         "NOTES": "Notes",
+        "NOTES_PLACEHOLDER": "Write any relevant notes here...",
         "CANCEL": "Cancel",
+        "CANCEL_AND_RETURN": "Cancel & Return",
         "SAVE": "Save Order",
+        "SAVE_ORDER": "Save Order",
         "SAVING": "Saving...",
+        "SORT_BY": "Sort by",
+        "SORT": {
+            "NEWEST": "Newest",
+            "OLDEST": "Oldest",
+            "HIGHEST_TOTAL": "Highest Total",
+            "LOWEST_TOTAL": "Lowest Total"
+        },
         "ALL": "All",
         "LOADING": "Loading orders...",
         "NO_ORDERS": "No orders",
+        "SEARCH_PLACEHOLDER": "Search by number or customer...",
         "STATUSES": {
             "PENDING": "Pending",
             "PROCESSING": "Processing",
@@ -397,17 +431,27 @@
             "PRODUCT": "Product",
             "UNIT_PRICE": "Unit Price",
             "SUBTOTAL": "Subtotal",
-            "REMOVE": "Remove"
-        },
-        "ACTIONS": {
-            "TITLE": "Actions",
-            "VIEW_DETAIL": "View Detail",
-            "CHANGE_STATUS": "Change Status",
-            "PROCESS": "Process",
-            "CANCEL": "Cancel",
-            "COMPLETE": "Complete"
+            "REMOVE": "Remove",
+            "DETAIL": {
+                "TITLE": "Order Details",
+                "ITEMS": "Items",
+                "CUSTOMER": "Customer",
+                "NO_CUSTOMER": "No customer assigned",
+                "TOTAL": "Total"
+            },
+            "SELECT_PRODUCT_PLACEHOLDER": "Search or select a product...",
+            "NO_ITEMS": "No items added yet",
+            "SUBTITLE": "Enter the details below to create a new order.",
+            "ADD": "Add",
+            "CUSTOMER_NAME": "Customer Name",
+            "CUSTOMER_NAME_PLACEHOLDER": "Enter customer name (optional)"
         },
         "DETAIL": {
+            "TITLE": "Order Details",
+            "ITEMS": "Items",
+            "CUSTOMER": "Customer",
+            "NO_CUSTOMER": "No customer assigned",
+            "TOTAL": "Total",
             "STATUS": "Status:",
             "PRODUCTS": "Products:",
             "NOTES": "Notes:",
@@ -416,12 +460,24 @@
                 "QUANTITY": "Quantity",
                 "PRICE": "Price",
                 "SUBTOTAL": "Subtotal"
-            },
-            "TOTAL": "Total:"
-        }
+            }
+        },
+        "ACTIONS": {
+            "TITLE": "Actions",
+            "VIEW_DETAIL": "View Detail",
+            "CHANGE_STATUS": "Change Status",
+            "PROCESS": "Process",
+            "CANCEL": "Cancel",
+            "COMPLETE": "Complete",
+            "DELETE": "Delete"
+        },
+        "SEND_EMAIL": "Send Email",
+        "BACK_TO_LIST": "Back to List",
+        "LOADING_DETAIL": "Loading order details..."
     },
     "REPORTS": {
-        "TITLE": "Reports",
+        "TITLE": "Reports & Analytics",
+        "EXPORT_PDF": "Export PDF",
         "SALES_TAB": "Sales",
         "PRODUCTS_TAB": "Products",
         "MOVEMENTS_TAB": "Movements",
@@ -455,9 +511,28 @@
         "NO_TOP_PRODUCTS": "No products sold in this period",
         "NO_LOW_STOCK": "All products have adequate stock!",
         "LOADING_KPIS": "Loading metrics...",
-        "COMING_SOON": "Coming soon..."
+        "COMING_SOON": "Coming soon...",
+        "TYPES": {
+            "SALES": "Sales",
+            "INVENTORY": "Inventory",
+            "MOVEMENTS": "Movements"
+        },
+        "HISTORY": {
+            "TITLE": "Report History",
+            "SUBTITLE": "View and download your previously generated reports.",
+            "TYPE": "Report Type",
+            "DATE": "Generated Date",
+            "GENERATED_BY": "Generated By",
+            "ACTIONS": "Actions",
+            "NO_REPORTS": "No reports found in history.",
+            "VIEW": "View PDF",
+            "SEARCH_PLACEHOLDER": "Search by ID...",
+            "FILTER_TYPE": "Filter by Type",
+            "ALL_TYPES": "All Types"
+        }
     },
     "PRODUCT_MODAL": {
+        "PRODUCT": "Product",
         "TITLE_NEW": "New Product",
         "TITLE_EDIT": "Edit Product",
         "SKU": "SKU",
@@ -488,8 +563,10 @@
     },
     "SETTINGS": {
         "TITLE": "Settings",
-        "DESCRIPTION": "Manage your preferences and account settings.",
+        "DESCRIPTION": "Customize your experience and manage your professional profile data.",
         "SAVE": "Save Changes",
+        "DISCARD": "Discard",
+        "CHANGES_DISCARDED": "Changes discarded",
         "TABS": {
             "PROFILE": "Profile",
             "SECURITY": "Security",
@@ -499,17 +576,30 @@
         "PROFILE": {
             "TITLE": "User Profile",
             "SUBTITLE": "Update your photo and personal details.",
-            "AVATAR": "Your Avatar",
-            "CHANGE": "Change",
+            "AVATAR": "Profile Photo",
+            "AVATAR_DESC": "Upload a high-resolution photo to personalize your account.",
+            "AVATAR_UPDATED": "Profile photo updated",
+            "AVATAR_REMOVED": "Profile photo removed",
+            "AVATAR_ERROR": "Error processing profile photo",
+            "AVATAR_INVALID_TYPE": "Only image files are allowed (JPEG, PNG, GIF, WebP)",
+            "AVATAR_TOO_LARGE": "Image must not exceed 5MB",
+            "CHANGE": "Change photo",
             "REMOVE": "Remove",
             "FULL_NAME": "Full Name",
             "EMAIL": "Email Address",
             "PHONE": "Phone",
-            "ROLE": "Role"
+            "ROLE": "Role / Position",
+            "BIO": "Biography",
+            "BIO_PLACEHOLDER": "Tell us a bit about yourself and your role..."
         },
         "ROLES": {
             "ADMIN": "Administrator",
             "USER": "User"
+        },
+        "PREFERENCES": {
+            "TITLE": "Personal Preferences",
+            "LANGUAGE": "System Language",
+            "LANGUAGE_DESC": "Select your preferred language for the interface."
         },
         "SECURITY": {
             "TITLE": "Security",
@@ -518,6 +608,7 @@
             "CONFIRM_PASSWORD": "Confirm Password",
             "MISMATCH": "Passwords do not match",
             "UPDATE_PASSWORD": "Update Password",
+            "PASSWORD_UPDATED": "Password updated successfully",
             "TWO_FACTOR": "Two-Factor Authentication",
             "TWO_FACTOR_DESC": "Increases your account security."
         },
@@ -534,6 +625,11 @@
             "CURRENCY": "Currency",
             "TIMEZONE": "Timezone"
         },
-        "PROFILE_UPDATED": "Profile updated successfully"
+        "PROFILE_UPDATED": "Profile updated successfully",
+        "VALIDATION": {
+            "REQUIRED": "This field is required",
+            "MIN_LENGTH": "Minimum {{min}} characters",
+            "INVALID_EMAIL": "Enter a valid email address"
+        }
     }
 }

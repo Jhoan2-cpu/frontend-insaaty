@@ -29,28 +29,35 @@ export class Homepage {
     scrollTo(sectionId: string) {
         const element = document.getElementById(sectionId);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const headerOffset = 80;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
     }
 
     features = [
         {
-            icon: 'fa-chart-line',
+            icon: 'fa-file-pdf',
             titleKey: 'FEATURES.ANALYTICS_TITLE',
             descKey: 'FEATURES.ANALYTICS_DESC'
         },
         {
-            icon: 'fa-robot',
+            icon: 'fa-history',
             titleKey: 'FEATURES.WORKFLOWS_TITLE',
             descKey: 'FEATURES.WORKFLOWS_DESC'
         },
         {
-            icon: 'fa-warehouse',
+            icon: 'fa-tachometer-alt',
             titleKey: 'FEATURES.WAREHOUSE_TITLE',
             descKey: 'FEATURES.WAREHOUSE_DESC'
         },
         {
-            icon: 'fa-plug',
+            icon: 'fa-truck',
             titleKey: 'FEATURES.INTEGRATIONS_TITLE',
             descKey: 'FEATURES.INTEGRATIONS_DESC'
         }
