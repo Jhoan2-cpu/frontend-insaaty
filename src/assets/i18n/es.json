@@ -503,7 +503,25 @@
         "NO_TOP_PRODUCTS": "No hay productos vendidos en este período",
         "NO_LOW_STOCK": "¡Todos los productos tienen stock adecuado!",
         "LOADING_KPIS": "Cargando indicadores...",
-        "COMING_SOON": "Próximamente..."
+        "COMING_SOON": "Próximamente...",
+        "TYPES": {
+            "SALES": "Ventas",
+            "INVENTORY": "Inventario",
+            "MOVEMENTS": "Movimientos"
+        },
+        "HISTORY": {
+            "TITLE": "Historial de Reportes",
+            "SUBTITLE": "Consulta y descarga tus reportes generados anteriormente.",
+            "TYPE": "Tipo de Reporte",
+            "DATE": "Fecha de Generación",
+            "GENERATED_BY": "Generado Por",
+            "ACTIONS": "Acciones",
+            "NO_REPORTS": "No se encontraron reportes en el historial.",
+            "VIEW": "Ver PDF",
+            "SEARCH_PLACEHOLDER": "Buscar por ID...",
+            "FILTER_TYPE": "Filtrar por Tipo",
+            "ALL_TYPES": "Todos los Tipos"
+        }
     },
     "PRODUCT_MODAL": {
         "PRODUCT": "Producto",

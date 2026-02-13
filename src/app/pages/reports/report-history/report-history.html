@@ -14,6 +14,91 @@
             </button>
         </div>
 
+        <!-- Filters and Search -->
+        <div
+            class="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+            <div class="relative w-full sm:w-96">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400"></i>
+                </div>
+                <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="applyFilters()"
+                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm transition duration-150 ease-in-out"
+                    [placeholder]="'REPORTS.HISTORY.SEARCH_PLACEHOLDER' | translate">
+            </div>
+
+            <div class="flex items-center gap-3 w-full sm:w-auto relative">
+                <span class="text-sm font-medium text-gray-500 whitespace-nowrap hidden sm:block">{{
+                    'REPORTS.HISTORY.FILTER_TYPE' | translate }}:</span>
+
+                <div class="relative w-full sm:w-48">
+                    <button (click)="toggleFilterDropdown()" type="button"
+                        class="bg-white relative w-full border border-gray-300 rounded-lg shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm transition-all duration-200 hover:border-emerald-400">
+                        <span class="block truncate font-medium text-gray-700">
+                            {{ filterType === 'ALL' ? ('REPORTS.HISTORY.ALL_TYPES' | translate) : ('REPORTS.TYPES.' +
+                            filterType | translate) }}
+                        </span>
+                        <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform duration-200"
+                                [class.rotate-180]="isFilterDropdownOpen"></i>
+                        </span>
+                    </button>
+
+                    <div *ngIf="isFilterDropdownOpen"
+                        class="absolute z-50 mt-1 w-full bg-white shadow-xl max-h-60 rounded-lg py-1 text-base border border-gray-100 overflow-auto focus:outline-none sm:text-sm animate__animated animate__fadeIn animate__faster">
+
+                        <div (click)="selectFilter('ALL')"
+                            class="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-emerald-50 hover:text-emerald-900 transition-colors duration-150"
+                            [class.text-emerald-600]="filterType === 'ALL'"
+                            [class.bg-emerald-50]="filterType === 'ALL'">
+                            <span class="block truncate" [class.font-semibold]="filterType === 'ALL'">
+                                {{ 'REPORTS.HISTORY.ALL_TYPES' | translate }}
+                            </span>
+                            <span *ngIf="filterType === 'ALL'"
+                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-emerald-600">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+
+                        <div (click)="selectFilter('SALES')"
+                            class="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-emerald-50 hover:text-emerald-900 transition-colors duration-150"
+                            [class.text-emerald-600]="filterType === 'SALES'">
+                            <span class="block truncate" [class.font-semibold]="filterType === 'SALES'">
+                                {{ 'REPORTS.TYPES.SALES' | translate }}
+                            </span>
+                            <span *ngIf="filterType === 'SALES'"
+                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-emerald-600">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+
+                        <div (click)="selectFilter('INVENTORY')"
+                            class="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-emerald-50 hover:text-emerald-900 transition-colors duration-150"
+                            [class.text-emerald-600]="filterType === 'INVENTORY'">
+                            <span class="block truncate" [class.font-semibold]="filterType === 'INVENTORY'">
+                                {{ 'REPORTS.TYPES.INVENTORY' | translate }}
+                            </span>
+                            <span *ngIf="filterType === 'INVENTORY'"
+                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-emerald-600">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+
+                        <div (click)="selectFilter('MOVEMENTS')"
+                            class="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-emerald-50 hover:text-emerald-900 transition-colors duration-150"
+                            [class.text-emerald-600]="filterType === 'MOVEMENTS'">
+                            <span class="block truncate" [class.font-semibold]="filterType === 'MOVEMENTS'">
+                                {{ 'REPORTS.TYPES.MOVEMENTS' | translate }}
+                            </span>
+                            <span *ngIf="filterType === 'MOVEMENTS'"
+                                class="absolute inset-y-0 right-0 flex items-center pr-4 text-emerald-600">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Content -->
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             <div class="overflow-x-auto">
@@ -37,12 +122,12 @@
                                 <i class="fas fa-spinner fa-spin mr-2"></i> Loading...
                             </td>
                         </tr>
-                        <tr *ngIf="!isLoading && reports.length === 0">
+                        <tr *ngIf="!isLoading && filteredReports.length === 0">
                             <td colspan="5" class="px-6 py-8 text-center text-gray-400">
                                 {{ 'REPORTS.HISTORY.NO_REPORTS' | translate }}
                             </td>
                         </tr>
-                        <tr *ngFor="let report of reports" class="hover:bg-gray-50 transition-colors group">
+                        <tr *ngFor="let report of filteredReports" class="hover:bg-gray-50 transition-colors group">
                             <td class="px-6 py-4 text-sm text-gray-500 font-mono">#{{ report.id }}</td>
                             <td class="px-6 py-4">
                                 <span class="px-2 py-1 text-xs font-bold rounded-full" [ngClass]="{
