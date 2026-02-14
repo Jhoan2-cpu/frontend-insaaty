@@ -90,7 +90,14 @@ export class ReportsService {
         return this.http.get<KPIs>(`${this.apiUrl}/kpis`, { params: httpParams });
     }
 
-    getReportHistory(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.apiUrl}/history`);
+    getReportHistory(page: number = 1, limit: number = 10, search?: string, type?: string): Observable<any> {
+        let httpParams = new HttpParams()
+            .set('page', page.toString())
+            .set('limit', limit.toString());
+
+        if (search) httpParams = httpParams.set('search', search);
+        if (type && type !== 'ALL') httpParams = httpParams.set('type', type);
+
+        return this.http.get<any>(`${this.apiUrl}/history`, { params: httpParams });
     }
 }

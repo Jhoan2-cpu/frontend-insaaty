@@ -21,7 +21,7 @@
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <i class="fas fa-search text-gray-400"></i>
                 </div>
-                <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="applyFilters()"
+                <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearch()"
                     class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm transition duration-150 ease-in-out"
                     [placeholder]="'REPORTS.HISTORY.SEARCH_PLACEHOLDER' | translate">
             </div>
@@ -122,12 +122,12 @@
                                 <i class="fas fa-spinner fa-spin mr-2"></i> Loading...
                             </td>
                         </tr>
-                        <tr *ngIf="!isLoading && filteredReports.length === 0">
+                        <tr *ngIf="!isLoading && reports.length === 0">
                             <td colspan="5" class="px-6 py-8 text-center text-gray-400">
                                 {{ 'REPORTS.HISTORY.NO_REPORTS' | translate }}
                             </td>
                         </tr>
-                        <tr *ngFor="let report of filteredReports" class="hover:bg-gray-50 transition-colors group">
+                        <tr *ngFor="let report of reports" class="hover:bg-gray-50 transition-colors group">
                             <td class="px-6 py-4 text-sm text-gray-500 font-mono">#{{ report.id }}</td>
                             <td class="px-6 py-4">
                                 <span class="px-2 py-1 text-xs font-bold rounded-full" [ngClass]="{
@@ -159,6 +159,27 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Pagination -->
+            <div *ngIf="!isLoading && totalItems > 0"
+                class="px-6 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span class="text-sm text-gray-500">
+                    {{ 'COMMON.SHOWING' | translate }} {{((currentPage - 1) * pageSize) + 1}} -
+                    {{ (currentPage * pageSize) > totalItems ? totalItems : (currentPage * pageSize) }}
+                    {{ 'COMMON.OF' | translate }} {{totalItems}}
+                </span>
+                <div class="flex gap-2">
+                    <button (click)="previousPage()" [disabled]="currentPage === 1"
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        {{ 'COMMON.PREVIOUS' | translate }}
+                    </button>
+
+                    <button (click)="nextPage()" [disabled]="currentPage === totalPages"
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                        {{ 'COMMON.NEXT' | translate }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>
