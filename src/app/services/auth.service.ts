@@ -82,6 +82,7 @@ export class AuthService {
     private clearTokensAndRedirect(): void {
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
+        this.profileCache$ = null; // Clear profile cache
         this.isAuthenticatedSubject.next(false);
         this.router.navigate(['/login']);
     }

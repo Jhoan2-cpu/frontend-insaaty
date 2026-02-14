@@ -129,7 +129,9 @@
         "EMAIL_REQUIRED": "El correo es requerido",
         "EMAIL_INVALID": "Ingresa un correo válido",
         "PASSWORD_REQUIRED": "La contraseña es requerida",
-        "PASSWORD_MIN": "Mínimo 6 caracteres"
+        "PASSWORD_MIN": "Mínimo 6 caracteres",
+        "ERROR_CREDENTIALS": "Correo o contraseña incorrecta",
+        "ERROR_TIMEOUT": "El servidor no responde. Por favor, intenta más tarde."
     },
     "REGISTER": {
         "STEP_1": "PASO 1 DE 2",
@@ -161,7 +163,9 @@
         "EMAIL_INVALID": "Ingresa un email válido",
         "PASSWORD_REQUIRED": "La contraseña es requerida",
         "PASSWORD_MIN": "Mínimo 8 caracteres",
-        "TERMS_REQUIRED": "Debes aceptar los términos"
+        "TERMS_REQUIRED": "Debes aceptar los términos",
+        "ERROR_EMAIL_EXISTS": "El correo electrónico ya está registrado",
+        "ERROR_GENERIC": "Ocurrió un error al registrarse. Intenta de nuevo."
     },
     "AUTH": {
         "LEFT_TITLE": "Control Total de tu Inventario Cloud",
