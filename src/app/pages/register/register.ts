@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
+import { finalize, timeout } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -32,7 +33,8 @@ export class Register implements OnInit {
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -105,17 +107,30 @@ export class Register implements OnInit {
       full_name: this.fullName || this.businessName, // Use businessName as fallback
       email: this.email,
       password: this.password
-    }).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.router.navigate(['/dashboard']);
-      },
-      error: (error) => {
-        this.isLoading = false;
-        console.error('Register error:', error);
-        this.errorMessage = error.error?.message || 'Error al registrar. Intenta de nuevo.';
-      }
-    });
+    })
+      .pipe(
+        timeout(10000),
+        finalize(() => {
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          console.error('Register error:', error);
+          if (error.name === 'TimeoutError') {
+            this.errorMessage = 'LOGIN.ERROR_TIMEOUT'; // Recycle timeout error key
+          } else if (error.error?.message === 'El email ya está registrado' || error.status === 400) {
+            this.errorMessage = 'REGISTER.ERROR_EMAIL_EXISTS';
+          } else {
+            this.errorMessage = 'REGISTER.ERROR_GENERIC';
+          }
+          this.cdr.detectChanges();
+        }
+      });
   }
 
   registerWithGoogle() {

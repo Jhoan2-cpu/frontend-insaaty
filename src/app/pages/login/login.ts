@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
+import { finalize, timeout } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,8 @@ export class Login implements OnInit {
   constructor(
     private translate: TranslateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -78,17 +80,33 @@ export class Login implements OnInit {
 
     this.isLoading = true;
     this.errorMessage = '';
+    console.log('Attempting login...');
 
     this.authService.login({ email: this.email, password: this.password })
+      .pipe(
+        timeout(10000),
+        finalize(() => {
+          this.isLoading = false;
+          this.cdr.detectChanges(); // Force update
+          console.log('Login request finalized. isLoading:', this.isLoading);
+        })
+      )
       .subscribe({
         next: () => {
-          this.isLoading = false;
+          console.log('Login successful');
           this.router.navigate(['/dashboard']);
         },
         error: (error) => {
-          this.isLoading = false;
           console.error('Login error:', error);
-          this.errorMessage = error.error?.message || 'Credenciales incorrectas';
+          if (error.name === 'TimeoutError') {
+            this.errorMessage = 'LOGIN.ERROR_TIMEOUT';
+          } else if (error.status === 401 || error.status === 404) {
+            this.errorMessage = 'LOGIN.ERROR_CREDENTIALS';
+          } else {
+            this.errorMessage = 'LOGIN.ERROR_CREDENTIALS';
+          }
+          console.log('Error message set to:', this.errorMessage);
+          this.cdr.detectChanges(); // Force update again
         }
       });
   }

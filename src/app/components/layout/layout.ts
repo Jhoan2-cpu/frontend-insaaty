@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, ActivatedRoute, RouterModule } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
@@ -32,6 +32,7 @@ export class Layout implements OnInit, OnDestroy {
   pendingOrdersCount = 0;
 
   user: any = null;
+  errorLoadingProfile = false;
   private pollSub?: Subscription;
 
   constructor(
@@ -40,7 +41,8 @@ export class Layout implements OnInit, OnDestroy {
     private orderService: OrderService,
     public titleService: TitleService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -50,9 +52,18 @@ export class Layout implements OnInit, OnDestroy {
     this.currentLang = savedLang;
 
     // Cargar perfil de usuario
-    this.authService.getProfile().subscribe({
-      next: (user) => this.user = user,
-      error: (err) => console.error('Error loading profile', err)
+    this.authService.getProfile(true).subscribe({
+      next: (user) => {
+        console.log('Profile loaded:', user);
+        this.user = user;
+        this.errorLoadingProfile = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Error loading profile', err);
+        this.errorLoadingProfile = true;
+        this.cdr.detectChanges();
+      }
     });
 
     // Cargar contador de pedidos pendientes (reactivo)

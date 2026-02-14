@@ -11,7 +11,13 @@
                 <i class="fas fa-box text-white text-lg"></i>
             </div>
             <div>
-                <h1 class="font-bold text-gray-900 leading-tight">{{ 'COMMON.APP_NAME' | translate }}</h1>
+                <h1 class="font-bold text-white leading-tight">
+                    @if (errorLoadingProfile) {
+                    INVENTORY-SAAS
+                    } @else {
+                    {{ user?.tenant?.name || ('COMMON.APP_NAME' | translate) }}
+                    }
+                </h1>
                 <p class="text-[10px] text-gray-400 uppercase tracking-wider">{{ 'COMMON.APP_EDITION' | translate }}</p>
             </div>
         </div>
@@ -163,7 +169,12 @@
                         <div class="overflow-hidden">
                             <p class="text-[10px] text-gray-500 uppercase font-bold tracking-wider">{{ 'SIDEBAR.COMPANY'
                                 | translate }}</p>
-                            <p class="text-xs font-bold text-white truncate">{{ user?.tenant?.name || 'Loading...' }}
+                            <p class="text-xs font-bold text-white truncate">
+                                @if (errorLoadingProfile) {
+                                <span class="text-red-400">Error</span>
+                                } @else {
+                                {{ user?.tenant?.name || 'Loading...' }}
+                                }
                             </p>
                         </div>
                     </div>
@@ -188,12 +199,20 @@
                     </div>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-semibold text-gray-900 truncate group-hover:text-blue-600 transition-colors">
+                    <p class="text-sm font-semibold text-white truncate group-hover:text-blue-600 transition-colors">
+                        @if (errorLoadingProfile) {
+                        <span class="text-red-400">Error loading</span>
+                        } @else {
                         {{ user?.full_name || ('COMMON.LOADING' | translate) }}
+                        }
                     </p>
                     <p class="text-xs text-gray-500 truncate">
+                        @if (errorLoadingProfile) {
+                        Try refreshing
+                        } @else {
                         {{ user?.role_id === 3 ? ('DASHBOARD.ADMIN_MANAGER' | translate) : ('SETTINGS.ROLES.USER' |
                         translate) }}
+                        }
                     </p>
                 </div>
                 <button (click)="confirmLogout(); $event.stopPropagation()"
@@ -216,10 +235,17 @@
                 <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-sign-out-alt text-red-500 text-2xl"></i>
                 </div>
-                <div>
-                    <div class="text-[10px] text-blue-100 uppercase tracking-wider">{{ 'DASHBOARD.CURRENT_TENANT' |
-                        translate }}</div>
-                    <div class="font-bold text-sm">{{ 'DASHBOARD.DEFAULT_WAREHOUSE' | translate }}</div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">{{ 'SIDEBAR.LOGOUT_TITLE' | translate }}</h3>
+                <p class="text-sm text-gray-500 mb-6">{{ 'SIDEBAR.LOGOUT_MESSAGE' | translate }}</p>
+                <div class="flex gap-3">
+                    <button (click)="cancelLogout()"
+                        class="flex-1 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-colors">
+                        {{ 'SIDEBAR.LOGOUT_CANCEL' | translate }}
+                    </button>
+                    <button (click)="logout()"
+                        class="flex-1 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-xl font-medium transition-colors shadow-lg shadow-red-500/30">
+                        {{ 'SIDEBAR.LOGOUT_CONFIRM' | translate }}
+                    </button>
                 </div>
             </div>
         </div>
