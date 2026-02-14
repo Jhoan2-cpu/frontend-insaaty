@@ -242,6 +242,7 @@
         "NO_LOW_STOCK": "¡Todos los productos tienen stock adecuado!",
         "NO_TRANSACTIONS": "No hay transacciones recientes",
         "DEFAULT_WAREHOUSE": "Almacén Principal",
+        "REGISTER_TRANSACTION": "Registrar Movimiento",
         "OVERVIEW": "Resumen del Dashboard"
     },
     "COMMON": {
@@ -261,9 +262,29 @@
         "UPDATE": "Actualizar",
         "PAGE": "Página",
         "OF": "de",
+        "SHOWING": "Mostrando",
         "NONE": "Ninguno",
         "APP_NAME": "Nexus Stock",
-        "APP_EDITION": "Edición Empresarial"
+        "APP_EDITION": "Edición Empresarial",
+        "FILTERS": "Filtros",
+        "CLEAR": "Limpiar",
+        "DATE_RANGE": "Rango de Fechas",
+        "START": "Inicio",
+        "END": "Fin",
+        "APPLY_FILTERS": "Aplicar Filtros",
+        "DATE": "Fecha",
+        "PREVIOUS": "Anterior",
+        "NEXT": "Siguiente",
+        "ALL_USERS": "Todos los Usuarios",
+        "WEEKDAYS": {
+            "SU": "DO",
+            "MO": "LU",
+            "TU": "MA",
+            "WE": "MI",
+            "TH": "JU",
+            "FR": "VI",
+            "SA": "SA"
+        }
     },
     "INVENTORY": {
         "TYPE": "Tipo",

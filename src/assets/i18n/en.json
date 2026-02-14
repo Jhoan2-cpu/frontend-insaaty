@@ -213,7 +213,6 @@
         "ITEM_NAME": "ITEM NAME",
         "QTY": "QTY",
         "STATUS": "STATUS",
-        "STATUS": "Status",
         "CRITICAL": "Critical",
         "LOW": "Low",
         "RECENT_TRANSACTIONS": "Recent Transactions",
@@ -239,6 +238,7 @@
         "NO_LOW_STOCK": "All products have adequate stock!",
         "NO_TRANSACTIONS": "No recent transactions",
         "DEFAULT_WAREHOUSE": "Main Warehouse",
+        "REGISTER_TRANSACTION": "Register Movement",
         "OVERVIEW": "Dashboard Overview"
     },
     "COMMON": {
@@ -258,9 +258,29 @@
         "UPDATE": "Update",
         "PAGE": "Page",
         "OF": "of",
+        "SHOWING": "Showing",
         "NONE": "None",
         "APP_NAME": "Nexus Stock",
-        "APP_EDITION": "Enterprise Edition"
+        "APP_EDITION": "Enterprise Edition",
+        "FILTERS": "Filters",
+        "CLEAR": "Clear",
+        "DATE_RANGE": "Date Range",
+        "START": "Start",
+        "END": "End",
+        "APPLY_FILTERS": "Apply Filters",
+        "DATE": "Date",
+        "PREVIOUS": "Previous",
+        "NEXT": "Next",
+        "ALL_USERS": "All Users",
+        "WEEKDAYS": {
+            "SU": "SU",
+            "MO": "MO",
+            "TU": "TU",
+            "WE": "WE",
+            "TH": "TH",
+            "FR": "FR",
+            "SA": "SA"
+        }
     },
     "INVENTORY": {
         "TYPE": "Type",

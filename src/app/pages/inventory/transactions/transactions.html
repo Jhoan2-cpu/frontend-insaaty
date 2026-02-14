@@ -46,44 +46,7 @@
                         </div>
                     </div>
 
-                    <!-- User Filter -->
-                    <div class="space-y-1.5">
-                        <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                            {{ 'INVENTORY.USER' | translate }}
-                        </label>
-                        <div class="relative">
-                            <!-- Custom Select Trigger -->
-                            <div class="relative group">
-                                <button (click)="toggleUserDropdown()"
-                                    class="w-full text-left pl-4 pr-10 py-2.5 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-700 hover:bg-white hover:border-emerald-200 focus:outline-none focus:ring-0 focus:shadow-md transition-all shadow-sm flex items-center justify-between">
-                                    <span class="truncate">{{ getSelectedUserName() | translate }}</span>
-                                    <i
-                                        class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-emerald-500 transition-colors"></i>
-                                </button>
-                            </div>
 
-                            <!-- Dropdown Menu -->
-                            <div *ngIf="showUserDropdown"
-                                class="absolute z-[60] top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden animate__animated animate__fadeIn animate__faster">
-                                <div class="max-h-60 overflow-y-auto">
-                                    <button *ngFor="let user of users" (click)="selectUser(user)"
-                                        class="w-full text-left px-4 py-3 text-sm hover:bg-emerald-50 transition-colors flex items-center justify-between group">
-                                        <span [class.text-emerald-600]="filters.user === user.id"
-                                            [class.font-medium]="filters.user === user.id"
-                                            class="text-gray-700 group-hover:text-emerald-700">
-                                            {{ user.name | translate }}
-                                        </span>
-                                        <i *ngIf="filters.user === user.id"
-                                            class="fas fa-check text-emerald-500 text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Overlay to close -->
-                            <div *ngIf="showUserDropdown" (click)="toggleUserDropdown()"
-                                class="fixed inset-0 z-[55] bg-transparent cursor-default"></div>
-                        </div>
-                    </div>
 
 
                     <!-- Type Filter -->

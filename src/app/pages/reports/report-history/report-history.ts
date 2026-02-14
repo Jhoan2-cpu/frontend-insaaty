@@ -22,6 +22,12 @@ export class ReportHistoryComponent implements OnInit {
   filterType: string = 'ALL';
   isFilterDropdownOpen = false;
 
+  // Pagination
+  currentPage = 1;
+  pageSize = 10;
+  totalItems = 0;
+  totalPages = 0;
+
   constructor(
     private reportsService: ReportsService,
     private pdfService: PdfService,
@@ -39,21 +45,29 @@ export class ReportHistoryComponent implements OnInit {
   selectFilter(type: string) {
     this.filterType = type;
     this.isFilterDropdownOpen = false;
-    this.applyFilters();
+    this.currentPage = 1; // Reset to first page on filter change
+    this.loadReports();
+  }
+
+  onSearch() {
+    this.currentPage = 1;
+    this.loadReports();
   }
 
   loadReports() {
     this.isLoading = true;
-    this.reportsService.getReportHistory()
+    this.reportsService.getReportHistory(this.currentPage, this.pageSize, this.searchTerm, this.filterType)
       .pipe(finalize(() => {
         this.isLoading = false;
         this.cdr.detectChanges();
       }))
       .subscribe({
-        next: (data: any[]) => {
-          // Sort by ID descending by default
-          this.reports = data.sort((a, b) => b.id - a.id);
-          this.applyFilters();
+        next: (response: any) => {
+          this.reports = response.data;
+          this.totalItems = response.total;
+          this.totalPages = response.totalPages;
+          // No need for client-side filtering anymore
+          this.filteredReports = this.reports;
         },
         error: (err: any) => {
           console.error('Error loading reports', err);
@@ -61,17 +75,28 @@ export class ReportHistoryComponent implements OnInit {
       });
   }
 
-  applyFilters() {
-    this.filteredReports = this.reports.filter(report => {
-      const matchesSearch = report.id.toString().includes(this.searchTerm) ||
-        report.type.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        (report.user?.full_name || '').toLowerCase().includes(this.searchTerm.toLowerCase());
-
-      const matchesType = this.filterType === 'ALL' || report.type === this.filterType;
-
-      return matchesSearch && matchesType;
-    });
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadReports();
+    }
   }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadReports();
+    }
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadReports();
+    }
+  }
+
+
 
   viewReport(url: string) {
     this.pdfService.viewPdf(url);

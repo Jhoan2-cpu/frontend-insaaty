@@ -277,9 +277,25 @@ export class Orders implements OnInit {
     this.loadOrders();
   }
 
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.loadOrders();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadOrders();
+    }
+  }
+
   goToPage(page: number) {
-    this.currentPage = page;
-    this.loadOrders();
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.loadOrders();
+    }
   }
 
   getStatusClass(status: OrderStatus): string {
