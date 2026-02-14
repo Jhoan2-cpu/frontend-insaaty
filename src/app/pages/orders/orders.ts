@@ -35,7 +35,7 @@ export class Orders implements OnInit {
 
   // Paginación
   currentPage = 1;
-  pageSize = 5;
+  pageSize = 10;
   totalOrders = 0;
   totalPages = 0;
   isLoading = true;
@@ -158,16 +158,9 @@ export class Orders implements OnInit {
       search: this.searchTerm
     }).subscribe({
       next: (response) => {
-        console.log('Orders Response:', response);
         this.orders = response.data;
         this.totalOrders = response.meta.total;
         this.totalPages = response.meta.last_page;
-        console.log('Pagination State:', {
-          currentPage: this.currentPage,
-          totalPages: this.totalPages,
-          totalOrders: this.totalOrders,
-          pageSize: this.pageSize
-        });
         this.isLoading = false;
         this.cdr.detectChanges();
       },
