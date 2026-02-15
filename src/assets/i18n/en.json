@@ -9,8 +9,9 @@
     "HERO": {
         "BADGE": "Integral Inventory Management",
         "TITLE_1": "Control inventory",
-        "TITLE_2": "with precision",
+        "PREPOSITION": "with",
         "TITLE_HIGHLIGHT": "absolute",
+        "TITLE_2": "precision",
         "DESCRIPTION": "Eliminate stockouts and overstocking forever. Our intelligent platform gives you real-time visibility and automated workflows to scale your business effortlessly.",
         "CTA_TRIAL": "Start Free Trial",
         "CTA_DEMO": "Watch Demo",
@@ -95,7 +96,7 @@
         "BUTTON_DEMO": "Schedule a Demo"
     },
     "FOOTER": {
-        "TAGLINE": "Making inventory management painless, intelligent, and scalable for modern businesses.",
+        "TAGLINE": "Revolutionizing inventory management for modern businesses.",
         "PRODUCT": "Product",
         "FEATURES": "Features",
         "INTEGRATIONS": "Integrations",
@@ -107,7 +108,8 @@
         "LEGAL": "Legal",
         "PRIVACY": "Privacy",
         "TERMS": "Terms",
-        "COPYRIGHT": "Â© 2026 InventorySaaS, Inc. All rights reserved."
+        "COPYRIGHT": "© 2026 Inventory SaaS. All rights reserved.",
+        "DEMO_DISCLAIMER": "This is a demo version for demonstration purposes."
     },
     "LOGIN": {
         "TITLE": "Welcome back",
@@ -115,7 +117,7 @@
         "EMAIL_LABEL": "Email address",
         "EMAIL_PLACEHOLDER": "name@company.com",
         "PASSWORD_LABEL": "Password",
-        "PASSWORD_PLACEHOLDER": "â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢",
+        "PASSWORD_PLACEHOLDER": "********",
         "FORGOT_PASSWORD": "Forgot password?",
         "SUBMIT": "Sign in",
         "OR_CONTINUE": "Or continue with",
@@ -245,7 +247,7 @@
         "BACK_TO_HOME": "Back to Home",
         "DEMO_VERSION": "DEMO VERSION",
         "LANGUAGE": "Language",
-        "SPANISH": "EspaÃ±ol",
+        "SPANISH": "Spanish",
         "ENGLISH": "English",
         "LOADING": "Loading...",
         "PAGE_NOT_FOUND": "The page you are looking for does not exist or has been moved.",

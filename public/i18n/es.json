@@ -9,8 +9,9 @@
     "HERO": {
         "BADGE": "Ahora con Pronóstico 5.0",
         "TITLE_1": "Controla tu inventario",
-        "TITLE_2": "con precisión",
+        "PREPOSITION": "con",
         "TITLE_HIGHLIGHT": "absoluta",
+        "TITLE_2": "precisión",
         "DESCRIPTION": "Elimina los faltantes y el exceso de stock para siempre. Nuestra plataforma inteligente te brinda visibilidad en tiempo real y flujos de trabajo automatizados para escalar tu negocio sin esfuerzo.",
         "CTA_TRIAL": "Prueba Gratuita",
         "CTA_DEMO": "Ver Demo",
@@ -49,21 +50,28 @@
         "BUTTON_DEMO": "Programar Demo"
     },
     "FOOTER": {
-        "TAGLINE": "Haciendo que la gestión de inventario sea sencilla, inteligente y escalable para negocios modernos.",
+        "TAGLINE": "Revolucionando la gestión de inventario para negocios modernos.",
         "PRODUCT": "Producto",
         "FEATURES": "Características",
         "INTEGRATIONS": "Integraciones",
         "PRICING": "Precios",
         "SUPPORT": "Soporte",
         "DOCUMENTATION": "Documentación",
-        "API_STATUS": "Estado del API",
+        "API_STATUS": "Estado de API",
         "CONTACT": "Contacto",
         "LEGAL": "Legal",
         "PRIVACY": "Privacidad",
         "TERMS": "Términos",
-        "COPYRIGHT": "© 2026 InventorySaaS, Inc. Todos los derechos reservados."
+        "COPYRIGHT": "© 2026 Inventory SaaS. Todos los derechos reservados.",
+        "DEMO_DISCLAIMER": "Esta es una versión demo con fines de demostración."
     },
     "COMMON": {
+        "DEMO_VERSION": "VERSIÓN DEMO",
+        "SPANISH": "Spanish",
+        "ENGLISH": "English",
+        "LOADING": "Cargando..."
+    },
+    "LOGIN": {
         "LANGUAGE": "Idioma",
         "SPANISH": "Español",
         "ENGLISH": "English"
