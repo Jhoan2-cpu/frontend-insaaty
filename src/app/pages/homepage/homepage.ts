@@ -15,10 +15,13 @@ export class Homepage {
     currentLang = 'es';
 
     constructor(private translate: TranslateService) {
-        // Establecer español como idioma por defecto
-        this.translate.setDefaultLang('es');
-        this.translate.use('es');
+        // Use current language from service (initialized in App component)
         this.currentLang = this.translate.currentLang || 'es';
+
+        // Subscribe to language changes to update local state
+        this.translate.onLangChange.subscribe((event) => {
+            this.currentLang = event.lang;
+        });
     }
 
     switchLanguage(lang: string) {

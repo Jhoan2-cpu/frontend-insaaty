@@ -9,8 +9,9 @@
     "HERO": {
         "BADGE": "Now with Forecasting 5.0",
         "TITLE_1": "Control inventory",
-        "TITLE_2": "with precision",
+        "PREPOSITION": "with",
         "TITLE_HIGHLIGHT": "absolute",
+        "TITLE_2": "precision",
         "DESCRIPTION": "Eliminate stockouts and overstocking forever. Our intelligent platform gives you real-time visibility and automated workflows to scale your business effortlessly.",
         "CTA_TRIAL": "Start Free Trial",
         "CTA_DEMO": "Watch Demo",
@@ -49,7 +50,7 @@
         "BUTTON_DEMO": "Schedule a Demo"
     },
     "FOOTER": {
-        "TAGLINE": "Making inventory management painless, intelligent, and scalable for modern businesses.",
+        "TAGLINE": "Revolutionizing inventory management for modern businesses.",
         "PRODUCT": "Product",
         "FEATURES": "Features",
         "INTEGRATIONS": "Integrations",
@@ -61,9 +62,16 @@
         "LEGAL": "Legal",
         "PRIVACY": "Privacy",
         "TERMS": "Terms",
-        "COPYRIGHT": "© 2026 InventorySaaS, Inc. All rights reserved."
+        "COPYRIGHT": "© 2026 Inventory SaaS. All rights reserved.",
+        "DEMO_DISCLAIMER": "This is a demo version for demonstration purposes."
     },
     "COMMON": {
+        "DEMO_VERSION": "DEMO VERSION",
+        "SPANISH": "Spanish",
+        "ENGLISH": "English",
+        "LOADING": "Loading..."
+    },
+    "LOGIN": {
         "LANGUAGE": "Language",
         "SPANISH": "Español",
         "ENGLISH": "English"
